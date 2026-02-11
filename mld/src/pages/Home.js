@@ -6,7 +6,6 @@ import Hero from '../components/Hero';
 import Intro from '../components/Intro';
 import Portfolio from '../components/Portfolio';
 import Services from '../components/Services';
-import Booking from '../components/Booking';
 
 
 const Home = () => {
@@ -15,7 +14,6 @@ const Home = () => {
             <Hero />
             <Intro />
             <Services />
-            <Booking />
             <Portfolio />
             <Clients />
             <Cta/>

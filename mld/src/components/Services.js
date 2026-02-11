@@ -1,8 +1,8 @@
 import React from 'react';
-import installationImg from '../images/Services/installation.jpg';
-import supplyImg from '../images/Services/Supply.jpg';
-import maintenanceImg from '../images/Services/maintance.webp';
-import consultationImg from '../images/Services/consultation.webp';
+import img from '../images/web.svg'; 
+import img2 from '../images/app.svg';
+import img3 from '../images/hosting.svg';
+import img4 from '../images/consultation.svg';
 
 const Services = () => {
 
@@ -23,40 +23,40 @@ const Services = () => {
                             
                             <div className="bg-white transition-all ease-in-out duration-400  overflow-hidden text-gray-700 hover:bg-gray-500 hover:text-white rounded-lg shadow-2xl p-3 group">
                                 <div className="m-2 text-justify text-sm">
-                                    <img alt="Irrigation supply" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out w-full h-40 object-cover" src={supplyImg} />
-                                    <h2 className="font-semibold my-4 text-2xl text-center">Supply of irrigation equipment</h2>
+                                <img alt="card img" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out" src={img} />
+                                    <h2 className="font-semibold my-4 text-2xl text-center">Web Development</h2>
                                     <p className="text-md font-medium">
-                                        We source and supply quality irrigation components including sprinklers, drip lines, controllers, pumps and fittings, ensuring every project is built on reliable hardware.
+                                        We specialize in creating and optimizing high-quality, custom websites for businesses and organizations of all sizes. Building mobile-friendly and easy-to-use websites and applications for clients.
                                     </p>
                                 </div>
                             </div>
 
                             <div className="bg-white transition-all ease-in-out duration-400  overflow-hidden text-gray-700 hover:bg-gray-500 hover:text-white rounded-lg shadow-2xl p-3 group">
                                 <div className="m-2 text-justify text-sm">
-                                    <img alt="Irrigation installation" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out w-full h-40 object-cover" src={installationImg} />
-                                    <h2 className="font-semibold my-4 text-2xl text-center">System installation & commissioning</h2>
+                                <img alt="card img" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out" src={img2} />
+                                    <h2 className="font-semibold my-4 text-2xl text-center">Mobile App Development</h2>
                                     <p className="text-md font-medium">
-                                        We design, install and commission complete irrigation systems for lawns, gardens, farms and commercial sites, calibrated for even coverage and efficient water use.
+                                        We develop high-quality, custom cross-platform mobile applications that are robust and optimized for performance, scalability, and accessibility.
                                     </p>
                                 </div>
                             </div>
 
                             <div className="bg-white transition-all ease-in-out duration-400  overflow-hidden text-gray-700 hover:bg-gray-500 hover:text-white rounded-lg shadow-2xl p-3 group">
                                 <div className="m-2 text-justify text-sm">
-                                    <img alt="Irrigation maintenance" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out w-full h-40 object-cover" src={maintenanceImg} />
-                                    <h2 className="font-semibold my-4 text-2xl text-center ">Maintenance & repairs</h2>
+                                    <img alt="card img" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out" src={img3} />
+                                    <h2 className="font-semibold my-4 text-2xl text-center ">Domain and Hosting Services</h2>
                                     <p className="text-md font-medium">
-                                        We provide scheduled maintenance, troubleshooting and repairs to keep existing irrigation systems running efficiently and extend the life of installed equipment.
+                                        We provide domain registration and web hosting services to individuals and organizations to enable them gain visibility in the digital space.
                                     </p>
                                 </div>
                             </div>
 
                             <div className="bg-white transition-all ease-in-out duration-400  overflow-hidden text-gray-700 hover:bg-gray-500 hover:text-white rounded-lg shadow-2xl p-3 group">
                                 <div className="m-2 text-justify text-sm">
-                                    <img alt="Irrigation consultation" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out w-full h-40 object-cover" src={consultationImg} />
-                                    <h2 className="font-semibold my-4 text-2xl text-center ">Design & consultation</h2>
+                                <img alt="card img" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out" src={img4} />
+                                    <h2 className="font-semibold my-4 text-2xl text-center ">General IT Consultations</h2>
                                     <p className="text-md font-medium">
-                                        We offer site assessments, system design and technical advice to help you choose the right irrigation solution for your lawns, gardens, sports fields or farms.
+                                        Our IT consultations service provides expert guidance and support for businesses and individuals looking to optimize their technology solutions.
                                     </p>
                                 </div>
                             </div>                    
@@ -88,210 +88,6 @@ const Services = () => {
                                 <p className='my-3 text-xl text-gray-600 font-semibold'>We can collaborate with your existing tech team to scale existing software applications or design customized software applications that suits your everyday need and simplifies various processes.</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="bg-white">
-                <div className="m-auto max-w-6xl px-4 md:px-8 py-12" data-aos="fade-up">
-                    <div className="mb-8 text-center">
-                        <h2 className="text-3xl text-blue-900 font-bold uppercase">The process</h2>
-                        <p className="mt-3 text-gray-600 font-semibold text-sm md:text-base">
-                            Detailed breakdown of the service pathway &mdash; from the initial scientific audit to final handover.
-                        </p>
-                    </div>
-
-                    <div className="space-y-6">
-                        {/* Step 1 */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6">
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Step 1: The Scientific Audit
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-gray-800">ZMW 1,000</span>
-                                </span>
-                            </div>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <ul className="list-disc list-inside space-y-1">
-                                        <li>On-site evaluation of soil texture and topography.</li>
-                                        <li>Measurement of water flow rates and static pressure.</li>
-                                        <li>Identification of hydro-zones and specific water needs.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Initial consultation on site.</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Cancellations &lt; 24 hours or no-shows forfeit the fee.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>ZMW 1,000 commitment fee.</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        100% deductible from the final installation cost.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Step 2A */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6">
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Step 2 (Path A): Scoping &mdash; Standard residential
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-green-700">Complimentary</span>
-                                </span>
-                            </div>
-                            <p className="text-xs text-gray-500 mb-2">
-                                For properties up to approximately 4,200&nbsp;m².
-                            </p>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <p>
-                                        Complimentary preliminary quote based on more than 14 years of irrigation experience.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Prepared following completion of the scientific audit.</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>Complimentary (no charge).</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Step 2B */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6">
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Step 2 (Path B): Scoping &mdash; Estate &amp; commercial
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-gray-800">ZMW 3,000</span>
-                                </span>
-                            </div>
-                            <p className="text-xs text-gray-500 mb-2">
-                                For properties roughly between 4,200&nbsp;m² and 10,000&nbsp;m².
-                            </p>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <ul className="list-disc list-inside space-y-1">
-                                        <li>Advanced hydraulic quantification.</li>
-                                        <li>Technical CAD blueprints for precise sprinkler placement.</li>
-                                        <li>Comprehensive installation guide.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Work starts after deposit; drafting begins immediately.</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>ZMW 3,000 (ZMW 1,500 deposit required to start).</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Arrangements for larger or more complex sites can be discussed separately.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Step 3 */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6">
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Step 3: 3D visualisation &amp; CAD design
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-gray-800">ZMW 4,000</span>
-                                </span>
-                            </div>
-                            <p className="text-xs text-gray-500 mb-2">
-                                Typically for properties up to around 4,200&nbsp;m².
-                            </p>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <ul className="list-disc list-inside space-y-1">
-                                        <li>Professional 3D landscape rendering.</li>
-                                        <li>Virtual walkthrough of the garden layout.</li>
-                                        <li>Full material list and high‑resolution renders.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Completed before any trenching or digging begins.</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>ZMW 4,000 for standard property sizes.</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Larger or more complex properties can be quoted individually.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Step 4 & 5 */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6">
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Steps 4 &amp; 5: Precision installation &amp; handover
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-gray-800">from 25% of total material cost</span>
-                                </span>
-                            </div>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <ul className="list-disc list-inside space-y-1">
-                                        <li>Trenching, piping and sprinkler installation.</li>
-                                        <li>Smart setup of Wi‑Fi controllers and rain sensors.</li>
-                                        <li>Training on how to control the lawn from your phone.</li>
-                                        <li>Handover of a fully operational, precision‑engineered system.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Mobilisation after design approval and contract signing.</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>Typically from 25% of the total material cost.</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Detailed installation pricing is confirmed with your final design and bill of quantities.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="mt-8 border-t border-gray-200 pt-5 text-xs md:text-sm text-gray-600 space-y-2">
-                        <p>
-                            This standard service pathway caters to properties within roughly a 30&nbsp;km radius of Lusaka (transport included).
-                        </p>
-                        <p>
-                            For large‑scale designs (Path B), design fees must be settled in full before technical blueprints and renders are released.
-                        </p>
-                        <p>
-                            For properties beyond this scope or with specialised requirements, a tailored solution can be arranged.
-                        </p>
-                        <p>
-                            Optional maintenance service contracts are available for seasonal filter cleaning, nozzle adjustments and performance checks.
-                        </p>
-                        <p className="mt-3 font-semibold text-gray-700">
-                            George Mulenga &mdash; Irrigation Specialist (MEng Agric student, BSc Agric Soil, Dip Eng Agric)
-                        </p>
                     </div>
                 </div>
             </section>
