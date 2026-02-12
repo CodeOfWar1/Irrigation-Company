@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavLinks from '../Navbar/NavLinks';
 import { HashLink } from 'react-router-hash-link';
+import logo from '../../images/LIT LOGO.jpg'; 
 
 const NavBar = () => {
     const location = useLocation();
@@ -33,7 +34,14 @@ const NavBar = () => {
         <nav className={`fixed top-0 w-full z-30 transition duration-300 ease-in-out mb-16 ${!showTransparent ? 'bg-white shadow-lg' : ''}`}>
             <div className="flex flex-row justify-between items-center gap-4 px-4 md:px-6 lg:px-8 py-3">
                 <div className="flex-shrink-0">
-                    <HashLink smooth to={isHome ? '/#hero' : '/'}><h1 className={`font-extrabold text-4xl transition-colors duration-300 ${showTransparent ? 'text-white' : 'text-blue-900'}`}>mld</h1></HashLink>
+                    <HashLink smooth to={isHome ? '/#hero' : '/'}>
+                        {/* Responsive logo height: 2rem on mobile, 2.5rem on tablet/desktop */}
+                        <img 
+                            src={logo} 
+                            alt="Logo" 
+                            className={`h-8 md:h-10 w-auto transition-all duration-300 rounded-xl h-8 md:h-10}`} 
+                        />
+                    </HashLink>
                 </div>
                 <div className="flex flex-row items-center gap-2 lg:gap-0">
                     <button className={`p-2 rounded-lg lg:hidden transition-colors duration-300 ${showTransparent ? 'text-white' : 'text-blue-900'}`} onClick={handleClick} aria-label="Toggle menu">
@@ -63,6 +71,5 @@ const NavBar = () => {
     )
     
 }
-
 
 export default NavBar;
