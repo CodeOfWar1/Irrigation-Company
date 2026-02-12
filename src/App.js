@@ -13,6 +13,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import DemoProduct from './pages/DemoProduct';
 import Projects from './pages/Projects';
+import ProjectDetail from './pages/ProjectDetail';
 import CompanyProfile from './pages/CompanyProfile';
 
 import {useDocTitle} from './components/CustomHook';
@@ -45,6 +46,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/get-demo" element={<DemoProduct />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/company-profile" element={<CompanyProfile />} />
             <Route path="/portfolio" element={<CompanyProfile />} />
           </Routes>
