@@ -41,28 +41,31 @@ const NavBar = () => {
                 }`}
         >
             {/* NAV CONTENT */}
-            <div className="flex flex-row justify-between items-center gap-4 px-4 md:px-6 lg:px-8 py-3">
+            <div className="flex flex-row justify-between items-center gap-4 px-4 md:px-6 lg:px-8 py-4">
 
                 {/* LOGO + TEXT */}
                 <div className="flex-shrink-0 flex items-center gap-3">
 
+                    {/* LOGO */}
                     <HashLink smooth to={isHome ? '/#hero' : '/'}>
                         <img
                             src={logo}
                             alt="Lawn Irrigation Technologies Logo"
-                            className="h-8 md:h-10 w-auto rounded-xl transition-all duration-300"
+                            className="h-12 md:h-14 w-auto rounded-xl transition-all duration-300 hover:scale-105"
                         />
                     </HashLink>
 
-                    {/* COMPANY NAME */}
-                    <h3
-                        className={`text-sm md:text-lg font-bold leading-tight transition-colors duration-300 ${showTransparent ? 'text-white' : 'text-blue-900'
+                    {/* COMPANY NAME (CLICKABLE) */}
+                    <HashLink
+                        smooth
+                        to={isHome ? '/#hero' : '/'}
+                        className={`text-sm md:text-lg font-bold leading-tight transition-colors duration-300 cursor-pointer ${showTransparent ? 'text-white' : 'text-blue-900'
                             }`}
                     >
                         Lawn Irrigation
                         <br className="hidden md:block" />
                         Technologies
-                    </h3>
+                    </HashLink>
                 </div>
 
                 {/* RIGHT SIDE */}
