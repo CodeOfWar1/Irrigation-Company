@@ -20,30 +20,42 @@ const Clients = () => {
                 </div>
 
                 <div className="p-16" data-aos="fade-in" data-aos-delay="600">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 place-items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 place-items-center text-center">
 
-                        <div className="flex items-center justify-center h-40 w-full">
+                        {/* International School of Lusaka */}
+                        <div className="flex flex-col items-center justify-center h-56 w-full">
                             <img
                                 src={kws}
-                                alt="ISL"
-                                className="h-32 w-auto object-contain"
+                                alt="International School of Lusaka"
+                                className="h-32 w-auto object-contain mb-4"
                             />
+                            <p className="text-blue-900 font-semibold text-sm">
+                                International School of Lusaka, Zambia
+                            </p>
                         </div>
 
-                        <div className="flex items-center justify-center h-40 w-full">
+                        {/* ZICTA */}
+                        <div className="flex flex-col items-center justify-center h-56 w-full">
                             <img
                                 src={protergia}
-                                alt="ZICTA"
-                                className="h-32 w-auto object-contain"
+                                alt="Zambia Information and Communications Technology Authority"
+                                className="h-32 w-auto object-contain mb-4"
                             />
+                            <p className="text-blue-900 font-semibold text-sm">
+                                Zambia Information and Communications Technology Authority (ZICTA)
+                            </p>
                         </div>
 
-                        <div className="flex items-center justify-center h-40 w-full">
+                        {/* University of Zambia */}
+                        <div className="flex flex-col items-center justify-center h-56 w-full">
                             <img
                                 src={geps}
-                                alt="UNZA"
-                                className="h-32 w-auto object-contain"
+                                alt="University of Zambia"
+                                className="h-32 w-auto object-contain mb-4"
                             />
+                            <p className="text-blue-900 font-semibold text-sm">
+                                University of Zambia
+                            </p>
                         </div>
 
                     </div>
