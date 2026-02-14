@@ -1,113 +1,129 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
+import React from "react";
+import { HashLink } from "react-router-hash-link";
 
 const Footer = () => {
     return (
-        <>
-            <footer>
-                <div className="footer max-w-full mx-auto px-4 sm:px-6 bg-gray-100 border-t border-b py-30">
+        <footer className="bg-gray-100 border-t border-gray-300">
+            <div className="max-w-7xl mx-auto px-6 py-16">
 
-                    {/* Top area: Blocks */}
-                    <div className="grid sm:grid-cols-12 gap-5 py-8 md:py-12 border-t border-gray-200 lg:ml-11">
+                {/* GRID SECTION */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
-                    {/* 1st block */}
-                    <div className="col-span-12 lg:col-span-4">
-                        <div className="box-border border-b-4 border-blue-900 p-8 bg-gray-200 text-gray-600 text-center rounded-lg xl:w-80 mx-auto">
-                            <h3 className="font-bold text-4xl mb-4">MLD</h3>
-                            <div className='text-md font-medium text-gray-600'>
-                                <h5>Molad e Konsult</h5>
-                                <p>Ilo Awela,</p>
-                                <p>Ota,</p>
-                                <p>Ogun State.</p>
-                            </div>
+                    {/* COMPANY INFO */}
+                    <div>
+                        <h2 className="text-2xl font-bold text-blue-900 mb-3">
+                            Lawn Irrigation Technologies
+                        </h2>
+                        <p className="italic text-sm text-gray-600 mb-4">
+                            “Green Grass, Zero Effort.”
+                        </p>
+
+                        <div className="text-sm text-gray-700 space-y-1">
+                            <p>Plot 70, Handsworth</p>
+                            <p>Great East Road</p>
+                            <p>Lusaka, Zambia</p>
+                            <p className="pt-2 font-medium">Established: 2011</p>
+                            <p>Registration No: 184163</p>
+                            <p>TPIN: 1002735194</p>
                         </div>
                     </div>
 
-                    {/* 2nd block */}
-                    <div className="col-span-6 md:col-span-6 lg:col-span-1 ml-7 mx-auto">
-                        <h6 className="text-[#013289] text-xl font-bold mb-4">LINKS</h6>
-                        <ul className="text-md">
-                        <li className="mb-2">
-                            <HashLink to="#" className="text-[#013289] hover:text-gray-900 hover:tracking-wider transition duration-250 ease-in-out">About</HashLink>
-                        </li>
-                        <li className="mb-2">
-                            <HashLink to="#" className="text-[#013289] hover:text-gray-900 hover:tracking-wider transition duration-250 ease-in-out">Services</HashLink>
-                        </li>
-                        <li className="mb-2">
-                            <HashLink to="#" className="text-[#013289] hover:text-gray-900 hover:tracking-wider transition duration-250 ease-in-out">Contact</HashLink>
-                        </li>                            
+                    {/* QUICK LINKS */}
+                    <div>
+                        <h3 className="text-lg font-semibold text-blue-900 mb-4">
+                            Quick Links
+                        </h3>
+                        <ul className="space-y-2 text-sm text-gray-700">
+                            <li>
+                                <HashLink smooth to="#about" className="hover:text-blue-700 transition">
+                                    About Us
+                                </HashLink>
+                            </li>
+                            <li>
+                                <HashLink smooth to="#services" className="hover:text-blue-700 transition">
+                                    Services
+                                </HashLink>
+                            </li>
+                            <li>
+                                <HashLink smooth to="#projects" className="hover:text-blue-700 transition">
+                                    Projects
+                                </HashLink>
+                            </li>
+                            <li>
+                                <HashLink smooth to="#contact" className="hover:text-blue-700 transition">
+                                    Contact
+                                </HashLink>
+                            </li>
                         </ul>
                     </div>
 
-                    {/* 3rd block */}
-                    <div className="col-span-6 md:col-span-6 lg:col-span-4 mx-auto">
-                        <h6 className="text-[#013289] text-xl font-bold mb-4">OUR SERVICES</h6>
-                        <ul className="text-md">
-                        <li className="mb-2">
-                            <Link to="#" className="text-[#013289] hover:text-gray-900 hover:tracking-wider transition duration-250 ease-in-out">Web Development</Link>
-                        </li>
-                        <li className="mb-2">
-                            <Link to="#" className="text-[#013289] hover:text-gray-900 hover:tracking-wider transition duration-250 ease-in-out">Mobile App Development</Link>
-                        </li>
-                        <li className="mb-2">
-                            <Link to="#" className="text-[#013289] hover:text-gray-900 hover:tracking-wider transition duration-250 ease-in-out">Domain and Hosting</Link>
-                        </li>
-                        <li className="mb-2">
-                            <Link to="#" className="text-[#013289] hover:text-gray-900 hover:tracking-wider transition duration-250 ease-in-out">General IT Consultations</Link>
-                        </li>
+                    {/* CORE SERVICES */}
+                    <div>
+                        <h3 className="text-lg font-semibold text-blue-900 mb-4">
+                            Core Services
+                        </h3>
+                        <ul className="space-y-2 text-sm text-gray-700">
+                            <li>3D Landscape Visualization & CAD Design</li>
+                            <li>Automated Pop-up Sprinkler Systems</li>
+                            <li>Precision Drip & Micro-Irrigation</li>
+                            <li>Solar-Powered Irrigation Systems</li>
+                            <li>Pump Station Installation</li>
+                            <li>Soil Science & Fertility Consultancy</li>
                         </ul>
                     </div>
 
-                    {/* 4th block */}
-                    <div className="col-span-12 text-center mx-auto lg:col-span-3 font-bold uppercase text-blue-900">
-                        <div className="text-xl mb-6">
-                            Social Media Links.
+                    {/* CONTACT & SOCIAL */}
+                    <div>
+                        <h3 className="text-lg font-semibold text-blue-900 mb-4">
+                            Contact
+                        </h3>
+
+                        <div className="text-sm text-gray-700 space-y-2 mb-4">
+                            <p>📞 +260 966 897 354</p>
+                            <p>✉ lawnirrigationtech@gmail.com</p>
+                            <p>✉ geomulenga@gmail.com</p>
+                            <p className="font-semibold pt-2">
+                                “Easy Life With Modern Technology”
+                            </p>
                         </div>
 
-                                <div className="text-md font-medium mb-6">
-                                    Follow us on social media.
-                                </div>
-                        <div className="mx-auto text-center mt-2">
-                                <ul className="flex justify-center mb-4 md:mb-0">
-                                    <li>
-                                        <Link to="#" className="flex justify-center items-center text-blue-900 hover:text-gray-500 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out" aria-label="Twitter">
-                                        <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 11.5c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4 0 1.6 1.1 2.9 2.6 3.2-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H8c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4c.7-.5 1.3-1.1 1.7-1.8z" />
-                                        </svg>
-                                        </Link>
-                                    </li>
-                                    <li className="ml-4">
-                                        <Link to="#" className="flex justify-center items-center text-blue-900 hover:text-gray-500 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out" aria-label="Facebook">
-                                        <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M14.023 24L14 17h-3v-3h3v-2c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V14H21l-1 3h-2.72v7h-3.257z" />
-                                        </svg>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                    </div>          
+                        {/* SOCIAL ICONS */}
+                        <div className="flex space-x-4 mt-4">
+                            {/* Facebook */}
+                            <a href="#" className="text-blue-900 hover:text-blue-700 transition">
+                                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                                    <path d="M22 12A10 10 0 1010.9 21.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.2 1.8.2v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0022 12z" />
+                                </svg>
+                            </a>
 
+                            {/* LinkedIn */}
+                            <a href="#" className="text-blue-900 hover:text-blue-700 transition">
+                                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                                    <path d="M4.98 3.5C4.98 4.9 3.9 6 2.5 6S0 4.9 0 3.5 1.1 1 2.5 1 4.98 2.1 4.98 3.5zM0 8h5v16H0V8zm7.5 0h4.8v2.2h.1c.7-1.3 2.3-2.7 4.8-2.7 5.1 0 6 3.3 6 7.7V24h-5v-7.6c0-1.8 0-4.2-2.6-4.2s-3 2-3 4v7.8h-5V8z" />
+                                </svg>
+                            </a>
+
+                            {/* Instagram */}
+                            <a href="#" className="text-blue-900 hover:text-blue-700 transition">
+                                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                                    <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm0 2C5.7 4 4 5.7 4 7.8v8.4C4 18.3 5.7 20 7.8 20h8.4c2.1 0 3.8-1.7 3.8-3.8V7.8C20 5.7 18.3 4 16.2 4H7.8zm4.2 3.5A4.5 4.5 0 1112 16.5 4.5 4.5 0 0112 7.5zm0 2A2.5 2.5 0 1014.5 12 2.5 2.5 0 0012 9.5zm4.8-3.3a1 1 0 110 2 1 1 0 010-2z" />
+                                </svg>
+                            </a>
+                        </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center md:justify-between justify-center mx-auto px-4">
-                <div className="w-full md:w-4/12 px-4 mx-auto text-center py-2">
-                    <div className="text-sm text-gray-200 font-semibold py-1">
-                    Copyright &copy; {new Date().getFullYear()}{"  "}
-                    <HashLink
-                        to="#"
-                        className=" hover:text-gray-900"
-                    >
-                        Molad e Konsult
-                    </HashLink>. All rights reserved.
-                    </div>
-                </div>
                 </div>
 
+                {/* BOTTOM BAR */}
+                <div className="border-t border-gray-300 mt-12 pt-6 text-center text-sm text-gray-600">
+                    © {new Date().getFullYear()} Lawn Irrigation Technologies. All Rights Reserved.
+                    <br />
+                    Lusaka, Zambia | Engineering Smart Green Spaces Since 2011
                 </div>
-                
-            </footer>
-        </>
-    )
-}
+
+            </div>
+        </footer>
+    );
+};
+
 export default Footer;
