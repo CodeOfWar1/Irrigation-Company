@@ -45,13 +45,13 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
                 </div>
                 <Link to="/about" className={mobileLinkClass} onClick={onLinkClick}>About</Link>
                 <Link to="/company-profile" className={mobileLinkClass} onClick={onLinkClick}>Company Profile</Link>
-                <Link to="/projects" className={mobileLinkClass} onClick={onLinkClick}>Portfolio</Link>
+                <Link to="/get-demo" className={mobileLinkClass} onClick={onLinkClick}>Portfolio</Link>
                 <Link to="/terms" className={mobileLinkClass} onClick={onLinkClick}>Terms &amp; Conditions</Link>
                 <div className="border-b border-gray-100 my-1" />
                 <HashLink to="/#services" smooth className={mobileLinkClass} onClick={onLinkClick}>Services</HashLink>
                 <HashLink to="/#process" smooth className={mobileLinkClass} onClick={onLinkClick}>Process</HashLink>
                 <Link to="/contact" className={mobileLinkClass} onClick={onLinkClick}>Contact Us</Link>
-                <HashLink to="/get-demo#demo" smooth className={mobileCtaClass} onClick={onLinkClick}>Demo our products</HashLink>
+                <Link to="/get-demo" className={mobileCtaClass} onClick={onLinkClick}>Portfolio</Link>
             </>
         );
     }
@@ -85,7 +85,7 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
                         <Link to="/company-profile" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
                             Company Profile
                         </Link>
-                        <Link to="/projects" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
+                        <Link to="/get-demo" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
                             Portfolio
                         </Link>
                         <Link to="/terms" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
@@ -103,9 +103,9 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
             <HashLink className={linkClass(atTop)} to="/contact#contact">
                 Contact Us
             </HashLink>
-            <HashLink className={ctaClass(atTop)} smooth to="/get-demo#demo">
-                Demo our products
-            </HashLink>
+            <Link className={ctaClass(atTop)} to="/get-demo">
+                Portfolio
+            </Link>
         </>
     )
 }

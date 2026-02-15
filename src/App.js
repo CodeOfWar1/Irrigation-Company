@@ -5,14 +5,14 @@ import './index.css';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Navigate
 } from 'react-router-dom';
 // All pages
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import DemoProduct from './pages/DemoProduct';
-import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import CompanyProfile from './pages/CompanyProfile';
 import Terms from './pages/Terms';
@@ -47,7 +47,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/get-demo" element={<DemoProduct />} />
-            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects" element={<Navigate to="/get-demo" replace />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/company-profile" element={<CompanyProfile />} />
             <Route path="/terms" element={<Terms />} />
