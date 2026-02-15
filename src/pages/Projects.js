@@ -77,7 +77,7 @@ const Projects = () => {
 
         <div className="m-auto max-w-6xl px-3 sm:px-4 md:px-8 -mt-6 relative z-10 pb-16">
           {commercial.length > 0 && (
-            <section className="mb-12" data-aos="fade-up">
+            <section className="mb-12" data-aos="fade-up"><br></br>
               <h2 id="commercial-projects" className="text-xl sm:text-2xl font-bold text-blue-900 mb-6">
                 Commercial &amp; institutional
               </h2>
