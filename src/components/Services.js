@@ -70,76 +70,81 @@ const PROCESS_STEPS = [
 
 const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
     const isLast = index === PROCESS_STEPS.length - 1;
+    const stepLabel = typeof step.id === 'number' ? step.id : step.id === '2a' ? '2A' : step.id === '2b' ? '2B' : '4-5';
     return (
-        <div className="relative flex gap-4 md:gap-6">
-            {/* Timeline: circle + line */}
-            <div className="flex flex-col items-center shrink-0">
+        <div className="relative flex gap-3 sm:gap-4 md:gap-6">
+            {/* Timeline: circle + line — hidden on very small, visible from sm */}
+            <div className="hidden sm:flex flex-col items-center shrink-0 pt-1">
                 <button
                     type="button"
                     onClick={onToggle}
-                    className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 ${isExpanded ? 'bg-blue-900 ring-4 ring-blue-200 scale-105' : 'bg-blue-700 hover:bg-blue-800'
-                        }`}
+                    className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 ${isExpanded ? 'bg-blue-900 ring-2 ring-blue-300 scale-100' : 'bg-blue-700 hover:bg-blue-800'}`}
                     aria-expanded={isExpanded}
+                    aria-label={`${step.title}, ${isExpanded ? 'collapse' : 'expand'} details`}
                 >
-                    {typeof step.id === 'number' ? step.id : step.id === '2a' ? '2A' : step.id === '2b' ? '2B' : '4-5'}
+                    {stepLabel}
                 </button>
-                {!isLast && <div className="w-0.5 flex-1 min-h-[24px] bg-blue-200 my-1 rounded-full" />}
+                {!isLast && <div className="w-0.5 flex-1 min-h-[16px] sm:min-h-[20px] bg-blue-200 my-0.5 rounded-full" aria-hidden="true" />}
             </div>
 
             {/* Card */}
-            <div className="flex-1 min-w-0 pb-2">
+            <div className="flex-1 min-w-0">
                 <button
                     type="button"
                     onClick={onToggle}
-                    className={`w-full text-left rounded-2xl border-2 transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${isExpanded
-                            ? 'bg-white border-blue-900 shadow-xl shadow-blue-900/10'
-                            : 'bg-gray-50 border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md'
-                        }`}
+                    className={`relative w-full text-left rounded-xl sm:rounded-2xl border transition-all duration-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:scale-[0.99] ${isExpanded
+                        ? 'bg-white border-blue-900 shadow-lg shadow-blue-900/5'
+                        : 'bg-white border-gray-200 hover:border-blue-300 hover:shadow-md'
+                    }`}
                 >
-                    <div className="p-4 md:p-6 flex flex-wrap items-start justify-between gap-3">
-                        <div className="flex items-start gap-3 flex-1 min-w-0">
-                            <span className="text-blue-900 shrink-0 mt-0.5">{step.icon}</span>
-                            <div>
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900 pr-8">{step.title}</h3>
-                                {step.sub && <p className="text-sm text-gray-500 mt-1">{step.sub}</p>}
-                                <p className="mt-2">
-                                    <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Investment: </span>
+                    <div className="p-4 sm:p-5 md:p-6 flex flex-wrap items-center justify-between gap-3">
+                        {/* Step badge on mobile when timeline hidden */}
+                        <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                            <span className="sm:hidden shrink-0 w-9 h-9 rounded-full bg-blue-900 text-white flex items-center justify-center text-sm font-bold">
+                                {stepLabel}
+                            </span>
+                            <span className="hidden sm:block text-blue-900 shrink-0">{step.icon}</span>
+                            <div className="min-w-0">
+                                <h3 className="text-base sm:text-lg md:text-xl font-bold text-blue-900 pr-10 sm:pr-8 leading-snug">{step.title}</h3>
+                                {step.sub && <p className="text-xs sm:text-sm text-gray-500 mt-0.5">{step.sub}</p>}
+                                <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm">
+                                    <span className="font-semibold uppercase tracking-wider text-gray-500">Investment: </span>
                                     <span className={step.investmentHighlight ? 'text-green-700 font-semibold' : 'text-gray-800 font-semibold'}>{step.investment}</span>
                                 </p>
                             </div>
                         </div>
-                        <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-blue-100' : 'bg-gray-200'}`}>
-                            <svg className="w-5 h-5 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                        <span className={`absolute top-4 right-4 sm:relative sm:top-0 sm:right-0 shrink-0 w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-transform duration-200 ${isExpanded ? 'rotate-180 bg-blue-100 text-blue-900' : 'bg-gray-100 text-gray-600'}`} aria-hidden="true">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                         </span>
                     </div>
 
                     {isExpanded && (
-                        <div className="px-4 md:px-6 pb-5 md:pb-6 pt-0 border-t border-gray-100 animate-[fadeIn_0.25s_ease-out]">
-                            <div className="grid md:grid-cols-3 gap-6 pt-4 text-sm text-gray-700">
-                                <div className="bg-blue-50/50 rounded-xl p-4">
-                                    <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
-                                        <span className="w-6 h-6 rounded bg-blue-900 text-white flex items-center justify-center text-xs">1</span>
+                        <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 pt-0 border-t border-gray-100 bg-gray-50/30 animate-[fadeIn_0.2s_ease-out]">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 pt-4 text-sm text-gray-700">
+                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-blue-100">
+                                    <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-2 text-xs uppercase tracking-wider">
+                                        <span className="w-6 h-6 rounded bg-blue-900 text-white flex items-center justify-center text-xs shrink-0">1</span>
                                         Deliverables
                                     </h4>
-                                    <ul className="list-disc list-inside space-y-1">
+                                    <ul className="list-disc list-inside space-y-1.5 text-gray-700">
                                         {step.deliverables.map((item, i) => (
-                                            <li key={i}>{item}</li>
+                                            <li key={i} className="leading-snug">{item}</li>
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="bg-gray-50 rounded-xl p-4">
-                                    <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
-                                        <span className="w-6 h-6 rounded bg-gray-600 text-white flex items-center justify-center text-xs">2</span>
+                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-gray-200">
+                                    <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2 text-xs uppercase tracking-wider">
+                                        <span className="w-6 h-6 rounded bg-gray-600 text-white flex items-center justify-center text-xs shrink-0">2</span>
                                         Timeline
                                     </h4>
-                                    <p>{step.timeline}</p>
+                                    <p className="leading-snug">{step.timeline}</p>
                                 </div>
-                                <div className="bg-green-50/50 rounded-xl p-4">
-                                    <h4 className="font-bold text-green-900 mb-2 flex items-center gap-2">
-                                        <span className="w-6 h-6 rounded bg-green-700 text-white flex items-center justify-center text-xs">3</span>
+                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-green-200">
+                                    <h4 className="font-bold text-green-900 mb-2 flex items-center gap-2 text-xs uppercase tracking-wider">
+                                        <span className="w-6 h-6 rounded bg-green-700 text-white flex items-center justify-center text-xs shrink-0">3</span>
                                         Investment
                                     </h4>
-                                    <p>{step.investmentDetail}</p>
+                                    <p className="leading-snug">{step.investmentDetail}</p>
                                 </div>
                             </div>
                         </div>
@@ -214,51 +219,92 @@ const Services = () => {
                 </div>
             </section>
 
-            <section>
-                <div className="m-auto max-w-6xl p-2 md:p-12 h-5/6">
-                    <div className="flex flex-col-reverse lg:flex-row py-8 justify-between lg:text-left" data-aos="zoom-out">
-                        <div className="lg:w-1/2 flex flex-col lg:mx-4 justify-center">
-                            <div className='text-blue-900 mb-4'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" className='fill-current'>
-                                    <path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zm18.71-11.04c.39-.39.39-1.02 0-1.41l-2.5-2.5a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.99-1.67z"></path>
-                                </svg>
+            <section className="bg-gradient-to-b from-white to-gray-50 py-12 md:py-20 overflow-hidden">
+                <div className="m-auto max-w-6xl px-4 sm:px-6 md:px-12">
+                    <div className="text-center mb-10 md:mb-14" data-aos="fade-down">
+                        <p className="text-blue-600 font-semibold uppercase tracking-widest text-sm">Our approach</p>
+                        <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900">Design. Then deliver.</h2>
+                        <div className="w-16 h-0.5 bg-blue-900 rounded-full mx-auto mt-3" />
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-12">
+                        {/* We Design */}
+                        <div
+                            className="group relative rounded-2xl overflow-hidden bg-white shadow-xl border border-gray-100 hover:shadow-2xl hover:border-blue-200 transition-all duration-300"
+                            data-aos="fade-right"
+                        >
+                            <div className="relative h-52 sm:h-64 overflow-hidden">
+                                <img
+                                    src={consultationImg}
+                                    alt="Irrigation design and consultancy"
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/20 to-transparent" />
+                                <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3">
+                                    <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/95 text-blue-900 shadow-lg">
+                                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zm18.71-11.04c.39-.39.39-1.02 0-1.41l-2.5-2.5a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.99-1.67z" /></svg>
+                                    </span>
+                                    <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg">We <span className="font-black">Design</span></h3>
+                                </div>
                             </div>
-                            <h3 className="text-3xl  text-blue-900 
-                            font-bold">We <span className='font-black'>Design</span></h3>
-                            <div>
-                                <p className='my-3 text-xl text-gray-600 font-semibold'>
+                            <div className="p-5 sm:p-6">
+                                <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
                                     We design precision irrigation systems engineered for efficiency, durability and optimal water distribution across residential, commercial and agricultural landscapes.
                                 </p>
+                                <ul className="mt-4 space-y-2 text-sm sm:text-base text-gray-700">
+                                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-900" /> Soil & site analysis</li>
+                                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-900" /> 3D visualisation & CAD</li>
+                                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-900" /> Bill of quantities</li>
+                                </ul>
                             </div>
                         </div>
-                        <div className="lg:w-1/2 flex flex-col lg:mx-4 justify-center">
-                            <div className='text-blue-900 mb-4'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" className='fill-current'>
-                                    <path d="M19.14,12.94c0-.31.03-.63.08-.94l2.03-1.58-2-3.46-2.38.95c-.5-.38-1.04-.7-1.62-.94L14.5,2h-5l-.72,2.97c-.58.24-1.12.56-1.62.94L4.76,6.96l-2,3.46,2.03,1.58c-.05.31-.08.63-.08.94s.03.63.08.94L2.76,15.54l2,3.46,2.38-.95c.5.38 1.04.7 1.62.94L9.5,22h5l.72-2.97c.58-.24 1.12-.56 1.62-.94l2.38.95 2-3.46-2.03-1.58c.05-.31.08-.63.08-.94ZM12,15.5c-1.93,0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5,1.57 3.5,3.5-1.57,3.5-3.5,3.5Z"></path>
-                                </svg>
+                        {/* We Implement */}
+                        <div
+                            className="group relative rounded-2xl overflow-hidden bg-white shadow-xl border border-gray-100 hover:shadow-2xl hover:border-blue-200 transition-all duration-300"
+                            data-aos="fade-left"
+                        >
+                            <div className="relative h-52 sm:h-64 overflow-hidden">
+                                <img
+                                    src={installationImg}
+                                    alt="Irrigation installation and implementation"
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/20 to-transparent" />
+                                <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3">
+                                    <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/95 text-blue-900 shadow-lg">
+                                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.14,12.94c0-.31.03-.63.08-.94l2.03-1.58-2-3.46-2.38.95c-.5-.38-1.04-.7-1.62-.94L14.5,2h-5l-.72,2.97c-.58.24-1.12.56-1.62.94L4.76,6.96l-2,3.46,2.03,1.58c-.05.31-.08.63-.08.94s.03.63.08.94L2.76,15.54l2,3.46,2.38-.95c.5.38 1.04.7 1.62.94L9.5,22h5l.72-2.97c.58-.24 1.12-.56 1.62-.94l2.38.95 2-3.46-2.03-1.58c.05-.31.08-.63.08-.94ZM12,15.5c-1.93,0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5,1.57 3.5,3.5-1.57,3.5-3.5,3.5Z" /></svg>
+                                    </span>
+                                    <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg">We <span className="font-black">Implement</span></h3>
+                                </div>
                             </div>
-                            <h3 className="text-3xl  text-blue-900 font-bold">We <span className='font-black'>Implement</span></h3>
-                            <div>
-                                <p className='my-3 text-xl text-gray-600 font-semibold'>  From system installation to testing and maintenance planning, we ensure every project delivers efficiency, water conservation and healthy landscape growth.</p>
+                            <div className="p-5 sm:p-6">
+                                <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
+                                    From system installation to testing and maintenance planning, we ensure every project delivers efficiency, water conservation and healthy landscape growth.
+                                </p>
+                                <ul className="mt-4 space-y-2 text-sm sm:text-base text-gray-700">
+                                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-900" /> Turnkey installation</li>
+                                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-900" /> Smart controllers & sensors</li>
+                                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-900" /> Handover & training</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="bg-white">
-                <div className="m-auto max-w-6xl px-4 md:px-8 py-12" data-aos="fade-up">
-                    <div className="mb-10 text-center">
-                        <h2 className="text-3xl md:text-4xl text-blue-900 font-bold uppercase tracking-tight">The process</h2>
+            <section id="process" className="bg-white scroll-mt-24">
+                <div className="m-auto max-w-4xl lg:max-w-5xl px-4 sm:px-6 md:px-8 py-10 sm:py-12 md:py-16" data-aos="fade-up">
+                    <div className="mb-8 sm:mb-10 text-center">
+                        <p className="text-xs sm:text-sm font-semibold uppercase tracking-widest text-blue-600">How we work</p>
+                        <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl text-blue-900 font-bold tracking-tight">The process</h2>
                         <div className="flex justify-center mt-3">
-                            <div className="w-20 border-b-4 border-blue-900 rounded-full" />
+                            <div className="w-16 sm:w-20 h-0.5 bg-blue-900 rounded-full" />
                         </div>
-                        <p className="mt-4 text-gray-600 font-semibold text-base md:text-lg max-w-2xl mx-auto">
-                            From the initial scientific audit to final handover — click any step to view details.
+                        <p className="mt-4 text-gray-600 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-2">
+                            From scientific audit to handover. Tap any step for details.
                         </p>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-3 sm:space-y-4">
                         {PROCESS_STEPS.map((step, index) => (
                             <ProcessStepCard
                                 key={step.id}

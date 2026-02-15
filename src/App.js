@@ -15,6 +15,7 @@ import DemoProduct from './pages/DemoProduct';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import CompanyProfile from './pages/CompanyProfile';
+import Terms from './pages/Terms';
 
 import { useDocTitle } from './components/CustomHook';
 import ScrollToTop from './components/ScrollToTop';
@@ -49,6 +50,7 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/company-profile" element={<CompanyProfile />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="/portfolio" element={<CompanyProfile />} />
           </Routes>
         </ScrollToTop>

@@ -8,7 +8,7 @@ const Hero = () => {
         <>
             <div
                 id="hero"
-                className="relative min-h-screen flex flex-col bg-gray-900"
+                className="relative min-h-screen flex flex-col bg-gray-900 overflow-hidden"
                 style={{
                     backgroundImage: `url(${heroImg})`,
                     backgroundSize: 'cover',
@@ -18,9 +18,20 @@ const Hero = () => {
                 data-aos="fade"
                 data-aos-duration="1000"
             >
-                {/* Dark overlay */}
+                {/* Gradient overlay for better contrast and depth */}
                 <div
-                    className="absolute inset-0 z-0 bg-black/50 pointer-events-none"
+                    className="absolute inset-0 z-0 pointer-events-none"
+                    style={{
+                        background: 'linear-gradient(135deg, rgba(15, 76, 117, 0.75) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.7) 100%)',
+                    }}
+                    aria-hidden="true"
+                />
+                {/* Subtle vignette */}
+                <div
+                    className="absolute inset-0 z-0 pointer-events-none opacity-60"
+                    style={{
+                        boxShadow: 'inset 0 0 20rem 8rem rgba(0,0,0,0.4)',
+                    }}
                     aria-hidden="true"
                 />
 

@@ -31,17 +31,17 @@ const CompanyProfile = () => {
       <div>
         <NavBar />
       </div>
-      <main className="mt-20 min-h-screen">
+      <main className="mt-14 sm:mt-20 min-h-screen">
         {/* Hero */}
-        <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-16 md:py-24" data-aos="fade-down">
-          <div className="m-auto max-w-6xl px-4 md:px-8 text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-200">
+        <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-10 sm:py-16 md:py-24" data-aos="fade-down">
+          <div className="m-auto max-w-6xl px-3 sm:px-4 md:px-8 text-center">
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-blue-200">
               Company profile
             </p>
-            <h1 className="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight">
+            <h1 className="mt-2 sm:mt-3 text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight px-2">
               Lawn Irrigation Technologies
             </h1>
-            <p className="mt-4 text-lg md:text-xl text-blue-100 font-medium max-w-2xl mx-auto">
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-blue-100 font-medium max-w-2xl mx-auto px-1">
               “Green Grass, Zero Effort.”
             </p>
             <p className="mt-2 text-sm text-blue-200">
@@ -50,7 +50,7 @@ const CompanyProfile = () => {
           </div>
         </div>
 
-        <div className="m-auto max-w-6xl px-4 md:px-8 -mt-6 relative z-10 pb-20">
+        <div className="m-auto max-w-6xl px-3 sm:px-4 md:px-8 -mt-4 sm:-mt-6 relative z-10 pb-12 sm:pb-20">
           <div className="space-y-8">
             {/* Executive summary */}
             <SectionCard id="executive-summary-heading" heading="1. Executive summary">

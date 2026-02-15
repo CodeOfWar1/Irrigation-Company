@@ -12,7 +12,7 @@ const About = () => {
       <div>
         <NavBar />
       </div>
-      <main className="mt-20 min-h-screen bg-gray-50">
+      <main className="mt-14 sm:mt-20 min-h-screen bg-gray-50">
         <Intro />
       </main>
       <Footer />

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 
 const Footer = () => {
@@ -53,6 +54,11 @@ const Footer = () => {
                                 <HashLink smooth to="#contact" className="hover:text-blue-700 transition">
                                     Contact
                                 </HashLink>
+                            </li>
+                            <li>
+                                <Link to="/terms" className="hover:text-blue-700 transition">
+                                    Terms &amp; Conditions
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -115,10 +121,14 @@ const Footer = () => {
                 </div>
 
                 {/* BOTTOM BAR */}
-                <div className="border-t border-gray-300 mt-12 pt-6 text-center text-sm text-gray-600">
-                    © {new Date().getFullYear()} Lawn Irrigation Technologies. All Rights Reserved.
-                    <br />
-                    Lusaka, Zambia | Engineering Smart Green Spaces Since 2011
+                <div className="border-t border-gray-300 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-gray-600">
+                    <span>© {new Date().getFullYear()} Lawn Irrigation Technologies. All Rights Reserved.</span>
+                    <span className="hidden sm:inline">|</span>
+                    <Link to="/terms" className="hover:text-blue-700 transition font-medium">
+                        Terms &amp; Conditions
+                    </Link>
+                    <span className="hidden sm:inline">|</span>
+                    <span>Lusaka, Zambia | Engineering Smart Green Spaces Since 2011</span>
                 </div>
 
             </div>

@@ -17,7 +17,10 @@ const dropdownLinkClass = (atTop) =>
         ? 'block px-4 py-2.5 text-sm font-semibold text-white hover:text-blue-200 hover:bg-blue-900/20 rounded-lg transition-colors duration-300'
         : 'block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-900 rounded-lg transition-colors duration-300';
 
-const NavLinks = ({ atTop = false }) => {
+const mobileLinkClass = 'flex items-center w-full px-4 py-3.5 text-base font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-900 rounded-lg transition-colors border-b border-gray-100 last:border-b-0 active:bg-gray-100';
+const mobileCtaClass = 'flex items-center justify-center w-full px-4 py-3.5 text-base font-bold text-white bg-blue-900 hover:bg-blue-800 rounded-xl mx-2 mt-2 mb-1 transition-colors';
+
+const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
     const [resourcesOpen, setResourcesOpen] = useState(false);
     const closeTimeoutRef = useRef(null);
 
@@ -32,6 +35,26 @@ const NavLinks = ({ atTop = false }) => {
     const handleLeave = () => {
         closeTimeoutRef.current = setTimeout(() => setResourcesOpen(false), 120);
     };
+
+    if (isMobileMenu) {
+        return (
+            <>
+                <Link to="/" className={mobileLinkClass} onClick={onLinkClick}>Home</Link>
+                <div className="px-4 pt-3 pb-1">
+                    <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Resources</span>
+                </div>
+                <Link to="/about" className={mobileLinkClass} onClick={onLinkClick}>About</Link>
+                <Link to="/company-profile" className={mobileLinkClass} onClick={onLinkClick}>Company Profile</Link>
+                <Link to="/projects" className={mobileLinkClass} onClick={onLinkClick}>Portfolio</Link>
+                <Link to="/terms" className={mobileLinkClass} onClick={onLinkClick}>Terms &amp; Conditions</Link>
+                <div className="border-b border-gray-100 my-1" />
+                <HashLink to="/#services" smooth className={mobileLinkClass} onClick={onLinkClick}>Services</HashLink>
+                <HashLink to="/#process" smooth className={mobileLinkClass} onClick={onLinkClick}>Process</HashLink>
+                <Link to="/contact" className={mobileLinkClass} onClick={onLinkClick}>Contact Us</Link>
+                <HashLink to="/get-demo#demo" smooth className={mobileCtaClass} onClick={onLinkClick}>Demo our products</HashLink>
+            </>
+        );
+    }
 
     return (
         <>
@@ -65,25 +88,17 @@ const NavLinks = ({ atTop = false }) => {
                         <Link to="/projects" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
                             Portfolio
                         </Link>
+                        <Link to="/terms" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
+                            Terms &amp; Conditions
+                        </Link>
                     </div>
                 )}
             </div>
-            <div className="lg:hidden flex flex-col space-y-1">
-                <span className={`px-4 pt-2 text-xs font-bold uppercase tracking-wider ${atTop ? 'text-white/80' : 'text-gray-400'}`}>
-                    Resources
-                </span>
-                <Link to="/about" className={linkClass(atTop)} onClick={() => setResourcesOpen(false)}>
-                    About
-                </Link>
-                <Link to="/company-profile" className={linkClass(atTop)} onClick={() => setResourcesOpen(false)}>
-                    Company Profile
-                </Link>
-                <Link to="/projects" className={linkClass(atTop)} onClick={() => setResourcesOpen(false)}>
-                    Portfolio
-                </Link>
-            </div>
             <HashLink className={linkClass(atTop)} smooth to="/#services">
                 Services
+            </HashLink>
+            <HashLink className={linkClass(atTop)} smooth to="/#process">
+                Process
             </HashLink>
             <HashLink className={linkClass(atTop)} to="/contact#contact">
                 Contact Us

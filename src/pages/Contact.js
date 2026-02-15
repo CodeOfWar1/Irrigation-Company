@@ -7,7 +7,7 @@ import axios from 'axios';
 import Notiflix from 'notiflix';
 
 const Contact = () => {
-    useDocTitle('MLD | Molad e Konsult - Send us a message')
+    useDocTitle('Contact | Lawn Irrigation Technologies')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -75,143 +75,113 @@ const Contact = () => {
             
         });
     }
+    const inputClass = "w-full border border-gray-300 text-gray-900 mt-1 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow";
+    const labelClass = "block text-sm font-semibold text-gray-700 mb-1";
+
     return (
         <>
-            <div>
-                <NavBar />
-            </div>
-            <div id='contact' className="flex justify-center items-center mt-8 w-full bg-white py-12 lg:py-24 ">
-                <div className="container mx-auto my-8 px-4 lg:px-20" data-aos="zoom-in">
-
-                <form onSubmit={sendEmail}>
-
-                    <div className="w-full bg-white p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
-                        <div className="flex">
-                            <h1 className="font-bold text-center lg:text-left text-blue-900 uppercase text-4xl">Send us a message</h1>
-                        </div>
-                        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
-                                <div>
-                                    <input 
-                                        name="first_name" 
-                                        className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                                        type="text" 
-                                        placeholder="First Name*" 
-                                        value={firstName}
-                                        onChange={(e)=> setFirstName(e.target.value)}
-                                        onKeyUp={clearErrors}
-                                    />
-                                    {errors && 
-                                        <p className="text-red-500 text-sm">{errors.first_name}</p>
-                                    }
-                                </div>
-                                
-                                <div>
-                                    <input 
-                                        name="last_name" 
-                                        className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                                        type="text" 
-                                        placeholder="Last Name*"
-                                        value={lastName}
-                                        onChange={(e)=> setLastName(e.target.value)}
-                                        onKeyUp={clearErrors}
-                                    />
-                                    {errors && 
-                                        <p className="text-red-500 text-sm">{errors.last_name}</p>
-                                    }
-                                </div>
-
-                                <div>
-                                    <input 
-                                        name="email"
-                                        className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                                        type="email" 
-                                        placeholder="Email*"
-                                        value={email}
-                                        onChange={(e)=> setEmail(e.target.value)}
-                                        onKeyUp={clearErrors}   
-                                    />
-                                    {errors && 
-                                        <p className="text-red-500 text-sm">{errors.email}</p>
-                                    }
-                                </div>
-
-                                <div>
-                                    <input
-                                        name="phone_number" 
-                                        className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                                        type="number" 
-                                        placeholder="Phone*"
-                                        value={phone}
-                                        onChange={(e)=> setPhone(e.target.value)}
-                                        onKeyUp={clearErrors}
-                                    />
-                                    {errors && 
-                                        <p className="text-red-500 text-sm">{errors.phone_number}</p>
-                                    }
-                                </div>
-                        </div>
-                        <div className="my-4">
-                            <textarea 
-                                name="message" 
-                                placeholder="Message*" 
-                                className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                                value={message}
-                                onChange={(e)=> setMessage(e.target.value)}
-                                onKeyUp={clearErrors}
-                            ></textarea>
-                            {errors && 
-                                <p className="text-red-500 text-sm">{errors.message}</p>
-                            }
-                        </div>
-                        <div className="my-2 w-1/2 lg:w-2/4">
-                            <button type="submit" id="submitBtn" className="uppercase text-sm font-bold tracking-wide bg-gray-500 hover:bg-blue-900 text-gray-100 p-3 rounded-lg w-full 
-                                    focus:outline-none focus:shadow-outline">
-                                Send Message
-                            </button>
-                        </div>
+            <div><NavBar /></div>
+            <div id='contact' className="min-h-screen bg-gray-50">
+                {/* Hero strip */}
+                <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-10 sm:py-14">
+                    <div className="m-auto max-w-4xl px-4 text-center">
+                        <p className="text-blue-200 text-sm font-semibold uppercase tracking-widest">Get in touch</p>
+                        <h1 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold">Contact us</h1>
+                        <p className="mt-2 text-blue-100 text-base sm:text-lg max-w-xl mx-auto">
+                            Have a project in mind? Send a message and we’ll get back to you.
+                        </p>
+                    </div>
                 </div>
-                </form>
-                        <div
-                            className="w-full  lg:-mt-96 lg:w-2/6 px-8 py-6 ml-auto bg-blue-900 rounded-2xl">
-                            <div className="flex flex-col text-white">
-                                
-                                <div className="flex my-4 w-2/3 lg:w-3/4">
-                                    <div className="flex flex-col">
-                                        <i className="fas fa-map-marker-alt pt-2 pr-2" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <h2 className="text-2xl">Office Address</h2>
-                                        <p className="text-gray-400">Ilo Awela, Ota, Ogun State</p>
-                                    </div>
-                                </div>
-                    
-                    <div className="flex my-4 w-2/3 lg:w-1/2">
-                        <div className="flex flex-col">
-                        <i className="fas fa-phone-alt pt-2 pr-2" />
-                        </div>
 
-                        <div className="flex flex-col">
-                        <h2 className="text-2xl">Call Us</h2>
-                        <p className="text-gray-400">Tel: 08055384406</p>
-                        
-                            <div className='mt-5'>
-                                <h2 className="text-2xl">Send an E-mail</h2>
-                                <p className="text-gray-400">info@mld.ng</p>
+                <div className="m-auto max-w-6xl px-3 sm:px-4 lg:px-8 -mt-6 relative z-10 pb-16">
+                    <div className="grid lg:grid-cols-[1fr,22rem] gap-6 lg:gap-10 items-start" data-aos="fade-up">
+                        {/* Form card */}
+                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                            <div className="border-l-4 border-blue-900 bg-blue-50/50 px-5 py-4">
+                                <h2 className="text-xl font-bold text-blue-900">Send a message</h2>
+                                <p className="text-sm text-gray-600 mt-0.5">We usually respond within 24 hours.</p>
                             </div>
-                       
+                            <form onSubmit={sendEmail} className="p-5 sm:p-6 md:p-8">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                                    <div>
+                                        <label htmlFor="contact-first" className={labelClass}>First name *</label>
+                                        <input id="contact-first" name="first_name" type="text" placeholder="e.g. John" value={firstName} onChange={(e) => setFirstName(e.target.value)} onKeyUp={clearErrors} className={inputClass} />
+                                        {errors && <p className="text-red-500 text-sm mt-1">{errors.first_name}</p>}
+                                    </div>
+                                    <div>
+                                        <label htmlFor="contact-last" className={labelClass}>Last name *</label>
+                                        <input id="contact-last" name="last_name" type="text" placeholder="e.g. Doe" value={lastName} onChange={(e) => setLastName(e.target.value)} onKeyUp={clearErrors} className={inputClass} />
+                                        {errors && <p className="text-red-500 text-sm mt-1">{errors.last_name}</p>}
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mt-4">
+                                    <div>
+                                        <label htmlFor="contact-email" className={labelClass}>Email *</label>
+                                        <input id="contact-email" name="email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} onKeyUp={clearErrors} className={inputClass} />
+                                        {errors && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                                    </div>
+                                    <div>
+                                        <label htmlFor="contact-phone" className={labelClass}>Phone *</label>
+                                        <input id="contact-phone" name="phone_number" type="tel" placeholder="e.g. +260 966 897 354" value={phone} onChange={(e) => setPhone(e.target.value)} onKeyUp={clearErrors} className={inputClass} />
+                                        {errors && <p className="text-red-500 text-sm mt-1">{errors.phone_number}</p>}
+                                    </div>
+                                </div>
+                                <div className="mt-4">
+                                    <label htmlFor="contact-message" className={labelClass}>Message *</label>
+                                    <textarea id="contact-message" name="message" rows={5} placeholder="Tell us about your project or question..." value={message} onChange={(e) => setMessage(e.target.value)} onKeyUp={clearErrors} className={inputClass} />
+                                    {errors && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+                                </div>
+                                <div className="mt-6">
+                                    <button type="submit" id="submitBtn" className="w-full sm:w-auto min-w-[180px] px-6 py-3.5 rounded-xl font-bold text-white bg-blue-900 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors shadow-lg">
+                                        Send message
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        {/* Sidebar: contact info + map */}
+                        <div className="lg:sticky lg:top-28 space-y-4">
+                            <div className="bg-blue-900 rounded-2xl shadow-xl p-5 sm:p-6 text-white">
+                                <h2 className="text-lg font-bold mb-4 pb-2 border-b border-blue-700">Contact information</h2>
+                                <div className="space-y-4">
+                                    <div className="flex gap-3">
+                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-blue-800 flex items-center justify-center text-blue-200">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                        </span>
+                                        <div>
+                                            <h3 className="font-semibold text-white">Address</h3>
+                                            <p className="text-blue-200 text-sm mt-0.5">Plot 70, Handsworth,<br />Great East Road, Lusaka, Zambia.</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-3">
+                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-blue-800 flex items-center justify-center text-blue-200">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                        </span>
+                                        <div>
+                                            <h3 className="font-semibold text-white">Phone</h3>
+                                            <a href="tel:+260966897354" className="text-blue-200 text-sm mt-0.5 hover:text-white">+260 966 897 354</a>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-3">
+                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-blue-800 flex items-center justify-center text-blue-200">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                        </span>
+                                        <div>
+                                            <h3 className="font-semibold text-white">Email</h3>
+                                            <a href="mailto:lawnirrigationtech@gmail.com" className="text-blue-200 text-sm mt-0.5 hover:text-white block">lawnirrigationtech@gmail.com</a>
+                                            <a href="mailto:geomulenga@gmail.com" className="text-blue-200 text-sm hover:text-white block">geomulenga@gmail.com</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-5 pt-4 border-t border-blue-700">
+                                    <p className="text-blue-200 text-sm italic">"Easy Life With Modern Technology"</p>
+                                </div>
+                            </div>
+                            <div className="rounded-xl overflow-hidden border border-gray-200 shadow-lg h-48 sm:h-56">
+                                <iframe title="Lawn Irrigation Technologies location" src={`https://www.google.com/maps?q=${encodeURIComponent('Plot 70, Handsworth, Great East Road, Lusaka, Zambia')}&z=15&output=embed`} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-full" />
+                            </div>
                         </div>
                     </div>
-                    
-                    <div className="flex my-4 w-2/3 lg:w-1/2">
-                        <a href="https://www.facebook.com/ENLIGHTENEERING/" target="_blank" rel="noreferrer" className="rounded-full flex justify-center bg-white h-8 text-blue-900  w-8  mx-1 text-center pt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='fill-current font-black hover:animate-pulse'><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"></path></svg>
-                        </a>
-                        <a href="https://www.linkedin.com/company/enlighteneering-inc-" target="_blank" rel="noreferrer" className="rounded-full flex justify-center bg-white h-8 text-blue-900  w-8  mx-1 text-center pt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='fill-current font-black hover:animate-pulse'><circle cx="4.983" cy="5.009" r="2.188"></circle><path d="M9.237 8.855v12.139h3.769v-6.003c0-1.584.298-3.118 2.262-3.118 1.937 0 1.961 1.811 1.961 3.218v5.904H21v-6.657c0-3.27-.704-5.783-4.526-5.783-1.835 0-3.065 1.007-3.568 1.96h-.051v-1.66H9.237zm-6.142 0H6.87v12.139H3.095z"></path></svg>
-                        </a>
-                    </div>
-                    </div>
-                </div>
                 </div>
             </div>
             <Footer />

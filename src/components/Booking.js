@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { jsPDF } from 'jspdf';
 
 const BOOKING_EVENT = 'open-booking';
 
@@ -95,67 +96,77 @@ const Booking = () => {
     setReceipt(null);
   };
 
-  const getReceiptHtml = () => {
-    if (!receipt) return '';
+  const handleDownloadReceipt = () => {
+    if (!receipt) return;
     const paidDate = new Date(receipt.paidAt || receipt.date);
     const dateStr = paidDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     const timeStr = paidDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     const preferredDateStr = receipt.date ? new Date(receipt.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '-';
-    return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Payment Receipt - ${receipt.transactionId}</title>
-  <style>
-    body { font-family: 'Segoe UI', system-ui, sans-serif; max-width: 400px; margin: 2rem auto; padding: 1.5rem; color: #111; }
-    .header { border-bottom: 2px solid #0F4C75; padding-bottom: 0.75rem; margin-bottom: 1rem; }
-    .company { font-size: 1.25rem; font-weight: 700; color: #0F4C75; }
-    .title { font-size: 0.9rem; color: #666; margin-top: 0.25rem; }
-    .meta { font-size: 0.85rem; color: #555; margin-bottom: 1rem; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    tr:not(:last-child) td { border-bottom: 1px solid #eee; padding: 0.4rem 0; }
-    .label { color: #666; }
-    .total { font-weight: 700; font-size: 1.1rem; padding-top: 0.5rem; }
-    .status { display: inline-block; background: #22A06B; color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; margin-top: 1rem; }
-    .footer { margin-top: 1.5rem; font-size: 0.8rem; color: #888; }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <div class="company">${COMPANY_NAME}</div>
-    <div class="title">PAYMENT RECEIPT</div>
-  </div>
-  <div class="meta">
-    Transaction ID: <strong>${receipt.transactionId}</strong><br>
-    Paid: ${dateStr} at ${timeStr}
-  </div>
-  <table>
-    <tr><td class="label">Customer</td><td>${receipt.name}</td></tr>
-    <tr><td class="label">Email</td><td>${receipt.email}</td></tr>
-    <tr><td class="label">Service</td><td>${receipt.serviceLabel}</td></tr>
-    <tr><td class="label">Preferred date</td><td>${preferredDateStr}</td></tr>
-    <tr><td class="label">Payment method</td><td>${receipt.paymentMethod === 'card' ? 'Credit / Debit Card' : 'Mobile Money'}</td></tr>
-    <tr><td class="label">Payer</td><td>${receipt.payerName}</td></tr>
-    <tr class="total"><td>Amount paid</td><td>ZMW ${Number(receipt.amount).toLocaleString('en-ZM', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td></tr>
-  </table>
-  <div class="status">PAID</div>
-  <div class="footer">Thank you for your booking. We will contact you shortly regarding next steps.</div>
-</body>
-</html>`;
-  };
+    const amountStr = Number(receipt.amount).toLocaleString('en-ZM', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const paymentMethodStr = receipt.paymentMethod === 'card' ? 'Credit / Debit Card' : 'Mobile Money';
 
-  const handleDownloadReceipt = () => {
-    if (!receipt) return;
-    const html = getReceiptHtml();
-    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `Lawn-Irrigation-Receipt-${receipt.transactionId}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    const doc = new jsPDF({ format: 'a4', unit: 'mm' });
+    const pageW = doc.internal.pageSize.getWidth();
+    let y = 20;
+
+    // Header block
+    doc.setFillColor(15, 76, 117); // blue-900
+    doc.rect(0, 0, pageW, 32, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text(COMPANY_NAME, 14, 14);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text('PAYMENT RECEIPT', 14, 22);
+
+    y = 42;
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Transaction ID: ${receipt.transactionId}`, 14, y);
+    y += 6;
+    doc.text(`Paid: ${dateStr} at ${timeStr}`, 14, y);
+    y += 12;
+
+    const lineHeight = 7;
+    const rows = [
+      ['Customer', receipt.name],
+      ['Email', receipt.email],
+      ['Service', receipt.serviceLabel],
+      ['Preferred date', preferredDateStr],
+      ['Payment method', paymentMethodStr],
+      ['Payer', receipt.payerName],
+    ];
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    rows.forEach(([label, value]) => {
+      doc.setTextColor(100, 100, 100);
+      doc.text(`${label}:`, 14, y);
+      doc.setTextColor(0, 0, 0);
+      doc.text(String(value), 55, y);
+      y += lineHeight;
+    });
+    y += 4;
+    doc.setFont('helvetica', 'bold');
+    doc.text('Amount paid:', 14, y);
+    doc.text(`ZMW ${amountStr}`, 55, y);
+    y += 12;
+
+    doc.setFillColor(34, 160, 107); // green
+    doc.roundedRect(14, y, 24, 10, 2, 2, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('PAID', 20, y + 7);
+    y += 20;
+
+    doc.setTextColor(120, 120, 120);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.text('Thank you for your booking. We will contact you shortly regarding next steps.', 14, y, { maxWidth: pageW - 28 });
+
+    doc.save(`Lawn-Irrigation-Receipt-${receipt.transactionId}.pdf`);
   };
 
   return (
@@ -374,7 +385,7 @@ const Booking = () => {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
-                  Download receipt
+                  Download PDF receipt
                 </button>
                 <button type="button" onClick={handleClose} className="w-full text-white bg-blue-900 hover:bg-blue-800 font-semibold py-3 text-base rounded-xl shadow-lg transition-colors">
                   Done

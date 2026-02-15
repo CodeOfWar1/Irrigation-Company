@@ -5,19 +5,17 @@ import { Link } from 'react-router-dom';
 const Intro = () => {
     return (
         <>
-            <div className="m-auto max-w-6xl p-2 md:p-12 h-5/6" id='about' >
-
-                <div className="flex flex-col-reverse lg:flex-row py-8 justify-between items-stretch lg:text-left" data-aos="fade-up">
-                    <div className="lg:w-1/2 flex lg:mx-4 justify-center lg:justify-end mb-6 lg:mb-0">
+            <div className="m-auto max-w-6xl p-3 sm:p-4 md:p-8 lg:p-12 min-h-[50vh]" id='about'>
+                <div className="flex flex-col-reverse lg:flex-row py-6 sm:py-8 justify-between items-stretch lg:text-left" data-aos="fade-up">
+                    <div className="lg:w-1/2 flex lg:mx-4 justify-center lg:justify-end mb-4 sm:mb-6 lg:mb-0">
                         <img
                             alt="George Kabwe Mulenga"
-                            className="rounded-2xl shadow-xl object-cover h-72 w-56 lg:h-96 lg:w-72 border-4 border-white bg-gray-100"
+                            className="rounded-xl sm:rounded-2xl shadow-xl object-cover h-56 w-44 sm:h-72 sm:w-56 lg:h-96 lg:w-72 border-2 sm:border-4 border-white bg-gray-100"
                             src={img}
                         />
                     </div>
-                    <div className="flex flex-col justify-center my-4 text-center lg:text-left lg:my-0 w-full lg:w-1/2 px-8" data-aos="zoom-in" data-aos-delay="500">
-
-                        <h3 className="text-3xl text-blue-900 font-bold">
+                    <div className="flex flex-col justify-center my-3 sm:my-4 text-center lg:text-left lg:my-0 w-full lg:w-1/2 px-4 sm:px-6 md:px-8" data-aos="zoom-in" data-aos-delay="500">
+                        <h3 className="text-xl sm:text-2xl md:text-3xl text-blue-900 font-bold leading-tight">
                             About Us: George Kabwe Mulenga &amp; our irrigation practice
                         </h3>
 
