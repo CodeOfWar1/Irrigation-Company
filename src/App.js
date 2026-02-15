@@ -16,8 +16,9 @@ import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import CompanyProfile from './pages/CompanyProfile';
 
-import {useDocTitle} from './components/CustomHook';
+import { useDocTitle } from './components/CustomHook';
 import ScrollToTop from './components/ScrollToTop';
+import Booking from './components/Booking';
 
 function App() {
   useEffect(() => {
@@ -51,6 +52,7 @@ function App() {
             <Route path="/portfolio" element={<CompanyProfile />} />
           </Routes>
         </ScrollToTop>
+        <Booking />
       </Router>
     </>
   );

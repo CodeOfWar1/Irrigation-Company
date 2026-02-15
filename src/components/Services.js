@@ -1,10 +1,157 @@
-import React from 'react';
+import React, { useState } from 'react';
 import installationImg from '../images/Services/installation.jpg';
 import supplyImg from '../images/Services/Supply.jpg';
 import maintenanceImg from '../images/Services/maintance.webp';
 import consultationImg from '../images/Services/consultation.webp';
 
+const PROCESS_STEPS = [
+    {
+        id: 1,
+        title: 'Step 1: The Scientific Audit',
+        investment: 'ZMW 1,000',
+        sub: null,
+        icon: (
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+        ),
+        deliverables: ['On-site evaluation of soil texture and topography.', 'Measurement of water flow rates and static pressure.', 'Identification of hydro-zones and specific water needs.'],
+        timeline: 'Initial consultation on site. Cancellations < 24 hours or no-shows forfeit the fee.',
+        investmentDetail: 'ZMW 1,000 commitment fee. 100% deductible from the final installation cost.',
+    },
+    {
+        id: '2a',
+        title: 'Step 2 (Path A): Scoping — Standard residential',
+        investment: 'Complimentary',
+        investmentHighlight: true,
+        sub: 'For properties up to approximately 4,200 m².',
+        icon: (
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+        ),
+        deliverables: ['Complimentary preliminary quote based on more than 14 years of irrigation experience.'],
+        timeline: 'Prepared following completion of the scientific audit.',
+        investmentDetail: 'Complimentary (no charge).',
+    },
+    {
+        id: '2b',
+        title: 'Step 2 (Path B): Scoping — Estate & commercial',
+        investment: 'ZMW 3,000',
+        sub: 'For properties roughly between 4,200 m² and 10,000 m².',
+        icon: (
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+        ),
+        deliverables: ['Advanced hydraulic quantification.', 'Technical CAD blueprints for precise sprinkler placement.', 'Comprehensive installation guide.'],
+        timeline: 'Work starts after deposit; drafting begins immediately.',
+        investmentDetail: 'ZMW 3,000 (ZMW 1,500 deposit required to start). Arrangements for larger or more complex sites can be discussed separately.',
+    },
+    {
+        id: 3,
+        title: 'Step 3: 3D visualisation & CAD design',
+        investment: 'ZMW 4,000',
+        sub: 'Typically for properties up to around 4,200 m².',
+        icon: (
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2m0 10V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
+        ),
+        deliverables: ['Professional 3D landscape rendering.', 'Virtual walkthrough of the garden layout.', 'Full material list and high‑resolution renders.'],
+        timeline: 'Completed before any trenching or digging begins.',
+        investmentDetail: 'ZMW 4,000 for standard property sizes. Larger or more complex properties can be quoted individually.',
+    },
+    {
+        id: '4-5',
+        title: 'Steps 4 & 5: Precision installation & handover',
+        investment: 'from 25% of total material cost',
+        sub: null,
+        icon: (
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        ),
+        deliverables: ['Trenching, piping and sprinkler installation.', 'Smart setup of Wi‑Fi controllers and rain sensors.', 'Training on how to control the lawn from your phone.', 'Handover of a fully operational, precision‑engineered system.'],
+        timeline: 'Mobilisation after design approval and contract signing.',
+        investmentDetail: 'Typically from 25% of the total material cost. Detailed installation pricing is confirmed with your final design and bill of quantities.',
+    },
+];
+
+const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
+    const isLast = index === PROCESS_STEPS.length - 1;
+    return (
+        <div className="relative flex gap-4 md:gap-6">
+            {/* Timeline: circle + line */}
+            <div className="flex flex-col items-center shrink-0">
+                <button
+                    type="button"
+                    onClick={onToggle}
+                    className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 ${isExpanded ? 'bg-blue-900 ring-4 ring-blue-200 scale-105' : 'bg-blue-700 hover:bg-blue-800'
+                        }`}
+                    aria-expanded={isExpanded}
+                >
+                    {typeof step.id === 'number' ? step.id : step.id === '2a' ? '2A' : step.id === '2b' ? '2B' : '4-5'}
+                </button>
+                {!isLast && <div className="w-0.5 flex-1 min-h-[24px] bg-blue-200 my-1 rounded-full" />}
+            </div>
+
+            {/* Card */}
+            <div className="flex-1 min-w-0 pb-2">
+                <button
+                    type="button"
+                    onClick={onToggle}
+                    className={`w-full text-left rounded-2xl border-2 transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${isExpanded
+                            ? 'bg-white border-blue-900 shadow-xl shadow-blue-900/10'
+                            : 'bg-gray-50 border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md'
+                        }`}
+                >
+                    <div className="p-4 md:p-6 flex flex-wrap items-start justify-between gap-3">
+                        <div className="flex items-start gap-3 flex-1 min-w-0">
+                            <span className="text-blue-900 shrink-0 mt-0.5">{step.icon}</span>
+                            <div>
+                                <h3 className="text-lg md:text-xl font-bold text-blue-900 pr-8">{step.title}</h3>
+                                {step.sub && <p className="text-sm text-gray-500 mt-1">{step.sub}</p>}
+                                <p className="mt-2">
+                                    <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Investment: </span>
+                                    <span className={step.investmentHighlight ? 'text-green-700 font-semibold' : 'text-gray-800 font-semibold'}>{step.investment}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-blue-100' : 'bg-gray-200'}`}>
+                            <svg className="w-5 h-5 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </div>
+
+                    {isExpanded && (
+                        <div className="px-4 md:px-6 pb-5 md:pb-6 pt-0 border-t border-gray-100 animate-[fadeIn_0.25s_ease-out]">
+                            <div className="grid md:grid-cols-3 gap-6 pt-4 text-sm text-gray-700">
+                                <div className="bg-blue-50/50 rounded-xl p-4">
+                                    <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                                        <span className="w-6 h-6 rounded bg-blue-900 text-white flex items-center justify-center text-xs">1</span>
+                                        Deliverables
+                                    </h4>
+                                    <ul className="list-disc list-inside space-y-1">
+                                        {step.deliverables.map((item, i) => (
+                                            <li key={i}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="bg-gray-50 rounded-xl p-4">
+                                    <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                                        <span className="w-6 h-6 rounded bg-gray-600 text-white flex items-center justify-center text-xs">2</span>
+                                        Timeline
+                                    </h4>
+                                    <p>{step.timeline}</p>
+                                </div>
+                                <div className="bg-green-50/50 rounded-xl p-4">
+                                    <h4 className="font-bold text-green-900 mb-2 flex items-center gap-2">
+                                        <span className="w-6 h-6 rounded bg-green-700 text-white flex items-center justify-center text-xs">3</span>
+                                        Investment
+                                    </h4>
+                                    <p>{step.investmentDetail}</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </button>
+            </div>
+        </div>
+    );
+};
+
 const Services = () => {
+    const [expandedStep, setExpandedStep] = useState(0); // first step expanded by default
 
     return (
         <div id="services" className="bg-gray-100 py-12" >
@@ -34,9 +181,10 @@ const Services = () => {
                         <div className="bg-white transition-all ease-in-out duration-400  overflow-hidden text-gray-700 hover:bg-gray-500 hover:text-white rounded-lg shadow-2xl p-3 group">
                             <div className="m-2 text-justify text-sm">
                                 <img alt="Irrigation installation" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out w-full h-40 object-cover" src={installationImg} />
-                                <h2 className="font-semibold my-4 text-2xl text-center">System installation & commissioning</h2>
+                                <h2 className="font-semibold my-4 text-2xl text-center">Soil Engineering & Consulting</h2>
                                 <p className="text-md font-medium">
-                                    We design, install and commission complete irrigation systems for lawns, gardens, farms and commercial sites, calibrated for even coverage and efficient water use.
+                                    pH testing, nutrient analysis, and "Green-Lawn
+                                    Guarantee" based on soil types.
                                 </p>
                             </div>
                         </div>
@@ -44,9 +192,10 @@ const Services = () => {
                         <div className="bg-white transition-all ease-in-out duration-400  overflow-hidden text-gray-700 hover:bg-gray-500 hover:text-white rounded-lg shadow-2xl p-3 group">
                             <div className="m-2 text-justify text-sm">
                                 <img alt="Irrigation maintenance" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out w-full h-40 object-cover" src={maintenanceImg} />
-                                <h2 className="font-semibold my-4 text-2xl text-center ">Maintenance & repairs</h2>
+                                <h2 className="font-semibold my-4 text-2xl text-center ">Water-Tech & Irrigation</h2>
                                 <p className="text-md font-medium">
-                                    We provide scheduled maintenance, troubleshooting and repairs to keep existing irrigation systems running efficiently and extend the life of installed equipment.
+                                    Smart, automated, and solar-powered systems designed for
+                                    Zambian water pressures.
                                 </p>
                             </div>
                         </div>
@@ -54,9 +203,10 @@ const Services = () => {
                         <div className="bg-white transition-all ease-in-out duration-400  overflow-hidden text-gray-700 hover:bg-gray-500 hover:text-white rounded-lg shadow-2xl p-3 group">
                             <div className="m-2 text-justify text-sm">
                                 <img alt="Irrigation consultation" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out w-full h-40 object-cover" src={consultationImg} />
-                                <h2 className="font-semibold my-4 text-2xl text-center ">Design & consultation</h2>
+                                <h2 className="font-semibold my-4 text-2xl text-center ">3D Landscape Design & Development</h2>
                                 <p className="text-md font-medium">
-                                    We offer site assessments, system design and technical advice to help you choose the right irrigation solution for your lawns, gardens, sports fields or farms.
+                                    Professional visualization, spatial planning, and
+                                    "unqualified-proof" blueprints.
                                 </p>
                             </div>
                         </div>
@@ -98,204 +248,26 @@ const Services = () => {
 
             <section className="bg-white">
                 <div className="m-auto max-w-6xl px-4 md:px-8 py-12" data-aos="fade-up">
-                    <div className="mb-8 text-center">
-                        <h2 className="text-3xl text-blue-900 font-bold uppercase">The process</h2>
-                        <p className="mt-3 text-gray-600 font-semibold text-sm md:text-base">
-                            Detailed breakdown of the service pathway &mdash; from the initial scientific audit to final handover.
+                    <div className="mb-10 text-center">
+                        <h2 className="text-3xl md:text-4xl text-blue-900 font-bold uppercase tracking-tight">The process</h2>
+                        <div className="flex justify-center mt-3">
+                            <div className="w-20 border-b-4 border-blue-900 rounded-full" />
+                        </div>
+                        <p className="mt-4 text-gray-600 font-semibold text-base md:text-lg max-w-2xl mx-auto">
+                            From the initial scientific audit to final handover — click any step to view details.
                         </p>
                     </div>
 
-                    <div className="space-y-6">
-                        {/* Step 1 */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6 transition-all duration-300 hover:shadow-md hover:border-blue-200 hover:bg-blue-50/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:border-blue-200" tabIndex={0}>
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Step 1: The Scientific Audit
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-gray-800">ZMW 1,000</span>
-                                </span>
-                            </div>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <ul className="list-disc list-inside space-y-1">
-                                        <li>On-site evaluation of soil texture and topography.</li>
-                                        <li>Measurement of water flow rates and static pressure.</li>
-                                        <li>Identification of hydro-zones and specific water needs.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Initial consultation on site.</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Cancellations &lt; 24 hours or no-shows forfeit the fee.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>ZMW 1,000 commitment fee.</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        100% deductible from the final installation cost.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Step 2A */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6 transition-all duration-300 hover:shadow-md hover:border-blue-200 hover:bg-blue-50/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:border-blue-200" tabIndex={0}>
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Step 2 (Path A): Scoping &mdash; Standard residential
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-green-700">Complimentary</span>
-                                </span>
-                            </div>
-                            <p className="text-xs text-gray-500 mb-2">
-                                For properties up to approximately 4,200&nbsp;m².
-                            </p>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <p>
-                                        Complimentary preliminary quote based on more than 14 years of irrigation experience.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Prepared following completion of the scientific audit.</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>Complimentary (no charge).</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Step 2B */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6 transition-all duration-300 hover:shadow-md hover:border-blue-200 hover:bg-blue-50/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:border-blue-200" tabIndex={0}>
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Step 2 (Path B): Scoping &mdash; Estate &amp; commercial
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-gray-800">ZMW 3,000</span>
-                                </span>
-                            </div>
-                            <p className="text-xs text-gray-500 mb-2">
-                                For properties roughly between 4,200&nbsp;m² and 10,000&nbsp;m².
-                            </p>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <ul className="list-disc list-inside space-y-1">
-                                        <li>Advanced hydraulic quantification.</li>
-                                        <li>Technical CAD blueprints for precise sprinkler placement.</li>
-                                        <li>Comprehensive installation guide.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Work starts after deposit; drafting begins immediately.</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>ZMW 3,000 (ZMW 1,500 deposit required to start).</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Arrangements for larger or more complex sites can be discussed separately.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Step 3 */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6 transition-all duration-300 hover:shadow-md hover:border-blue-200 hover:bg-blue-50/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:border-blue-200" tabIndex={0}>
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Step 3: 3D visualisation &amp; CAD design
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-gray-800">ZMW 4,000</span>
-                                </span>
-                            </div>
-                            <p className="text-xs text-gray-500 mb-2">
-                                Typically for properties up to around 4,200&nbsp;m².
-                            </p>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <ul className="list-disc list-inside space-y-1">
-                                        <li>Professional 3D landscape rendering.</li>
-                                        <li>Virtual walkthrough of the garden layout.</li>
-                                        <li>Full material list and high‑resolution renders.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Completed before any trenching or digging begins.</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>ZMW 4,000 for standard property sizes.</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Larger or more complex properties can be quoted individually.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Step 4 & 5 */}
-                        <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6 transition-all duration-300 hover:shadow-md hover:border-blue-200 hover:bg-blue-50/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:border-blue-200" tabIndex={0}>
-                            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                                <h3 className="text-lg md:text-xl font-bold text-blue-900">
-                                    Steps 4 &amp; 5: Precision installation &amp; handover
-                                </h3>
-                                <span className="text-xs md:text-sm font-semibold text-gray-500">
-                                    Investment: <span className="text-gray-800">from 25% of total material cost</span>
-                                </span>
-                            </div>
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Deliverables</h4>
-                                    <ul className="list-disc list-inside space-y-1">
-                                        <li>Trenching, piping and sprinkler installation.</li>
-                                        <li>Smart setup of Wi‑Fi controllers and rain sensors.</li>
-                                        <li>Training on how to control the lawn from your phone.</li>
-                                        <li>Handover of a fully operational, precision‑engineered system.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Timeline</h4>
-                                    <p>Mobilisation after design approval and contract signing.</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Investment</h4>
-                                    <p>Typically from 25% of the total material cost.</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Detailed installation pricing is confirmed with your final design and bill of quantities.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="mt-8 border-t border-gray-200 pt-5 text-xs md:text-sm text-gray-600 space-y-2">
-                        <p>
-                            This standard service pathway caters to properties within roughly a 30&nbsp;km radius of Lusaka (transport included).
-                        </p>
-                        <p>
-                            For large‑scale designs (Path B), design fees must be settled in full before technical blueprints and renders are released.
-                        </p>
-                        <p>
-                            For properties beyond this scope or with specialised requirements, a tailored solution can be arranged.
-                        </p>
-                        <p>
-                            Optional maintenance service contracts are available for seasonal filter cleaning, nozzle adjustments and performance checks.
-                        </p>
-                        <p className="mt-3 font-semibold text-gray-700">
-                            George Mulenga &mdash; Irrigation Specialist (MEng Agric student, BSc Agric Soil, Dip Eng Agric)
-                        </p>
+                    <div className="space-y-2">
+                        {PROCESS_STEPS.map((step, index) => (
+                            <ProcessStepCard
+                                key={step.id}
+                                step={step}
+                                index={index}
+                                isExpanded={expandedStep === index}
+                                onToggle={() => setExpandedStep((prev) => (prev === index ? -1 : index))}
+                            />
+                        ))}
                     </div>
                 </div>
             </section>

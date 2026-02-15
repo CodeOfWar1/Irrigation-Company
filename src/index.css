@@ -4,6 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
+html {
+  font-size: 18px;
+}
+
 body {
   margin: 0;
   font-family: 'Lato', sans-serif;
@@ -21,4 +25,16 @@ body {
 
 .cta {
   background: linear-gradient(rgba(2, 2, 2, .7), rgba(0, 0, 0, .7)), url(./images/background.webp) fixed center center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

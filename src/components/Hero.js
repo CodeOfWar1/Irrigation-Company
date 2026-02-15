@@ -70,12 +70,13 @@ const Hero = () => {
                                     Learn More
                                 </Link>
 
-                                <a
-                                    href="#booking"
+                                <button
+                                    type="button"
+                                    onClick={() => window.dispatchEvent(new CustomEvent('open-booking'))}
                                     className="text-blue-900 bg-white hover:bg-gray-100 inline-flex items-center justify-center px-8 py-3 my-2 text-lg shadow-md rounded-2xl border border-blue-100"
                                 >
                                     Book a Project
-                                </a>
+                                </button>
 
                             </div>
 

@@ -5,18 +5,15 @@ import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Portfolio from '../components/Portfolio';
 import Services from '../components/Services';
-import Booking from '../components/Booking';
-
 
 const Home = () => {
     return (
         <>
             <Hero />
             <Services />
-            <Booking />
             <Portfolio />
             <Clients />
-            <Cta/>
+            <Cta />
             <Footer />
         </>
 
