@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+images/raw/
+*.tiff
+*.psd
+*.ai
+*.raw
+
+src/images/
+
+
