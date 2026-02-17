@@ -3,7 +3,6 @@ import NavBar from '../components/Navbar/NavBar';
 import Footer from '../components/Footer';
 import {useDocTitle} from '../components/CustomHook';
 import axios from 'axios';
-// import emailjs from 'emailjs-com';
 import Notiflix from 'notiflix';
 
 const Contact = () => {
@@ -146,7 +145,7 @@ const Contact = () => {
                                 <div className="space-y-4">
                                     <div className="flex gap-3">
                                         <span className="shrink-0 w-10 h-10 rounded-xl bg-green-800 flex items-center justify-center text-green-200">
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                         </span>
                                         <div>
                                             <h3 className="font-semibold text-white">Address</h3>
@@ -192,3 +191,4 @@ const Contact = () => {
 }
 
 export default Contact;
+

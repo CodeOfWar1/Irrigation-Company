@@ -28,3 +28,4 @@ const StatsBar = () => {
 };
 
 export default StatsBar;
+

@@ -1,14 +1,14 @@
 /**
  * Portfolio projects built from WEB SITE PICS subfolders.
  * Each top-level subfolder and each subfolder under "Residencial areas" is one project.
+ *
+ * Vite: use import.meta.glob instead of require.context.
  */
-const ctx = require.context(
-  '../images/WEB SITE PICS',
-  true,
-  /\.(jpg|jpeg|png|webp)$/i
-);
+const imageModules = import.meta.glob('../images/WEB SITE PICS/**/*.{jpg,jpeg,png,webp}', {
+  eager: true,
+});
 
-const keys = ctx.keys();
+const keys = Object.keys(imageModules);
 
 function slugify(text) {
   return text
@@ -19,11 +19,18 @@ function slugify(text) {
 }
 
 function getProjectKey(path) {
-  const parts = path.slice(2).split('/').filter(Boolean);
-  if (parts[0] === 'Residencial areas' && parts.length >= 2) {
-    return parts.slice(0, 2).join('/');
+  // path is a full relative path like "../images/WEB SITE PICS/FOLDER/file.jpg"
+  const withoutPrefix = path.replace(/^\.{0,2}\//, '');
+  const parts = withoutPrefix.split('/').filter(Boolean);
+  // parts example:
+  // ["images","WEB SITE PICS","Some Project","image.jpg"]
+  const startIndex = parts.indexOf('WEB SITE PICS') + 1;
+  const projectParts = parts.slice(startIndex);
+
+  if (projectParts[0] === 'Residencial areas' && projectParts.length >= 2) {
+    return projectParts.slice(0, 2).join('/');
   }
-  return parts[0] || '';
+  return projectParts[0] || '';
 }
 
 function getDisplayName(folderKey) {
@@ -38,7 +45,10 @@ keys.forEach((key) => {
   const folderKey = getProjectKey(key);
   if (!folderKey) return;
   if (!byFolder[folderKey]) byFolder[folderKey] = [];
-  byFolder[folderKey].push(ctx(key));
+  const mod = imageModules[key];
+  // Vite's eager glob returns either the URL string as default export or the URL directly
+  const src = typeof mod === 'string' ? mod : mod.default || mod;
+  byFolder[folderKey].push(src);
 });
 
 const isResidential = (folderKey) => folderKey.startsWith('Residencial areas');
