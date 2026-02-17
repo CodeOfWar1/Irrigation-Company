@@ -5,11 +5,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 :root {
-  /* Brand color palette - matches logo */
-  --color-brand-blue: #0F4C75;
-  --color-brand-blue-light: #145E8A;
-  --color-brand-green: #22A06B;
-  --color-brand-green-soft: #2F9E44;
+  /* Brand color palette - Green theme */
+  --color-brand-primary: #166D44;
+  --color-brand-primary-light: #1A7E51;
+  --color-brand-primary-dark: #125C37;
+  --color-brand-secondary: #22A06B;
+  --color-brand-secondary-light: #47AF73;
   --color-brand-accent: #F2C94C;
 }
 
@@ -47,4 +48,213 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 3D Animations */
+@keyframes float3d {
+  0%, 100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(2deg) rotateY(-2deg);
+  }
+}
+
+@keyframes slideIn3d {
+  from {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(10deg) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) translateY(0);
+  }
+}
+
+@keyframes rotate3d {
+  from {
+    transform: perspective(1000px) rotateY(-15deg) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 3D Card hover effect */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+.card-3d:hover {
+  transform: perspective(1000px) rotateY(8deg) rotateX(-3deg) translateY(-12px) scale(1.03);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(34, 197, 94, 0.15), 0 0 30px rgba(34, 197, 94, 0.1);
+}
+
+/* Enhanced 3D effect for portfolio cards */
+#projects .card-3d {
+  position: relative;
+}
+
+#projects .card-3d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  opacity: 0;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#projects .card-3d:hover::before {
+  opacity: 1;
+}
+
+/* 3D Button effect */
+.btn-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+  position: relative;
+}
+
+.btn-3d:hover {
+  transform: perspective(1000px) rotateX(8deg) translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-3d:active {
+  transform: perspective(1000px) rotateX(2deg) translateY(1px) scale(0.98);
+}
+
+/* 3D Image tilt effect */
+.img-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+.card-3d:hover .img-3d {
+  transform: perspective(1000px) rotateY(-2deg) rotateX(2deg) scale(1.08);
+}
+
+/* Hero 3D Background Animation */
+.hero-3d-bg {
+  animation: heroFloat3d 30s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Smooth 3D transition during image changes */
+.hero-3d-bg[style*="opacity: 1"], .hero-3d-bg[style*="opacity:1"] {
+  animation: heroFloat3d 30s ease-in-out infinite, heroSmoothTransition 3s ease-in-out;
+}
+
+@keyframes heroFloat3d {
+  0%, 100% {
+    transform: perspective(2000px) rotateY(0deg) rotateX(0deg) scale(1) translateZ(0);
+  }
+  20% {
+    transform: perspective(2000px) rotateY(2deg) rotateX(1deg) scale(1.04) translateZ(15px);
+  }
+  40% {
+    transform: perspective(2000px) rotateY(-1.5deg) rotateX(-0.5deg) scale(1.06) translateZ(25px);
+  }
+  60% {
+    transform: perspective(2000px) rotateY(1.5deg) rotateX(0.5deg) scale(1.05) translateZ(20px);
+  }
+  80% {
+    transform: perspective(2000px) rotateY(-1deg) rotateX(0deg) scale(1.04) translateZ(18px);
+  }
+}
+
+@keyframes heroSmoothTransition {
+  0% {
+    transform: perspective(2000px) rotateY(0deg) rotateX(0deg) scale(1) translateZ(0);
+  }
+  50% {
+    transform: perspective(2000px) rotateY(1deg) rotateX(0.5deg) scale(1.02) translateZ(10px);
+  }
+  100% {
+    transform: perspective(2000px) rotateY(0deg) rotateX(0deg) scale(1) translateZ(0);
+  }
+}
+
+/* Portfolio Image 3D Animation */
+.portfolio-3d-img {
+  animation: portfolioFloat3d 25s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes portfolioFloat3d {
+  0%, 100% {
+    transform: perspective(1500px) rotateY(0deg) rotateX(0deg) scale(1) translateZ(0);
+  }
+  25% {
+    transform: perspective(1500px) rotateY(1.5deg) rotateX(0.5deg) scale(1.03) translateZ(12px);
+  }
+  50% {
+    transform: perspective(1500px) rotateY(-1deg) rotateX(-0.5deg) scale(1.05) translateZ(20px);
+  }
+  75% {
+    transform: perspective(1500px) rotateY(1deg) rotateX(0.5deg) scale(1.03) translateZ(15px);
+  }
+}
+
+/* Card Zoom Animation (instead of tilt) */
+.card-zoom {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+  will-change: transform;
+}
+
+.card-zoom:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(34, 197, 94, 0.15);
+}
+
+.card-img-zoom {
+  transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+.card-zoom:hover .card-img-zoom {
+  transform: scale(1.15);
+}
+
+/* Floating animation */
+.float-3d {
+  animation: float3d 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Add perspective to grid containers for better 3D effect */
+.grid {
+  perspective: 1200px;
+}
+
+/* Entrance animation with 3D */
+.animate-slide-in-3d {
+  animation: slideIn3d 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-rotate-3d {
+  animation: rotate3d 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }

@@ -171,11 +171,11 @@ const Booking = () => {
 
   return (
     <>
-      <div id="booking" className="fixed bottom-6 right-6 z-50" aria-hidden={open}>
+      <div id="booking" className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50" aria-hidden={open}>
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white font-bold shadow-xl rounded-full px-5 py-3 text-base transition-all hover:scale-105"
+          className="flex items-center gap-2 bg-green-900 hover:bg-green-800 text-white font-bold shadow-xl rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base transition-all hover:scale-105 active:scale-100"
           aria-label="Open booking form"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -202,7 +202,7 @@ const Booking = () => {
         aria-labelledby="booking-panel-title"
         role="dialog"
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-blue-900 text-white">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-green-900 text-white">
           <h2 id="booking-panel-title" className="text-lg font-bold">
             Book a project
           </h2>
@@ -226,13 +226,13 @@ const Booking = () => {
           {step !== 3 && (
             <div className="flex items-center justify-center mb-6 space-x-4 text-sm font-semibold">
               <div className="flex items-center">
-                <span className={`w-7 h-7 rounded-full flex items-center justify-center mr-2 ${step === 1 ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-900'}`}>1</span>
-                <span className={step === 1 ? 'text-blue-900' : 'text-gray-500'}>Details</span>
+                <span className={`w-7 h-7 rounded-full flex items-center justify-center mr-2 ${step === 1 ? 'bg-green-900 text-white' : 'bg-green-100 text-green-900'}`}>1</span>
+                <span className={step === 1 ? 'text-green-900' : 'text-gray-500'}>Details</span>
               </div>
               <div className="w-8 h-px bg-gray-300" />
               <div className="flex items-center">
-                <span className={`w-7 h-7 rounded-full flex items-center justify-center mr-2 ${step === 2 ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-900'}`}>2</span>
-                <span className={step === 2 ? 'text-blue-900' : 'text-gray-500'}>Payment</span>
+                <span className={`w-7 h-7 rounded-full flex items-center justify-center mr-2 ${step === 2 ? 'bg-green-900 text-white' : 'bg-green-100 text-green-900'}`}>2</span>
+                <span className={step === 2 ? 'text-green-900' : 'text-gray-500'}>Payment</span>
               </div>
             </div>
           )}
@@ -241,15 +241,15 @@ const Booking = () => {
             <form onSubmit={handleBookingSubmit} className="space-y-4">
               <div>
                 <label className="block text-base font-semibold text-gray-700 mb-1">Full name<span className="text-red-500">*</span></label>
-                <input type="text" name="name" value={formValues.name} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="John Doe" required />
+                <input type="text" name="name" value={formValues.name} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="John Doe" required />
               </div>
               <div>
                 <label className="block text-base font-semibold text-gray-700 mb-1">Email<span className="text-red-500">*</span></label>
-                <input type="email" name="email" value={formValues.email} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="you@example.com" required />
+                <input type="email" name="email" value={formValues.email} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="you@example.com" required />
               </div>
               <div>
                 <label className="block text-base font-semibold text-gray-700 mb-1">Service<span className="text-red-500">*</span></label>
-                <select name="service" value={formValues.service} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <select name="service" value={formValues.service} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500" required>
                   <option value="">Select a service</option>
                   <option value="irrigation-design">Irrigation design & consultancy</option>
                   <option value="installation">Installation & supply</option>
@@ -258,14 +258,14 @@ const Booking = () => {
               </div>
               <div>
                 <label className="block text-base font-semibold text-gray-700 mb-1">Preferred date<span className="text-red-500">*</span></label>
-                <input type="date" name="date" value={formValues.date} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                <input type="date" name="date" value={formValues.date} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500" required />
               </div>
               <div>
                 <label className="block text-base font-semibold text-gray-700 mb-1">Project summary / notes</label>
-                <textarea name="notes" rows="3" value={formValues.notes} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Brief project description..." />
+                <textarea name="notes" rows="3" value={formValues.notes} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Brief project description..." />
               </div>
               {statusMessage && <p className="text-base text-red-600">{statusMessage}</p>}
-              <button type="submit" className="w-full text-white bg-blue-900 hover:bg-blue-800 font-semibold py-3 text-base rounded-xl shadow-lg">
+              <button type="submit" className="w-full text-white bg-green-900 hover:bg-green-800 font-semibold py-3 text-base rounded-xl shadow-lg">
                 Continue to payment →
               </button>
             </form>
@@ -285,12 +285,12 @@ const Booking = () => {
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Payment method</p>
                 <div className="grid grid-cols-2 gap-2">
-                  <label className={`flex items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-colors ${formValues.paymentMethod === 'card' ? 'border-blue-900 bg-blue-50' : 'border-gray-200 hover:border-gray-300'}`}>
+                  <label className={`flex items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-colors ${formValues.paymentMethod === 'card' ? 'border-green-900 bg-green-50' : 'border-gray-200 hover:border-gray-300'}`}>
                     <input type="radio" name="paymentMethod" value="card" checked={formValues.paymentMethod === 'card'} onChange={handleChange} className="sr-only" />
                     <span className="text-lg">💳</span>
                     <span className="text-sm font-medium text-gray-800">Card</span>
                   </label>
-                  <label className={`flex items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-colors ${formValues.paymentMethod === 'mobile-money' ? 'border-blue-900 bg-blue-50' : 'border-gray-200 hover:border-gray-300'}`}>
+                  <label className={`flex items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-colors ${formValues.paymentMethod === 'mobile-money' ? 'border-green-900 bg-green-50' : 'border-gray-200 hover:border-gray-300'}`}>
                     <input type="radio" name="paymentMethod" value="mobile-money" checked={formValues.paymentMethod === 'mobile-money'} onChange={handleChange} className="sr-only" />
                     <span className="text-lg">📱</span>
                     <span className="text-sm font-medium text-gray-800">Mobile Money</span>
@@ -301,13 +301,13 @@ const Booking = () => {
               <div className="rounded-xl border border-gray-200 p-4 space-y-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Name on card / account</label>
-                  <input type="text" name="payerName" value={formValues.payerName} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="As it appears on card or account" />
+                  <input type="text" name="payerName" value={formValues.payerName} onChange={handleChange} className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="As it appears on card or account" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Amount (ZMW)</label>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">K</span>
-                    <input type="number" name="amount" value={formValues.amount} onChange={handleChange} min="1" step="0.01" className="w-full pl-8 pr-4 py-2.5 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="0.00" />
+                    <input type="number" name="amount" value={formValues.amount} onChange={handleChange} min="1" step="0.01" className="w-full pl-8 pr-4 py-2.5 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="0.00" />
                   </div>
                 </div>
               </div>
@@ -322,10 +322,10 @@ const Booking = () => {
               {statusMessage && <p className="text-base text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{statusMessage}</p>}
 
               <div className="flex gap-3 pt-1">
-                <button type="button" onClick={() => { setStep(1); setStatusMessage(''); }} className="flex-1 text-blue-900 border-2 border-blue-200 hover:bg-blue-50 font-semibold py-3 text-base rounded-xl transition-colors">
+                <button type="button" onClick={() => { setStep(1); setStatusMessage(''); }} className="flex-1 text-green-900 border-2 border-green-200 hover:bg-green-50 font-semibold py-3 text-base rounded-xl transition-colors">
                   Back
                 </button>
-                <button type="submit" disabled={isSubmitting} className="flex-1 text-white bg-blue-900 hover:bg-blue-800 disabled:opacity-70 disabled:cursor-not-allowed font-semibold py-3 text-base rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2">
+                <button type="submit" disabled={isSubmitting} className="flex-1 text-white bg-green-900 hover:bg-green-800 disabled:opacity-70 disabled:cursor-not-allowed font-semibold py-3 text-base rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2">
                   {isSubmitting ? (
                     <>
                       <svg className="animate-spin w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
@@ -355,10 +355,10 @@ const Booking = () => {
               </div>
 
               <div className="rounded-xl border-2 border-gray-200 overflow-hidden">
-                <div className="bg-blue-900 text-white px-4 py-3">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">Payment receipt</p>
+                <div className="bg-green-900 text-white px-4 py-3">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-green-200">Payment receipt</p>
                   <p className="font-mono font-bold text-lg tracking-tight">{receipt.transactionId}</p>
-                  <p className="text-sm text-blue-200 mt-0.5">
+                  <p className="text-sm text-green-200 mt-0.5">
                     {new Date(receipt.paidAt || receipt.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -368,7 +368,7 @@ const Booking = () => {
                   <div className="flex justify-between text-gray-600"><span>Payment method</span><span className="text-gray-900 font-medium">{receipt.paymentMethod === 'card' ? 'Card' : 'Mobile Money'}</span></div>
                   <div className="border-t border-gray-200 pt-3 mt-3 flex justify-between">
                     <span className="font-semibold text-gray-900">Amount paid</span>
-                    <span className="font-bold text-lg text-blue-900">ZMW {Number(receipt.amount).toLocaleString('en-ZM', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className="font-bold text-lg text-green-900">ZMW {Number(receipt.amount).toLocaleString('en-ZM', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                 </div>
                 <div className="px-4 py-2 bg-gray-50 border-t border-gray-200">
@@ -381,13 +381,13 @@ const Booking = () => {
               <p className="text-sm text-gray-500 text-center">We will contact you at <strong className="text-gray-700">{receipt.email}</strong> regarding next steps.</p>
 
               <div className="flex flex-col gap-2">
-                <button type="button" onClick={handleDownloadReceipt} className="w-full flex items-center justify-center gap-2 text-blue-900 border-2 border-blue-900 hover:bg-blue-50 font-semibold py-3 text-base rounded-xl transition-colors">
+                <button type="button" onClick={handleDownloadReceipt} className="w-full flex items-center justify-center gap-2 text-green-900 border-2 border-green-900 hover:bg-green-50 font-semibold py-3 text-base rounded-xl transition-colors">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
                   Download PDF receipt
                 </button>
-                <button type="button" onClick={handleClose} className="w-full text-white bg-blue-900 hover:bg-blue-800 font-semibold py-3 text-base rounded-xl shadow-lg transition-colors">
+                <button type="button" onClick={handleClose} className="w-full text-white bg-green-900 hover:bg-green-800 font-semibold py-3 text-base rounded-xl shadow-lg transition-colors">
                   Done
                 </button>
               </div>

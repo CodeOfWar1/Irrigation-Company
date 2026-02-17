@@ -13,8 +13,8 @@ const StatsBar = () => {
       <div className="m-auto max-w-6xl px-4 sm:px-6 md:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {STATS.map((stat, i) => (
-            <div key={i} className="text-center">
-              <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight">
+            <div key={i} className="text-center float-3d" style={{ animationDelay: `${i * 0.2}s` }}>
+              <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-green-900 tracking-tight">
                 {stat.value}
               </p>
               <p className="mt-1 text-sm sm:text-base font-semibold text-gray-800">{stat.label}</p>

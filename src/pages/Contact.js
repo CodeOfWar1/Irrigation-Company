@@ -75,7 +75,7 @@ const Contact = () => {
             
         });
     }
-    const inputClass = "w-full border border-gray-300 text-gray-900 mt-1 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow";
+    const inputClass = "w-full border border-gray-300 text-gray-900 mt-1 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-shadow";
     const labelClass = "block text-sm font-semibold text-gray-700 mb-1";
 
     return (
@@ -83,11 +83,11 @@ const Contact = () => {
             <div><NavBar /></div>
             <div id='contact' className="min-h-screen bg-gray-50">
                 {/* Hero strip */}
-                <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-10 sm:py-14">
+                <div className="bg-gradient-to-br from-green-900 via-green-800 to-green-800 text-white py-10 sm:py-14">
                     <div className="m-auto max-w-4xl px-4 text-center">
-                        <p className="text-blue-200 text-sm font-semibold uppercase tracking-widest">Get in touch</p>
+                        <p className="text-green-200 text-sm font-semibold uppercase tracking-widest">Get in touch</p>
                         <h1 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold">Contact us</h1>
-                        <p className="mt-2 text-blue-100 text-base sm:text-lg max-w-xl mx-auto">
+                        <p className="mt-2 text-green-100 text-base sm:text-lg max-w-xl mx-auto">
                             Have a project in mind? Send a message and we’ll get back to you.
                         </p>
                     </div>
@@ -97,8 +97,8 @@ const Contact = () => {
                     <div className="grid lg:grid-cols-[1fr,22rem] gap-6 lg:gap-10 items-start" data-aos="fade-up">
                         {/* Form card */}
                         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                            <div className="border-l-4 border-blue-900 bg-blue-50/50 px-5 py-4">
-                                <h2 className="text-xl font-bold text-blue-900">Send a message</h2>
+                            <div className="border-l-4 border-green-900 bg-green-50/50 px-5 py-4">
+                                <h2 className="text-xl font-bold text-green-900">Send a message</h2>
                                 <p className="text-sm text-gray-600 mt-0.5">We usually respond within 24 hours.</p>
                             </div>
                             <form onSubmit={sendEmail} className="p-5 sm:p-6 md:p-8">
@@ -132,7 +132,7 @@ const Contact = () => {
                                     {errors && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
                                 </div>
                                 <div className="mt-6">
-                                    <button type="submit" id="submitBtn" className="w-full sm:w-auto min-w-[180px] px-6 py-3.5 rounded-xl font-bold text-white bg-blue-900 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors shadow-lg">
+                                    <button type="submit" id="submitBtn" className="btn-3d w-full sm:w-auto min-w-[180px] px-6 py-3.5 rounded-xl font-bold text-white bg-green-900 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-lg">
                                         Send message
                                     </button>
                                 </div>
@@ -141,40 +141,40 @@ const Contact = () => {
 
                         {/* Sidebar: contact info + map */}
                         <div className="lg:sticky lg:top-28 space-y-4">
-                            <div className="bg-blue-900 rounded-2xl shadow-xl p-5 sm:p-6 text-white">
-                                <h2 className="text-lg font-bold mb-4 pb-2 border-b border-blue-700">Contact information</h2>
+                            <div className="bg-green-900 rounded-2xl shadow-xl p-5 sm:p-6 text-white">
+                                <h2 className="text-lg font-bold mb-4 pb-2 border-b border-green-700">Contact information</h2>
                                 <div className="space-y-4">
                                     <div className="flex gap-3">
-                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-blue-800 flex items-center justify-center text-blue-200">
+                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-green-800 flex items-center justify-center text-green-200">
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                         </span>
                                         <div>
                                             <h3 className="font-semibold text-white">Address</h3>
-                                            <p className="text-blue-200 text-sm mt-0.5">Plot 70, Handsworth,<br />Great East Road, Lusaka, Zambia.</p>
+                                            <p className="text-green-200 text-sm mt-0.5">Plot 70, Handsworth,<br />Great East Road, Lusaka, Zambia.</p>
                                         </div>
                                     </div>
                                     <div className="flex gap-3">
-                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-blue-800 flex items-center justify-center text-blue-200">
+                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-green-800 flex items-center justify-center text-green-200">
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                                         </span>
                                         <div>
                                             <h3 className="font-semibold text-white">Phone</h3>
-                                            <a href="tel:+260966897354" className="text-blue-200 text-sm mt-0.5 hover:text-white">+260 966 897 354</a>
+                                            <a href="tel:+260966897354" className="text-green-200 text-sm mt-0.5 hover:text-white">+260 966 897 354</a>
                                         </div>
                                     </div>
                                     <div className="flex gap-3">
-                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-blue-800 flex items-center justify-center text-blue-200">
+                                        <span className="shrink-0 w-10 h-10 rounded-xl bg-green-800 flex items-center justify-center text-green-200">
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                                         </span>
                                         <div>
                                             <h3 className="font-semibold text-white">Email</h3>
-                                            <a href="mailto:lawnirrigationtech@gmail.com" className="text-blue-200 text-sm mt-0.5 hover:text-white block">lawnirrigationtech@gmail.com</a>
-                                            <a href="mailto:geomulenga@gmail.com" className="text-blue-200 text-sm hover:text-white block">geomulenga@gmail.com</a>
+                                            <a href="mailto:lawnirrigationtech@gmail.com" className="text-green-200 text-sm mt-0.5 hover:text-white block">lawnirrigationtech@gmail.com</a>
+                                            <a href="mailto:geomulenga@gmail.com" className="text-green-200 text-sm hover:text-white block">geomulenga@gmail.com</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="mt-5 pt-4 border-t border-blue-700">
-                                    <p className="text-blue-200 text-sm italic">"Easy Life With Modern Technology"</p>
+                                <div className="mt-5 pt-4 border-t border-green-700">
+                                    <p className="text-green-200 text-sm italic">"Easy Life With Modern Technology"</p>
                                 </div>
                             </div>
                             <div className="rounded-xl overflow-hidden border border-gray-200 shadow-lg h-48 sm:h-56">

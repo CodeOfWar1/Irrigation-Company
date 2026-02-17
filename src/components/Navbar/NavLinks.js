@@ -4,21 +4,21 @@ import { HashLink } from 'react-router-hash-link';
 
 const linkClass = (atTop) =>
     atTop
-        ? 'inline-flex items-center font-extrabold text-white hover:text-blue-200 hover:bg-blue-900/20 rounded-lg px-4 py-2 transition-colors duration-300'
-        : 'inline-flex items-center font-extrabold text-gray-500 hover:text-blue-900 hover:bg-gray-100 rounded-lg px-4 py-2 transition-colors duration-300';
+        ? 'inline-flex items-center font-extrabold text-white hover:text-green-200 hover:bg-green-900/20 rounded-lg px-4 py-2 transition-colors duration-300'
+        : 'inline-flex items-center font-extrabold text-gray-500 hover:text-green-900 hover:bg-gray-100 rounded-lg px-4 py-2 transition-colors duration-300';
 
 const ctaClass = (atTop) =>
     atTop
-        ? 'border-2 border-white text-white hover:bg-white hover:text-blue-900 inline-flex items-center justify-center px-6 py-2.5 shadow-xl rounded-xl transition-colors duration-300'
-        : 'text-white bg-blue-900 hover:bg-blue-800 inline-flex items-center justify-center px-6 py-2.5 shadow-xl rounded-xl transition-colors duration-300';
+        ? 'border-2 border-white text-white hover:bg-white hover:text-green-900 inline-flex items-center justify-center px-6 py-2.5 shadow-xl rounded-xl transition-colors duration-300'
+        : 'text-white bg-green-900 hover:bg-green-800 inline-flex items-center justify-center px-6 py-2.5 shadow-xl rounded-xl transition-colors duration-300';
 
 const dropdownLinkClass = (atTop) =>
     atTop
-        ? 'block px-4 py-2.5 text-sm font-semibold text-white hover:text-blue-200 hover:bg-blue-900/20 rounded-lg transition-colors duration-300'
-        : 'block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-900 rounded-lg transition-colors duration-300';
+        ? 'block px-4 py-2.5 text-sm font-semibold text-white hover:text-green-200 hover:bg-green-900/20 rounded-lg transition-colors duration-300'
+        : 'block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-green-900 rounded-lg transition-colors duration-300';
 
-const mobileLinkClass = 'flex items-center w-full px-4 py-3.5 text-base font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-900 rounded-lg transition-colors border-b border-gray-100 last:border-b-0 active:bg-gray-100';
-const mobileCtaClass = 'flex items-center justify-center w-full px-4 py-3.5 text-base font-bold text-white bg-blue-900 hover:bg-blue-800 rounded-xl mx-2 mt-2 mb-1 transition-colors';
+const mobileLinkClass = 'flex items-center w-full px-4 py-3.5 text-base font-semibold text-gray-700 hover:bg-gray-50 hover:text-green-900 rounded-lg transition-colors border-b border-gray-100 last:border-b-0 active:bg-gray-100';
+const mobileCtaClass = 'flex items-center justify-center w-full px-4 py-3.5 text-base font-bold text-white bg-green-900 hover:bg-green-800 rounded-xl mx-2 mt-2 mb-1 transition-colors';
 
 const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
     const [resourcesOpen, setResourcesOpen] = useState(false);
@@ -78,7 +78,7 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
                     </svg>
                 </button>
                 {resourcesOpen && (
-                    <div className={`absolute left-0 top-full pt-1 min-w-[200px] ${atTop ? 'bg-blue-900/95 backdrop-blur' : 'bg-white shadow-lg'} rounded-lg border ${atTop ? 'border-white/20' : 'border-gray-100'}`}>
+                    <div className={`absolute left-0 top-full pt-1 min-w-[200px] ${atTop ? 'bg-green-900/95 backdrop-blur' : 'bg-white shadow-lg'} rounded-lg border ${atTop ? 'border-white/20' : 'border-gray-100'}`}>
                         <Link to="/about" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
                             About
                         </Link>

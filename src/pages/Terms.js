@@ -13,15 +13,15 @@ const Terms = () => {
         <NavBar />
       </div>
       <main className="min-h-screen bg-gray-50">
-        <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-10 sm:py-14">
+        <div className="bg-gradient-to-br from-green-800 via-green-700 to-green-800 text-white py-10 sm:py-14">
           <div className="m-auto max-w-4xl px-4 text-center">
-            <p className="text-blue-200 text-sm font-semibold uppercase tracking-widest">
+            <p className="text-green-200 text-sm font-semibold uppercase tracking-widest">
               Legal
             </p>
             <h1 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold">
               Professional Service &amp; Design Terms
             </h1>
-            <p className="mt-2 text-blue-100 text-base sm:text-lg max-w-xl mx-auto">
+            <p className="mt-2 text-green-100 text-base sm:text-lg max-w-xl mx-auto">
               Terms and conditions governing our professional services and design work.
             </p>
           </div>
@@ -29,8 +29,8 @@ const Terms = () => {
 
         <div className="m-auto max-w-3xl px-3 sm:px-4 md:px-8 py-10 sm:py-14">
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-            <div className="border-l-4 border-blue-900 bg-blue-50/50 px-5 py-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-blue-800">
+            <div className="border-l-4 border-green-900 bg-green-50/50 px-5 py-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-green-800">
                 Lawn Irrigation Technologies
               </p>
               <p className="text-sm text-gray-600 mt-0.5">
@@ -39,8 +39,8 @@ const Terms = () => {
             </div>
             <div className="p-5 sm:p-6 md:p-8 prose prose-gray max-w-none">
               <section className="mb-8">
-                <h2 className="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-900 text-sm">1</span>
+                <h2 className="text-lg font-bold text-green-900 mb-3 flex items-center gap-2">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 text-green-900 text-sm">1</span>
                   The Site Audit (Initial Commitment)
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
@@ -52,8 +52,8 @@ const Terms = () => {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-900 text-sm">2</span>
+                <h2 className="text-lg font-bold text-green-900 mb-3 flex items-center gap-2">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 text-green-900 text-sm">2</span>
                   Large-Scale Design Policy (Properties &gt; 4,200 m²)
                 </h2>
                 <p className="text-gray-700 leading-relaxed mb-3">
@@ -65,8 +65,8 @@ const Terms = () => {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-900 text-sm">3</span>
+                <h2 className="text-lg font-bold text-green-900 mb-3 flex items-center gap-2">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 text-green-900 text-sm">3</span>
                   3D Visualization Rights
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
@@ -79,8 +79,8 @@ const Terms = () => {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-900 text-sm">4</span>
+                <h2 className="text-lg font-bold text-green-900 mb-3 flex items-center gap-2">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 text-green-900 text-sm">4</span>
                   Cancellation &amp; Legal Recourse
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
@@ -104,7 +104,7 @@ const Terms = () => {
           <div className="mt-8 text-center">
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-900 hover:text-blue-700"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-green-900 hover:text-green-700"
             >
               ← Back to portfolio
             </Link>

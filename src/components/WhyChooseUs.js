@@ -45,11 +45,11 @@ const WhyChooseUs = () => {
     <section className="py-14 sm:py-20 bg-gradient-to-b from-gray-50 to-white" data-aos="fade-up">
       <div className="m-auto max-w-6xl px-4 sm:px-6 md:px-8">
         <div className="text-center mb-12">
-          <p className="text-blue-600 font-semibold uppercase tracking-widest text-sm">Why LIT</p>
-          <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900">
+          <p className="text-green-600 font-semibold uppercase tracking-widest text-sm">Why LIT</p>
+          <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold text-green-900">
             Why choose Lawn Irrigation Technologies
           </h2>
-          <div className="w-20 h-0.5 bg-blue-900 rounded-full mx-auto mt-3" />
+          <div className="w-20 h-0.5 bg-green-900 rounded-full mx-auto mt-3" />
           <p className="mt-4 text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
             From audit to handover, we combine science, design and support so your landscape thrives.
           </p>
@@ -58,12 +58,12 @@ const WhyChooseUs = () => {
           {ITEMS.map((item, i) => (
             <div
               key={i}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl hover:border-blue-100 transition-all duration-300 group"
+              className="card-3d bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl hover:border-green-100 group"
             >
-              <div className="w-14 h-14 rounded-xl bg-blue-900 text-white flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+              <div className="w-14 h-14 rounded-xl bg-green-900 text-white flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
                 {item.icon}
               </div>
-              <h3 className="text-lg font-bold text-blue-900 mb-2">{item.title}</h3>
+              <h3 className="text-lg font-bold text-green-900 mb-2">{item.title}</h3>
               <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
             </div>
           ))}
@@ -71,7 +71,7 @@ const WhyChooseUs = () => {
         <div className="text-center mt-10">
           <Link
             to="/about"
-            className="inline-flex items-center gap-2 text-blue-900 font-semibold hover:text-blue-700"
+            className="btn-3d inline-flex items-center gap-2 text-green-900 font-semibold hover:text-green-700"
           >
             Meet our team
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

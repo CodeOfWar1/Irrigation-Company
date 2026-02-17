@@ -1,28 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/Navbar/NavBar';
 import heroImg from '../images/sprinklerirrigation.jpg';
+import backgroundWebp from '../images/hero/background.webp';
+import smartIrrigationImg from '../images/hero/smart-irrigation-month-scaled.jpeg';
+import irrigationImg from '../images/hero/irrigation-7262563_1920.jpg';
 
 const Hero = () => {
+    // Array of hero images to cycle through
+    const heroImages = [
+        backgroundWebp,
+        smartIrrigationImg,
+        irrigationImg,
+        heroImg, // Keep the original as fallback
+    ];
+
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [previousImageIndex, setPreviousImageIndex] = useState(null);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPreviousImageIndex(currentImageIndex);
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+        }, 6000); // Change image every 6 seconds
+
+        return () => clearInterval(interval);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [heroImages.length, currentImageIndex]);
+
     return (
         <>
             <div
                 id="hero"
                 className="relative min-h-screen flex flex-col bg-gray-900 overflow-hidden"
-                style={{
-                    backgroundImage: `url(${heroImg})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                }}
                 data-aos="fade"
                 data-aos-duration="1000"
             >
+                {/* Hero Images with Smooth Crossfade Transition and 3D Animation */}
+                <div className="absolute inset-0 overflow-hidden">
+                    {heroImages.map((img, index) => {
+                        const isCurrent = index === currentImageIndex;
+                        const isPrevious = index === previousImageIndex;
+                        
+                        return (
+                            <div
+                                key={index}
+                                className={`absolute inset-0 hero-3d-bg ${
+                                    isCurrent ? 'opacity-100 z-10' : isPrevious ? 'opacity-0 z-[5]' : 'opacity-0 z-0'
+                                }`}
+                                style={{
+                                    backgroundImage: `url(${img})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                    transition: 'opacity 2500ms cubic-bezier(0.4, 0, 0.2, 1), transform 2500ms cubic-bezier(0.4, 0, 0.2, 1)',
+                                }}
+                                aria-hidden={!isCurrent}
+                            />
+                        );
+                    })}
+                </div>
                 {/* Gradient overlay for better contrast and depth */}
                 <div
                     className="absolute inset-0 z-0 pointer-events-none"
                     style={{
-                        background: 'linear-gradient(135deg, rgba(15, 76, 117, 0.75) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.7) 100%)',
+                        background: 'linear-gradient(135deg, rgba(22, 160, 107, 0.75) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.7) 100%)',
                     }}
                     aria-hidden="true"
                 />
@@ -48,35 +90,46 @@ const Hero = () => {
                         <div className="lg:max-w-2xl flex flex-col justify-center">
 
                             {/* HEADLINE */}
-                            <h1 className="mb-6 md:text-5xl text-3xl font-extrabold text-white drop-shadow-lg leading-tight">
+                            <h1 className="mb-5 md:mb-7 md:text-5xl text-3xl font-extrabold text-white drop-shadow-lg leading-tight">
                                 Stop Guessing. Start Engineering.
                             </h1>
 
-                            {/* SUB-HEADLINE */}
-                            <h2 className="text-xl md:text-2xl font-semibold text-blue-200 mb-6 drop-shadow">
-                                The only firm in Zambia combining Soil Science,
-                                3D Landscape Visualization, and Advanced Water Technology.
+                            {/* SUB-HEADLINE (shorter on mobile) */}
+                            <h2 className="text-lg md:text-2xl font-semibold text-green-200 mb-4 md:mb-5 drop-shadow">
+                                <span className="sm:hidden">
+                                    Soil science, 3D design & advanced irrigation for your property.
+                                </span>
+                                <span className="hidden sm:inline">
+                                    The only firm in Zambia combining Soil Science,
+                                    3D Landscape Visualization, and Advanced Water Technology.
+                                </span>
                             </h2>
 
-                            {/* BODY TEXT */}
-                            <p className="text-gray-200 text-lg leading-relaxed mb-8 drop-shadow">
-                                In a market saturated with unqualified labor, Lawn Irrigation
-                                Technologies brings 14 years of Agricultural Engineering
-                                expertise to your doorstep. We don't just plant; we design.
-                                We don't just water; we engineer.
-                                <br /><br />
-                                From small luxury gardens to massive estates, we use 3D
-                                Renders to show you the future of your property before we
-                                ever dig a trench. Our designs are based on your soil’s DNA
-                                and your property’s unique hydraulics.
+                            {/* BODY TEXT (summarised on mobile) */}
+                            <p className="text-gray-100 text-sm md:text-lg leading-relaxed mb-6 md:mb-7 drop-shadow">
+                                <span className="sm:hidden">
+                                    14+ years of Agricultural Engineering experience, delivering
+                                    efficient, engineered irrigation systems for homes, estates and institutions.
+                                </span>
+                                <span className="hidden sm:inline">
+                                    In a market saturated with unqualified labor, Lawn Irrigation
+                                    Technologies brings 14 years of Agricultural Engineering
+                                    expertise to your doorstep. We don't just plant; we design.
+                                    We don't just water; we engineer.
+                                    <br /><br />
+                                    From small luxury gardens to massive estates, we use 3D
+                                    renders to show you the future of your property before we
+                                    ever dig a trench. Our designs are based on your soil’s DNA
+                                    and your property’s unique hydraulics.
+                                </span>
                             </p>
 
                             {/* CTA BUTTONS */}
-                            <div className="space-x-0 md:space-x-4 flex flex-col md:flex-row">
+                            <div className="mt-2 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
 
                                 <Link
                                     to="/contact"
-                                    className="text-white bg-blue-900 hover:bg-blue-800 inline-flex items-center justify-center px-8 py-3 my-2 text-lg shadow-xl rounded-2xl"
+                                    className="btn-3d w-full sm:w-auto text-white bg-green-700 hover:bg-green-600 inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-base sm:text-lg shadow-xl rounded-xl sm:rounded-2xl"
                                 >
                                     Learn More
                                 </Link>
@@ -84,7 +137,7 @@ const Hero = () => {
                                 <button
                                     type="button"
                                     onClick={() => window.dispatchEvent(new CustomEvent('open-booking'))}
-                                    className="text-blue-900 bg-white hover:bg-gray-100 inline-flex items-center justify-center px-8 py-3 my-2 text-lg shadow-md rounded-2xl border border-blue-100"
+                                    className="btn-3d w-full sm:w-auto text-green-900 bg-white hover:bg-gray-100 inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-base sm:text-lg shadow-md rounded-xl sm:rounded-2xl border border-green-100"
                                 >
                                     Book a Project
                                 </button>

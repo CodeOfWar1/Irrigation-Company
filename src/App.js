@@ -25,8 +25,9 @@ function App() {
   useEffect(() => {
     const aos_init = () => {
       AOS.init({
-        once: true,
-        duration: 1000,
+        once: false,      // allow animations every time elements scroll into view
+        mirror: true,     // animate when scrolling back up as well
+        duration: 900,
         easing: 'ease-out-cubic',
       });
     }

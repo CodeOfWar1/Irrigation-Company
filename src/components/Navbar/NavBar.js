@@ -53,7 +53,7 @@ const NavBar = () => {
                     <HashLink
                         smooth
                         to={isHome ? '/#hero' : '/'}
-                        className={`min-w-0 text-xs sm:text-sm md:text-lg font-bold leading-tight transition-colors duration-300 cursor-pointer truncate max-w-[120px] sm:max-w-none ${showTransparent ? 'text-white' : 'text-blue-900'}`}
+                        className={`min-w-0 text-xs sm:text-sm md:text-lg font-bold leading-tight transition-colors duration-300 cursor-pointer truncate max-w-[120px] sm:max-w-none ${showTransparent ? 'text-white' : 'text-green-900'}`}
                     >
                         <span className="sm:hidden">LIT</span>
                         <span className="hidden sm:inline">Lawn Irrigation</span>
@@ -67,7 +67,7 @@ const NavBar = () => {
                     {/* MOBILE MENU BUTTON — 44px min touch target */}
                     <button
                         type="button"
-                        className={`lg:hidden flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 rounded-xl transition-colors duration-300 touch-manipulation ${showTransparent ? 'text-white hover:bg-white/10' : 'text-blue-900 hover:bg-gray-100'}`}
+                        className={`lg:hidden flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 rounded-xl transition-colors duration-300 touch-manipulation ${showTransparent ? 'text-white hover:bg-white/10' : 'text-green-900 hover:bg-gray-100'}`}
                         onClick={handleClick}
                         aria-label={isOpen ? 'Close menu' : 'Open menu'}
                         aria-expanded={isOpen}

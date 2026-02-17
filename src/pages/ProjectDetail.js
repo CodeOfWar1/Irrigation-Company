@@ -36,7 +36,7 @@ const ProjectDetail = () => {
         <div className="m-auto max-w-6xl px-3 sm:px-4 md:px-8">
           {!project ? (
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 md:p-10 text-center">
-              <h1 className="text-2xl md:text-3xl font-extrabold text-blue-900 mb-3">
+              <h1 className="text-2xl md:text-3xl font-extrabold text-green-900 mb-3">
                 Project not found
               </h1>
               <p className="text-gray-600 mb-6">
@@ -44,7 +44,7 @@ const ProjectDetail = () => {
               </p>
               <Link
                 to="/projects"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-2xl text-white bg-blue-900 hover:bg-blue-800 text-lg shadow-xl"
+                className="btn-3d inline-flex items-center justify-center px-6 py-3 rounded-2xl text-white bg-green-900 hover:bg-green-800 text-lg shadow-xl"
               >
                 Back to portfolio
               </Link>
@@ -55,11 +55,11 @@ const ProjectDetail = () => {
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gray-500 mb-2">
                   Project gallery
                 </p>
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-blue-900 mb-2 sm:mb-3 leading-tight">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-green-900 mb-2 sm:mb-3 leading-tight">
                   {project.name}
                 </h1>
                 <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-100 font-semibold">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-50 text-green-800 border border-green-100 font-semibold">
                     {project.sector}
                   </span>
                   <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-50 text-gray-700 border border-gray-200">
@@ -75,7 +75,7 @@ const ProjectDetail = () => {
                       key={index}
                       type="button"
                       onClick={() => setLightboxIndex(index)}
-                      className="aspect-square rounded-xl overflow-hidden bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                      className="aspect-square rounded-xl overflow-hidden bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                     >
                       <img
                         src={src}
@@ -90,7 +90,7 @@ const ProjectDetail = () => {
               <div className="flex justify-between items-center mt-8">
                 <Link
                   to="/projects"
-                  className="inline-flex items-center text-sm font-semibold text-blue-900 hover:text-blue-700"
+                  className="inline-flex items-center text-sm font-semibold text-green-900 hover:text-green-700"
                 >
                   ← Back to all projects
                 </Link>

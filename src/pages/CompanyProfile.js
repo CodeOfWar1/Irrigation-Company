@@ -12,8 +12,8 @@ const SectionCard = ({ id, heading, children, className = '' }) => (
     className={`bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-shadow hover:shadow-xl ${className}`}
     data-aos="fade-up"
   >
-    <div className="border-l-4 border-blue-900 bg-gradient-to-r from-blue-50/50 to-white px-6 md:px-8 py-4">
-      <h2 id={id} className="text-xl md:text-2xl font-bold text-blue-900">
+    <div className="border-l-4 border-green-900 bg-gradient-to-r from-green-50/50 to-white px-6 md:px-8 py-4">
+      <h2 id={id} className="text-xl md:text-2xl font-bold text-green-900">
         {heading}
       </h2>
     </div>
@@ -33,18 +33,18 @@ const CompanyProfile = () => {
       </div>
       <main className="mt-14 sm:mt-20 min-h-screen">
         {/* Hero */}
-        <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-10 sm:py-16 md:py-24" data-aos="fade-down">
+        <div className="bg-gradient-to-br from-green-800 via-green-700 to-green-800 text-white py-10 sm:py-16 md:py-24" data-aos="fade-down">
           <div className="m-auto max-w-6xl px-3 sm:px-4 md:px-8 text-center">
-            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-blue-200">
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-green-200">
               Company profile
             </p>
             <h1 className="mt-2 sm:mt-3 text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight px-2">
               Lawn Irrigation Technologies
             </h1>
-            <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-blue-100 font-medium max-w-2xl mx-auto px-1">
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-green-100 font-medium max-w-2xl mx-auto px-1">
               “Green Grass, Zero Effort.”
             </p>
-            <p className="mt-2 text-sm text-blue-200">
+            <p className="mt-2 text-sm text-green-200">
               Design • Supply • Install • Maintain
             </p>
           </div>
@@ -130,7 +130,7 @@ const CompanyProfile = () => {
             <SectionCard id="services-heading" heading="4. Our services">
               <div className="space-y-6 text-sm md:text-base text-gray-700">
                 <div>
-                  <h3 className="font-bold text-blue-900 mb-2">A. Design &amp; consultancy</h3>
+                  <h3 className="font-bold text-green-900 mb-2">A. Design &amp; consultancy</h3>
                   <ul className="list-disc list-inside space-y-1">
                     <li>Scientific site audits and hydraulic assessments.</li>
                     <li>Professional CAD blueprints and 3D landscape rendering.</li>
@@ -139,7 +139,7 @@ const CompanyProfile = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-blue-900 mb-2">B. Installation &amp; supply</h3>
+                  <h3 className="font-bold text-green-900 mb-2">B. Installation &amp; supply</h3>
                   <ul className="list-disc list-inside space-y-1">
                     <li>Automated pop-up sprinkler systems (rotors and sprays).</li>
                     <li>Precision drip and micro‑irrigation for hedges and beds.</li>
@@ -149,7 +149,7 @@ const CompanyProfile = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-blue-900 mb-2">C. Maintenance &amp; after‑sales</h3>
+                  <h3 className="font-bold text-green-900 mb-2">C. Maintenance &amp; after‑sales</h3>
                   <ul className="list-disc list-inside space-y-1">
                     <li>Seasonal system audits and routine servicing.</li>
                     <li>Borehole‑to‑irrigation integration.</li>
@@ -168,7 +168,7 @@ const CompanyProfile = () => {
 
               <div className="space-y-5 text-sm md:text-base text-gray-700">
                 <div>
-                  <h3 className="font-semibold text-blue-900">
+                  <h3 className="font-semibold text-green-900">
                     George Kabwe Mulenga – Director / Lead Irrigation Designer
                   </h3>
                   <ul className="list-disc list-inside space-y-1 mt-1">
@@ -180,7 +180,7 @@ const CompanyProfile = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-blue-900">
+                  <h3 className="font-semibold text-green-900">
                     Stevenson Sumbukeni – Site Manager
                   </h3>
                   <ul className="list-disc list-inside space-y-1 mt-1">
@@ -190,7 +190,7 @@ const CompanyProfile = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-blue-900">
+                  <h3 className="font-semibold text-green-900">
                     William Jere – Lead Technician
                   </h3>
                   <ul className="list-disc list-inside space-y-1 mt-1">
@@ -208,7 +208,7 @@ const CompanyProfile = () => {
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm md:text-base text-gray-700">
                 <div>
-                  <h3 className="font-semibold text-blue-900 mb-1">
+                  <h3 className="font-semibold text-green-900 mb-1">
                     Diplomatic &amp; government
                   </h3>
                   <ul className="list-disc list-inside space-y-1">
@@ -219,7 +219,7 @@ const CompanyProfile = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-blue-900 mb-1">
+                  <h3 className="font-semibold text-green-900 mb-1">
                     Institutional
                   </h3>
                   <ul className="list-disc list-inside space-y-1">
@@ -229,7 +229,7 @@ const CompanyProfile = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-blue-900 mb-1">
+                  <h3 className="font-semibold text-green-900 mb-1">
                     Commercial &amp; leisure
                   </h3>
                   <ul className="list-disc list-inside space-y-1">
@@ -239,7 +239,7 @@ const CompanyProfile = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-blue-900 mb-1">
+                  <h3 className="font-semibold text-green-900 mb-1">
                     Residential estates
                   </h3>
                   <ul className="list-disc list-inside space-y-1">
@@ -282,27 +282,27 @@ const CompanyProfile = () => {
             >
               <h2
                 id="contact-heading"
-                className="text-2xl font-bold text-blue-900 mb-4"
+                className="text-2xl font-bold text-green-900 mb-4"
               >
                 8. Contact & location
               </h2>
               <div className="grid lg:grid-cols-2 gap-8">
                 <div className="space-y-6 text-base text-gray-700">
                   <div>
-                    <h3 className="font-bold text-blue-900 mb-2 flex items-center gap-2"><span className="text-blue-900">📍</span> Physical address</h3>
+                    <h3 className="font-bold text-green-900 mb-2 flex items-center gap-2"><span className="text-green-900">📍</span> Physical address</h3>
                     <p className="leading-relaxed">{MAP_ADDRESS}</p>
                   </div>
                   <div>
-                    <h3 className="font-bold text-blue-900 mb-2">Direct lines</h3>
+                    <h3 className="font-bold text-green-900 mb-2">Direct lines</h3>
                     <p>+260 966 897 354</p>
                   </div>
                   <div>
-                    <h3 className="font-bold text-blue-900 mb-2">Email</h3>
+                    <h3 className="font-bold text-green-900 mb-2">Email</h3>
                     <p>lawnirrigationtech@gmail.com</p>
                     <p>geomulenga@gmail.com</p>
                   </div>
                   <div>
-                    <h3 className="font-bold text-blue-900 mb-2">Tagline</h3>
+                    <h3 className="font-bold text-green-900 mb-2">Tagline</h3>
                     <p>“Easy Life With Modern Technology”.</p>
                   </div>
                 </div>

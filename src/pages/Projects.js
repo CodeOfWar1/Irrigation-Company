@@ -15,7 +15,7 @@ const Projects = () => {
     <Link
       key={project.id}
       to={`/projects/${project.id}`}
-      className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col group hover:shadow-xl hover:border-blue-100 transition-all duration-300"
+      className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col group hover:shadow-xl hover:border-green-100 transition-all duration-300"
     >
       <div className="h-48 sm:h-52 w-full overflow-hidden bg-gray-100">
         <img
@@ -26,17 +26,17 @@ const Projects = () => {
       </div>
       <div className="p-5 flex flex-col flex-1">
         <div className="flex flex-wrap gap-2 mb-2">
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-100">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-50 text-green-800 border border-green-100">
             {project.sector}
           </span>
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
             {project.images.length} photo{project.images.length !== 1 ? 's' : ''}
           </span>
         </div>
-        <h3 className="text-lg font-semibold text-blue-900 mb-2 line-clamp-2">
+        <h3 className="text-lg font-semibold text-green-900 mb-2 line-clamp-2">
           {project.name}
         </h3>
-        <span className="mt-auto inline-flex items-center text-sm font-semibold text-blue-900 group-hover:text-blue-700">
+        <span className="mt-auto inline-flex items-center text-sm font-semibold text-green-900 group-hover:text-green-700">
           View project
           <svg
             className="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform"
@@ -63,13 +63,13 @@ const Projects = () => {
       <main className="min-h-screen bg-gray-50">
         <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-10 sm:py-14">
           <div className="m-auto max-w-4xl px-4 text-center">
-            <p className="text-blue-200 text-sm font-semibold uppercase tracking-widest">
+            <p className="text-green-200 text-sm font-semibold uppercase tracking-widest">
               What we deliver
             </p>
             <h1 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold">
               Our client projects
             </h1>
-            <p className="mt-2 text-blue-100 text-base sm:text-lg max-w-xl mx-auto">
+            <p className="mt-2 text-green-100 text-base sm:text-lg max-w-xl mx-auto">
               Irrigation and landscaping projects we have delivered.
             </p>
           </div>
@@ -77,8 +77,8 @@ const Projects = () => {
 
         <div className="m-auto max-w-6xl px-3 sm:px-4 md:px-8 -mt-6 relative z-10 pb-16">
           {commercial.length > 0 && (
-            <section className="mb-12" data-aos="fade-up"><br></br>
-              <h2 id="commercial-projects" className="text-xl sm:text-2xl font-bold text-blue-900 mb-6">
+            <section className="mb-12 mt-8 sm:mt-12" data-aos="fade-up">
+              <h2 id="commercial-projects" className="text-xl sm:text-2xl font-bold text-green-900 mb-6">
                 Commercial &amp; institutional
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
@@ -91,7 +91,7 @@ const Projects = () => {
 
           {residential.length > 0 && (
             <section data-aos="fade-up">
-              <h2 id="residential-projects" className="text-xl sm:text-2xl font-bold text-blue-900 mb-6">
+              <h2 id="residential-projects" className="text-xl sm:text-2xl font-bold text-green-900 mb-6">
                 Residential projects
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
