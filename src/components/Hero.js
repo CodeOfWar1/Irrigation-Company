@@ -33,8 +33,6 @@ const Hero = () => {
             <div
                 id="hero"
                 className="relative min-h-screen flex flex-col bg-gray-900 overflow-hidden"
-                data-aos="fade"
-                data-aos-duration="1000"
             >
                 {/* Hero Images with Smooth Crossfade Transition and 3D Animation */}
                 <div className="absolute inset-0 overflow-hidden">
@@ -83,7 +81,11 @@ const Hero = () => {
                 </div>
 
                 {/* HERO CONTENT */}
-                <div className="relative z-10 m-auto overflow-hidden mx-4 mt-8 lg:mt-4 p-2 md:p-12 flex-1 flex flex-col justify-center w-full max-w-6xl">
+                <div
+                    className="relative z-10 m-auto overflow-hidden mx-4 mt-8 lg:mt-4 p-2 md:p-12 flex-1 flex flex-col justify-center w-full max-w-6xl"
+                    data-aos="fade"
+                    data-aos-duration="1000"
+                >
 
                     <div className="flex flex-col lg:flex-row py-8 justify-between text-center lg:text-left items-center">
 

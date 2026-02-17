@@ -23,6 +23,12 @@ import Booking from './components/Booking';
 
 function App() {
   useEffect(() => {
+    // Always start at top on refresh/first load (disable browser scroll restoration)
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const aos_init = () => {
       AOS.init({
         once: false,      // allow animations every time elements scroll into view
