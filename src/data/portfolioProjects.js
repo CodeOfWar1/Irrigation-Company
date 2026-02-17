@@ -55,7 +55,11 @@ const isResidential = (folderKey) => folderKey.startsWith('Residencial areas');
 
 export const portfolioProjects = Object.entries(byFolder)
   .map(([folderKey, images]) => {
-    const name = getDisplayName(folderKey);
+    let name = getDisplayName(folderKey);
+    // Ensure proper casing for specific known names
+    if (name && name.toLowerCase() === 'choma') {
+      name = 'Choma';
+    }
     const slug = isResidential(folderKey)
       ? slugify(getDisplayName(folderKey))
       : slugify(folderKey);

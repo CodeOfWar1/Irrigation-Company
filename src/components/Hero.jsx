@@ -127,11 +127,11 @@ const Hero = () => {
                             </p>
 
                             {/* CTA BUTTONS */}
-                            <div className="mt-2 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+                            <div className="mt-2 flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-center lg:justify-start">
 
                                 <Link
                                     to="/contact"
-                                    className="btn-3d w-full sm:w-auto text-white bg-green-700 hover:bg-green-600 inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-base sm:text-lg shadow-xl rounded-xl sm:rounded-2xl"
+                                    className="btn-3d w-full sm:w-auto text-white bg-green-700 hover:bg-green-600 inline-flex items-center justify-center px-4 sm:px-8 py-2.5 sm:py-3.5 text-sm sm:text-lg shadow-xl rounded-lg sm:rounded-2xl"
                                 >
                                     Learn More
                                 </Link>
@@ -139,9 +139,9 @@ const Hero = () => {
                                 <button
                                     type="button"
                                     onClick={() => window.dispatchEvent(new CustomEvent('open-booking'))}
-                                    className="btn-3d w-full sm:w-auto text-green-900 bg-white hover:bg-gray-100 inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-base sm:text-lg shadow-md rounded-xl sm:rounded-2xl border border-green-100"
+                                    className="btn-3d w-full sm:w-auto text-green-900 bg-white hover:bg-gray-100 inline-flex items-center justify-center px-4 sm:px-8 py-2.5 sm:py-3.5 text-sm sm:text-lg shadow-md rounded-lg sm:rounded-2xl border border-green-100"
                                 >
-                                    Book a Project
+                                    Book a project
                                 </button>
 
                             </div>
