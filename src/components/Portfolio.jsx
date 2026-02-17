@@ -103,7 +103,7 @@ const Portfolio = () => {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10" />
                                 
                                 {/* Content Overlay */}
-                                <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-12 md:p-16 text-white z-20">
+                                <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-12 md:p-16 text-white z-20">
                                     <div className="max-w-2xl">
                                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm mb-4">
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,15 +111,15 @@ const Portfolio = () => {
                                             </svg>
                                             <span className="text-sm font-semibold">{currentFeatured.project?.sector || 'Commercial'}</span>
                                         </div>
-                                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+                                        <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 drop-shadow-lg">
                                             {currentFeatured.project?.name || 'Featured Project'}
                                         </h3>
-                                        <p className="text-lg sm:text-xl text-gray-200 mb-6 drop-shadow">
+                                        <p className="text-sm sm:text-xl text-gray-200 mb-4 sm:mb-6 drop-shadow">
                                             Discover our complete portfolio of irrigation and landscaping excellence
                                         </p>
-                                        <div className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 sm:px-6 py-3 rounded-xl bg-green-600 hover:bg-green-700 text-white font-semibold transition-colors shadow-lg">
+                                        <div className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:px-5 sm:py-3 rounded-lg sm:rounded-xl bg-green-600 hover:bg-green-700 text-xs sm:text-base font-semibold transition-colors shadow-lg">
                                             View full portfolio
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                             </svg>
                                         </div>
@@ -130,27 +130,6 @@ const Portfolio = () => {
                     </div>
                 )}
 
-                {/* CTA Section */}
-                <div className="text-center pt-4">
-                    <Link
-                        to="/get-demo"
-                        className="btn-3d w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-white bg-gradient-to-r from-green-700 to-green-600 hover:from-green-600 hover:to-green-500 shadow-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-base sm:text-lg"
-                    >
-                        View full portfolio
-                        <svg
-                            className="w-6 h-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M12.293 3.293a1 1 0 011.414 0L18 7.586a1 1 0 010 1.414l-4.293 4.293a1 1 0 01-1.414-1.414L14.586 10H5a1 1 0 110-2h9.586l-2.293-2.293a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </Link>
-                </div>
             </div>
         </section>
     )
