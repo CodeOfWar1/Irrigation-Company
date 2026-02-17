@@ -13,7 +13,7 @@ const Intro = () => {
                             <img
                                 alt="George Kabwe Mulenga – Director & Lead Irrigation Designer"
                                 className="w-full h-full object-cover"
-                                style={{ objectPosition: '45% 38%' }}
+                                style={{ objectPosition: '50% 40%' }}
                                 src={img}
                             />
                         </div>

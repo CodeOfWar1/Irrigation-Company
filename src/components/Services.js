@@ -140,8 +140,8 @@ const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
                                     <p className="leading-snug">{step.timeline}</p>
                                 </div>
                                 <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-green-200">
-                                    <h4 className="font-bold text-green-900 mb-2 flex items-center gap-2 text-xs uppercase tracking-wider">
-                                        <span className="w-6 h-6 rounded bg-green-700 text-white flex items-center justify-center text-xs shrink-0">3</span>
+                                    <h4 className="font-bold text-green-700 mb-2 flex items-center gap-2 text-xs uppercase tracking-wider">
+                                        <span className="w-6 h-6 rounded bg-green-600 text-white flex items-center justify-center text-xs shrink-0">3</span>
                                         Investment
                                     </h4>
                                     <p className="leading-snug">{step.investmentDetail}</p>
