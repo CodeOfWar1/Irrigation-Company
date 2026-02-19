@@ -20,6 +20,8 @@ import Terms from './pages/Terms';
 import { useDocTitle } from './components/CustomHook';
 import ScrollToTop from './components/ScrollToTop';
 import Booking from './components/Booking';
+import Login from './pages/Login';
+import AdminAppointments from './pages/admin';
 
 function App() {
   useEffect(() => {
@@ -59,6 +61,8 @@ function App() {
             <Route path="/company-profile" element={<CompanyProfile />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/portfolio" element={<CompanyProfile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/appointments" element={<AdminAppointments />} />
           </Routes>
         </ScrollToTop>
         <Booking />
