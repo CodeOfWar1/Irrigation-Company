@@ -28,51 +28,51 @@ const Contact = () => {
 
     const sendEmail = (e) => {
         e.preventDefault();
-        document.getElementById('submitBtn').disabled = true;
-        document.getElementById('submitBtn').innerHTML = 'Loading...';
-        let fData = new FormData();
-        fData.append('first_name', firstName)
-        fData.append('last_name', lastName)
-        fData.append('email', email)
-        fData.append('phone_number', phone)
-        fData.append('message', message)
+        const btn = document.getElementById('submitBtn');
+        if (btn) { btn.disabled = true; btn.innerHTML = 'Loading...'; }
 
-        axios({
-            method: "post",
-            url: process.env.REACT_APP_CONTACT_API,
-            data: fData,
-            headers: {
-                'Content-Type':  'multipart/form-data'
-            }
-        })
-        .then(function (response) {
-            document.getElementById('submitBtn').disabled = false;
-            document.getElementById('submitBtn').innerHTML = 'send message';
-            clearInput()
-            //handle success
-            Notiflix.Report.success(
-                'Success',
-                response.data.message,
+        const formId = import.meta.env?.VITE_FORMSPREE_FORM_ID || process.env.REACT_APP_FORMSPREE_FORM_ID;
+        const apiUrl = formId ? `https://formspree.io/f/${formId}` : null;
+
+        if (!apiUrl) {
+            if (btn) { btn.disabled = false; btn.innerHTML = 'send message'; }
+            Notiflix.Report.failure(
+                'Configuration required',
+                'Add VITE_FORMSPREE_FORM_ID to your .env file. Get a free form at https://formspree.io',
                 'Okay',
             );
+            return;
+        }
+
+        const payload = {
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            phone_number: phone,
+            message,
+        };
+
+        axios({
+            method: 'post',
+            url: apiUrl,
+            data: payload,
+            headers: { 'Content-Type': 'application/json' },
         })
-        .catch(function (error) {
-            document.getElementById('submitBtn').disabled = false;
-            document.getElementById('submitBtn').innerHTML = 'send message';
-            //handle error
-            const { response } = error;
-            if(response.status === 500) {
-                Notiflix.Report.failure(
-                    'An error occurred',
-                    response.data.message,
-                    'Okay',
-                );
-            }
-            if(response.data.errors !== null) {
-                setErrors(response.data.errors)
-            }
-            
-        });
+            .then(function (res) {
+                if (btn) { btn.disabled = false; btn.innerHTML = 'send message'; }
+                clearInput();
+                setErrors([]);
+                Notiflix.Report.success('Message sent', 'We\'ll get back to you soon.', 'Okay');
+            })
+            .catch(function (error) {
+                if (btn) { btn.disabled = false; btn.innerHTML = 'send message'; }
+                const { response } = error || {};
+                if (response?.data?.errors) {
+                    setErrors(response.data.errors);
+                }
+                const msg = response?.data?.message || response?.statusText || error?.message || 'Failed to send. Please try again.';
+                Notiflix.Report.failure('Unable to send', msg, 'Okay');
+            });
     }
     const inputClass = "w-full border border-gray-300 text-gray-900 mt-1 px-3 py-2.5 sm:py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-shadow text-sm sm:text-base";
     const labelClass = "block text-xs sm:text-sm font-semibold text-gray-700 mb-1";

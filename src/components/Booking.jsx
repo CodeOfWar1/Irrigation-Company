@@ -190,6 +190,19 @@ const Booking = () => {
 
   return (
     <>
+      {/* Floating Book button - fixed bottom-right on every page */}
+      <button
+        type="button"
+        onClick={() => window.dispatchEvent(new CustomEvent(BOOKING_EVENT))}
+        className="fixed bottom-6 right-6 z-30 flex items-center gap-2 px-4 py-3 bg-green-900 hover:bg-green-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+        aria-label="Book a project"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span className="hidden sm:inline">Book a Project</span>
+      </button>
+
       {open && <div className="fixed inset-0 bg-black/40 z-40" onClick={handleClose} />}
 
       <div className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 flex flex-col ${open ? 'translate-x-0' : 'translate-x-full'}`}>

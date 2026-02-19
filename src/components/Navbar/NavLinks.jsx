@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 const linkClass = (atTop) =>
@@ -21,6 +21,9 @@ const mobileLinkClass = 'flex items-center w-full px-4 py-3.5 text-base font-sem
 const mobileCtaClass = 'flex items-center justify-center w-full px-4 py-3.5 text-base font-bold text-white bg-green-900 hover:bg-green-800 rounded-xl mx-2 mt-2 mb-1 transition-colors';
 
 const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
+    const location = useLocation();
+    const isHome = location.pathname === '/';
+
     const [resourcesOpen, setResourcesOpen] = useState(false);
     const closeTimeoutRef = useRef(null);
 
@@ -36,10 +39,18 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
         closeTimeoutRef.current = setTimeout(() => setResourcesOpen(false), 120);
     };
 
+    const handleHomeClick = (e) => {
+        if (isHome) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        onLinkClick?.();
+    };
+
     if (isMobileMenu) {
         return (
             <>
-                <Link to="/" className={mobileLinkClass} onClick={onLinkClick}>Home</Link>
+                <Link to="/" className={mobileLinkClass} onClick={handleHomeClick}>Home</Link>
                 <div className="px-4 pt-3 pb-1">
                     <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Resources</span>
                 </div>
@@ -57,9 +68,14 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
         );
     }
 
+    const loginLinkClass = (atTop) =>
+        atTop
+            ? 'inline-flex items-center font-semibold text-white/90 hover:text-white hover:bg-white/10 hover:scale-105 rounded-lg px-4 py-2 border border-white/40 transition-all duration-300'
+            : 'inline-flex items-center font-semibold text-green-800 hover:text-green-900 hover:bg-green-50 hover:scale-105 rounded-lg px-4 py-2 border border-green-300 transition-all duration-300';
+
     return (
         <>
-            <Link className={linkClass(atTop)} to="/">
+            <Link className={linkClass(atTop)} to="/" onClick={handleHomeClick}>
                 Home
             </Link>
             <div
@@ -108,7 +124,7 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
                 Contact Us
             </HashLink>
 
-            <Link to="/login" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
+            <Link to="/login" className={loginLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
                 Login
             </Link>
             <Link className={ctaClass(atTop)} to="/get-demo">
