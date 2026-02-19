@@ -51,6 +51,7 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
                 <HashLink to="/#services" smooth className={mobileLinkClass} onClick={onLinkClick}>Services</HashLink>
                 <HashLink to="/#process" smooth className={mobileLinkClass} onClick={onLinkClick}>Process</HashLink>
                 <Link to="/contact" className={mobileLinkClass} onClick={onLinkClick}>Contact Us</Link>
+                <Link to="/login" className={mobileLinkClass} onClick={onLinkClick}>Login</Link>
                 <Link to="/get-demo" className={mobileCtaClass} onClick={onLinkClick}>Portfolio</Link>
             </>
         );
@@ -85,6 +86,9 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
                         <Link to="/company-profile" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
                             Company Profile
                         </Link>
+                        <Link to="/login" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
+                            Login
+                        </Link>
                         <Link to="/get-demo" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
                             Portfolio
                         </Link>
@@ -103,6 +107,10 @@ const NavLinks = ({ atTop = false, onLinkClick, isMobileMenu = false }) => {
             <HashLink className={linkClass(atTop)} to="/contact#contact">
                 Contact Us
             </HashLink>
+
+            <Link to="/login" className={dropdownLinkClass(atTop)} onClick={() => setResourcesOpen(false)}>
+                Login
+            </Link>
             <Link className={ctaClass(atTop)} to="/get-demo">
                 Portfolio
             </Link>
