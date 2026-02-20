@@ -41,10 +41,18 @@ const Booking = () => {
   const [statusMessage, setStatusMessage] = useState('');
   const [receipt, setReceipt] = useState(null);
 
+  const [scriptReady, setScriptReady] = useState(false);
+
   useEffect(() => {
+    if (window.LencoPay) {
+      setScriptReady(true);
+      return;
+    }
     const script = document.createElement('script');
     script.src = "https://pay.lenco.co/js/v1/inline.js";
     script.async = true;
+    script.onload = () => setScriptReady(true);
+    script.onerror = () => setScriptReady(false);
     document.body.appendChild(script);
 
     const openPanel = () => setOpen(true);
@@ -80,13 +88,31 @@ const Booking = () => {
     }
 
     if (!window.LencoPay) {
-      setStatusMessage('Payment gateway is loading. Please wait...');
+      setStatusMessage('Payment gateway is still loading. Please wait a moment and try again.');
+      return;
+    }
+
+    if (!LENCO_PUBLIC_KEY) {
+      setStatusMessage('Payment is not configured. Please add VITE_LENCO_PUBLIC_KEY to your environment.');
       return;
     }
 
     setIsSubmitting(true);
+    setStatusMessage('');
+
+    // Safety: unstick button if Lenco never calls back (e.g. 504, popup blocked)
+    const timeout = setTimeout(() => {
+      setIsSubmitting((prev) => {
+        if (prev) {
+          setStatusMessage('Payment gateway is not responding (504). Lenco\'s servers may be temporarily down. Please try again in a few minutes, or contact us at lawnirrigationtech@gmail.com to complete your booking.');
+          return false;
+        }
+        return prev;
+      });
+    }, 45000);
     const nameParts = formValues.payerName.split(' ');
 
+    try {
     window.LencoPay.getPaid({
       key: LENCO_PUBLIC_KEY,
       reference: generateTransactionId(),
@@ -100,6 +126,7 @@ const Booking = () => {
         phone: formValues.phone 
       },
       onSuccess: async (res) => {
+        clearTimeout(timeout);
         try {
           // --- INSERT INTO SUPABASE ---
           const { error } = await supabase.from('bookings').insert([{
@@ -132,12 +159,23 @@ const Booking = () => {
           setIsSubmitting(false);
         }
       },
-      onClose: () => setIsSubmitting(false),
-      onError: () => {
+      onClose: () => {
+        clearTimeout(timeout);
         setIsSubmitting(false);
-        setStatusMessage('Payment failed. Please try again.');
+      },
+      onError: (err) => {
+        clearTimeout(timeout);
+        setIsSubmitting(false);
+        setStatusMessage(err?.message || 'Payment failed. Please try again.');
+        console.error('Lenco onError:', err);
       }
     });
+    } catch (err) {
+      clearTimeout(timeout);
+      setIsSubmitting(false);
+      setStatusMessage(err?.message || 'Could not open payment. Check console for details.');
+      console.error('Lenco getPaid error:', err);
+    }
   };
 
   const handleClose = () => {
@@ -263,12 +301,13 @@ const Booking = () => {
                 </div>
               </div>
 
-              {statusMessage && <p className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">{statusMessage}</p>}
+              {statusMessage && <p className={`text-sm p-3 rounded-lg ${statusMessage.includes('504') || statusMessage.includes('not responding') ? 'text-amber-800 bg-amber-50' : 'text-red-500 bg-red-50'}`}>{statusMessage}</p>}
+              {!scriptReady && <p className="text-amber-600 text-sm">Loading payment gateway...</p>}
 
               <div className="flex gap-3">
                 <button type="button" onClick={() => setStep(1)} className="flex-1 border-2 border-gray-200 py-4 rounded-xl font-bold">Back</button>
-                <button type="submit" disabled={isSubmitting} className="flex-[2] bg-green-900 text-white py-4 rounded-xl font-bold shadow-lg disabled:opacity-50">
-                  {isSubmitting ? 'Opening Secure Pay...' : `Pay ZMW ${formValues.amount || '0.00'}`}
+                <button type="submit" disabled={isSubmitting || !scriptReady} className="flex-[2] bg-green-900 text-white py-4 rounded-xl font-bold shadow-lg disabled:opacity-50">
+                  {isSubmitting ? 'Opening payment window...' : scriptReady ? `Pay ZMW ${formValues.amount || '0.00'}` : 'Loading...'}
                 </button>
               </div>
             </form>
