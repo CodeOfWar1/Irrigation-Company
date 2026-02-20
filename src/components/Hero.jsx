@@ -43,7 +43,7 @@ const Hero = () => {
                         return (
                             <div
                                 key={index}
-                                className={`absolute inset-0 hero-3d-bg ${
+                                className={`absolute inset-0 hero-3d-bg hero-bg-slide ${
                                     isCurrent ? 'opacity-100 z-10' : isPrevious ? 'opacity-0 z-[5]' : 'opacity-0 z-0'
                                 }`}
                                 style={{

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
-import { createClient } from '@supabase/supabase-js';
 import { supabase } from '../supabase/client';
 const BOOKING_EVENT = 'open-booking';
 const COMPANY_NAME = 'Lawn Irrigation Technologies';
@@ -34,6 +34,8 @@ function generateTransactionId() {
 }
 
 const Booking = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname === '/appointments';
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [formValues, setFormValues] = useState({ ...INITIAL_FORM_VALUES });
@@ -42,6 +44,20 @@ const Booking = () => {
   const [receipt, setReceipt] = useState(null);
 
   const [scriptReady, setScriptReady] = useState(false);
+  const [bookedDates, setBookedDates] = useState([]);
+
+  useEffect(() => {
+    if (open) {
+      const fetchBookedDates = async () => {
+        const { data } = await supabase.from('bookings').select('preferred_date');
+        if (data) {
+          const dates = [...new Set(data.map((r) => r.preferred_date).filter(Boolean))];
+          setBookedDates(dates);
+        }
+      };
+      fetchBookedDates();
+    }
+  }, [open]);
 
   useEffect(() => {
     if (window.LencoPay) {
@@ -66,6 +82,7 @@ const Booking = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
+    if (name === 'date') setStatusMessage('');
   };
 
   const handleBookingSubmit = (e) => {
@@ -73,6 +90,10 @@ const Booking = () => {
     setStatusMessage('');
     if (!formValues.name || !formValues.email || !formValues.service || !formValues.date || !formValues.phone) {
       setStatusMessage('Please fill in all required fields.');
+      return;
+    }
+    if (bookedDates.includes(formValues.date)) {
+      setStatusMessage('This date is already booked. Please choose another date.');
       return;
     }
     setStep(2);
@@ -109,7 +130,7 @@ const Booking = () => {
         }
         return prev;
       });
-    }, 45000);
+    }, 60000);
     const nameParts = formValues.payerName.split(' ');
 
     try {
@@ -228,7 +249,8 @@ const Booking = () => {
 
   return (
     <>
-      {/* Floating Book button - fixed bottom-right on every page */}
+      {/* Floating Book button - hidden on admin dashboard */}
+      {!isAdminPage && (
       <button
         type="button"
         onClick={() => window.dispatchEvent(new CustomEvent(BOOKING_EVENT))}
@@ -240,6 +262,7 @@ const Booking = () => {
         </svg>
         <span className="hidden sm:inline">Book a Project</span>
       </button>
+      )}
 
       {open && <div className="fixed inset-0 bg-black/40 z-40" onClick={handleClose} />}
 
@@ -263,7 +286,24 @@ const Booking = () => {
                     <option key={key} value={key}>{label}</option>
                   ))}
                 </select>
-                <input type="date" name="date" value={formValues.date} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl" required />
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </span>
+                  <input
+                    type="date"
+                    name="date"
+                    value={formValues.date}
+                    onChange={handleChange}
+                    placeholder="Select date"
+                    min={new Date().toISOString().slice(0, 10)}
+                    className="w-full pl-12 pr-4 py-3 border rounded-xl [color-scheme:light]"
+                    required
+                  />
+                </div>
+                {statusMessage && step === 1 && <p className="text-red-500 text-sm">{statusMessage}</p>}
                 <textarea name="notes" placeholder="Notes (Optional)" value={formValues.notes} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl" rows="3" />
               </div>
               <button type="submit" className="w-full bg-green-900 text-white font-bold py-4 rounded-xl hover:bg-green-800 transition-colors">
