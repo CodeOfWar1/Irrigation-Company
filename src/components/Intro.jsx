@@ -11,7 +11,7 @@ const Intro = () => {
                     <div className="lg:w-2/5 relative shrink-0">
                         <div className="relative w-full aspect-[3/4] lg:aspect-auto lg:h-full lg:min-h-[380px] overflow-hidden bg-gray-100">
                             <img
-                                alt="George Kabwe Mulenga – Director & Lead Irrigation Designer"
+                                alt="George Mulenga – Director & Lead Irrigation Designer"
                                 className="w-full h-full object-cover"
                                 style={{ objectPosition: '50% 40%' }}
                                 src={img}
@@ -19,7 +19,7 @@ const Intro = () => {
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-28 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" aria-hidden="true" />
                         <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 text-white drop-shadow-md">
-                            <p className="text-sm font-semibold">George Kabwe Mulenga</p>
+                            <p className="text-sm font-semibold">George Mulenga</p>
                             <p className="text-xs text-white/90">Director & Lead Irrigation Designer</p>
                         </div>
                     </div>
@@ -28,11 +28,11 @@ const Intro = () => {
                     <div className="lg:w-3/5 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
                         <p className="text-green-600 font-semibold uppercase tracking-widest text-sm mb-2">Leadership</p>
                         <h2 className="text-xl sm:text-2xl md:text-3xl text-green-900 font-bold leading-tight mb-5">
-                            About Us: George Kabwe Mulenga &amp; our irrigation practice
+                            About Us
                         </h2>
 
                         <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
-                            Our work is led by <span className="font-semibold text-green-900">George Kabwe Mulenga</span>,
+                            Our work is led by <span className="font-semibold text-green-900">George Mulenga</span>,
                             Director and Lead Irrigation Designer, with over 14 years of specialised experience in
                             irrigation hydraulics across residential, commercial and institutional landscapes.
                         </p>

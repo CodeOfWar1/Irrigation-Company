@@ -7,9 +7,12 @@ const COMPANY_NAME = 'Lawn Irrigation Technologies';
 const LENCO_PUBLIC_KEY = import.meta.env.VITE_LENCO_PUBLIC_KEY;
 
 const SERVICE_LABELS = {
-  'irrigation-design': 'Irrigation design & consultancy',
-  'installation': 'Installation & supply',
-  'maintenance': 'Maintenance & after-sales',
+  'step-1-consultation': 'Step 1: Initial Site Consultation & Assessment',
+  'step-2-budget': 'Step 2: Preliminary Budget Estimate',
+  'step-3-design': 'Step 3: Detailed Irrigation Design & Formal Quotation',
+  'step-4-final-design': 'Step 4: Final Design Package & Technical Plan',
+  'step-5-installation': 'Step 5: Professional Installation & Handover',
+  'full-service': 'Full Service Pathway (All Steps)',
 };
 
 const INITIAL_FORM_VALUES = {
@@ -18,6 +21,7 @@ const INITIAL_FORM_VALUES = {
   phone: '',
   service: '',
   date: '',
+  time: '',
   notes: '',
   paymentMethod: 'card',
   payerName: '',
@@ -45,14 +49,27 @@ const Booking = () => {
 
   const [scriptReady, setScriptReady] = useState(false);
   const [bookedDates, setBookedDates] = useState([]);
+  const [bookedSlots, setBookedSlots] = useState({}); // { date: [time1, time2, ...] }
 
   useEffect(() => {
     if (open) {
       const fetchBookedDates = async () => {
-        const { data } = await supabase.from('bookings').select('preferred_date');
+        const { data } = await supabase.from('bookings').select('preferred_date, preferred_time');
         if (data) {
           const dates = [...new Set(data.map((r) => r.preferred_date).filter(Boolean))];
           setBookedDates(dates);
+          
+          // Group bookings by date and time
+          const slotsByDate = {};
+          data.forEach((booking) => {
+            if (booking.preferred_date && booking.preferred_time) {
+              if (!slotsByDate[booking.preferred_date]) {
+                slotsByDate[booking.preferred_date] = [];
+              }
+              slotsByDate[booking.preferred_date].push(booking.preferred_time);
+            }
+          });
+          setBookedSlots(slotsByDate);
         }
       };
       fetchBookedDates();
@@ -82,18 +99,32 @@ const Booking = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
-    if (name === 'date') setStatusMessage('');
+    if (name === 'date' || name === 'time') setStatusMessage('');
+  };
+
+  const isTimeSlotAvailable = (date, time) => {
+    if (!time) return true;
+    const slots = bookedSlots[date] || [];
+    if (slots.length === 0) return true;
+    
+    // Check if any existing booking is within 3 hours of the requested time
+    const requestedTime = new Date(`${date}T${time}`);
+    return !slots.some((bookedTime) => {
+      const booked = new Date(`${date}T${bookedTime}`);
+      const diffHours = Math.abs(requestedTime - booked) / (1000 * 60 * 60);
+      return diffHours < 3;
+    });
   };
 
   const handleBookingSubmit = (e) => {
     e.preventDefault();
     setStatusMessage('');
-    if (!formValues.name || !formValues.email || !formValues.service || !formValues.date || !formValues.phone) {
-      setStatusMessage('Please fill in all required fields.');
+    if (!formValues.name || !formValues.email || !formValues.service || !formValues.date || !formValues.phone || !formValues.time) {
+      setStatusMessage('Please fill in all required fields including time.');
       return;
     }
-    if (bookedDates.includes(formValues.date)) {
-      setStatusMessage('This date is already booked. Please choose another date.');
+    if (!isTimeSlotAvailable(formValues.date, formValues.time)) {
+      setStatusMessage('This time slot conflicts with an existing booking. Please choose a time at least 3 hours apart from other appointments.');
       return;
     }
     setStep(2);
@@ -157,6 +188,7 @@ const Booking = () => {
             phone: formValues.phone,
             service_type: formValues.service,
             preferred_date: formValues.date,
+            preferred_time: formValues.time,
             notes: formValues.notes,
             amount: amount,
             payment_method: formValues.paymentMethod
@@ -168,6 +200,7 @@ const Booking = () => {
             ...formValues,
             amount: amount,
             serviceLabel: SERVICE_LABELS[formValues.service],
+            time: formValues.time,
           });
           setStep(3);
           
@@ -233,6 +266,7 @@ const Booking = () => {
       ['Service', receipt.serviceLabel],
       ['Phone', receipt.phone],
       ['Booking Date', receipt.date],
+      ['Time', receipt.time || 'TBD'],
       ['Amount Paid', `ZMW ${Number(receipt.amount).toFixed(2)}`],
     ];
 
@@ -242,6 +276,25 @@ const Booking = () => {
       doc.setFont('helvetica', 'normal');
       doc.text(String(value), 60, y);
       y += 8;
+    });
+
+    y += 6;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.text('Terms & Conditions (summary)', 14, y);
+    y += 5;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    const termsLines = [
+      'This receipt is subject to Lawn Irrigation Technologies\' full Terms & Conditions.',
+      'The site audit fee (where applicable) is non-refundable but 100% deductible from the',
+      'final installation cost upon award of contract. Large properties may have additional',
+      'design fees. 3D visualisation and design rights are as per our published terms.',
+      'Full terms: please see our website or request a copy from us.',
+    ];
+    termsLines.forEach((line) => {
+      doc.text(line, 14, y, { maxWidth: pageW - 28 });
+      y += 4;
     });
 
     doc.save(`Receipt-${receipt.transactionId}.pdf`);
@@ -254,59 +307,129 @@ const Booking = () => {
       <button
         type="button"
         onClick={() => window.dispatchEvent(new CustomEvent(BOOKING_EVENT))}
-        className="fixed bottom-6 right-6 z-30 flex items-center gap-2 px-4 py-3 bg-green-900 hover:bg-green-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30 flex items-center gap-1.5 sm:gap-2 px-2.5 py-2 sm:px-4 sm:py-3 bg-green-900 hover:bg-green-800 text-white font-bold rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm"
         aria-label="Book a project"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
         <span className="hidden sm:inline">Book a Project</span>
+        <span className="sm:hidden">Book</span>
       </button>
       )}
 
       {open && <div className="fixed inset-0 bg-black/40 z-40" onClick={handleClose} />}
 
       <div className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 flex flex-col ${open ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex items-center justify-between p-4 bg-green-900 text-white">
-          <h2 className="text-lg font-bold">Book a Project</h2>
-          <button onClick={handleClose} className="p-2 text-xl">&times;</button>
+        <div className="flex items-center justify-between px-5 py-4 bg-green-900 text-white shadow-lg">
+          <h2 className="text-lg font-bold tracking-tight">Book a Project</h2>
+          <button onClick={handleClose} className="p-2 -m-2 rounded-lg hover:bg-white/10 text-xl transition-colors" aria-label="Close">&times;</button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-5 sm:p-6 bg-gray-50/50">
           {step === 1 && (
-            <form onSubmit={handleBookingSubmit} className="space-y-4">
-              <h3 className="text-gray-800 font-bold text-lg">Project Details</h3>
-              <div className="space-y-3">
-                <input type="text" name="name" placeholder="Full Name" value={formValues.name} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl" required />
-                <input type="tel" name="phone" placeholder="Phone (e.g. 097...)" value={formValues.phone} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl" required />
-                <input type="email" name="email" placeholder="Email Address" value={formValues.email} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl" required />
-                <select name="service" value={formValues.service} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl" required>
-                  <option value="">Select Service</option>
-                  {Object.entries(SERVICE_LABELS).map(([key, label]) => (
-                    <option key={key} value={key}>{label}</option>
-                  ))}
-                </select>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </span>
-                  <input
-                    type="date"
-                    name="date"
-                    value={formValues.date}
-                    onChange={handleChange}
-                    placeholder="Select date"
-                    min={new Date().toISOString().slice(0, 10)}
-                    className="w-full pl-12 pr-4 py-3 border rounded-xl [color-scheme:light]"
-                    required
-                  />
+            <form onSubmit={handleBookingSubmit} className="space-y-5">
+              <h3 className="text-gray-900 font-bold text-lg border-b border-green-200 pb-2">Project Details</h3>
+              <div className="space-y-4">
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">Full Name</span>
+                  <input type="text" name="name" value={formValues.name} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white" required />
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">Phone</span>
+                  <input type="tel" name="phone" placeholder="e.g. 097..." value={formValues.phone} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white" required />
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">Email</span>
+                  <input type="email" name="email" value={formValues.email} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white" required />
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">Service</span>
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    </span>
+                    <select
+                      name="service"
+                      value={formValues.service}
+                      onChange={handleChange}
+                      className="w-full pl-12 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white appearance-none cursor-pointer text-gray-800 font-medium"
+                      required
+                    >
+                      <option value="">Select a service</option>
+                      {Object.entries(SERVICE_LABELS).map(([key, label]) => (
+                        <option key={key} value={key}>{label}</option>
+                      ))}
+                    </select>
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    </span>
+                  </div>
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">Preferred date</span>
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </span>
+                    <input
+                      type="date"
+                      name="date"
+                      value={formValues.date}
+                      onChange={handleChange}
+                      min={new Date().toISOString().slice(0, 10)}
+                      className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white [color-scheme:light]"
+                      required
+                    />
+                  </div>
+                </label>
+                <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 text-green-700">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </span>
+                    <span className="text-sm font-semibold text-gray-800">Preferred time</span>
+                  </div>
+                  <p className="text-xs text-gray-500 mb-3">Tap a time slot or pick a custom time below</p>
+                  <div className="grid grid-cols-4 gap-2 mb-3">
+                    {['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'].map((slot) => (
+                      <button
+                        key={slot}
+                        type="button"
+                        onClick={() => setFormValues((prev) => ({ ...prev, time: slot }))}
+                        className={`py-2.5 rounded-lg text-sm font-semibold border-2 transition-all ${
+                          formValues.time === slot
+                            ? 'border-green-600 bg-green-600 text-white shadow-md'
+                            : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-green-400 hover:bg-green-50/50'
+                        }`}
+                      >
+                        {slot}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </span>
+                    <input
+                      type="time"
+                      name="time"
+                      value={formValues.time}
+                      onChange={handleChange}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white [color-scheme:light]"
+                      required
+                    />
+                  </div>
                 </div>
                 {statusMessage && step === 1 && <p className="text-red-500 text-sm">{statusMessage}</p>}
-                <textarea name="notes" placeholder="Notes (Optional)" value={formValues.notes} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl" rows="3" />
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">Notes (optional)</span>
+                  <textarea name="notes" value={formValues.notes} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white resize-none" rows="3" placeholder="Any special requests or details..." />
+                </label>
               </div>
-              <button type="submit" className="w-full bg-green-900 text-white font-bold py-4 rounded-xl hover:bg-green-800 transition-colors">
+              <button type="submit" className="w-full bg-green-900 text-white font-bold py-3.5 rounded-xl hover:bg-green-800 transition-colors shadow-md hover:shadow-lg focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                 Review Summary & Pay →
               </button>
             </form>
@@ -314,9 +437,9 @@ const Booking = () => {
 
           {step === 2 && (
             <form onSubmit={handlePayment} className="space-y-6">
-              <div className="bg-gray-50 border rounded-2xl p-5 space-y-4">
-                <h3 className="font-bold text-gray-900 border-b pb-2">Order Summary</h3>
-                <div className="text-sm space-y-2">
+              <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm space-y-4">
+                <h3 className="font-bold text-gray-900 border-b border-green-200 pb-2">Order Summary</h3>
+                <div className="text-sm space-y-2.5">
                   <div className="flex justify-between">
                     <span className="text-gray-500">Client:</span>
                     <span className="font-medium">{formValues.name}</span>
@@ -327,17 +450,17 @@ const Booking = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Scheduled:</span>
-                    <span className="font-medium">{formValues.date}</span>
+                    <span className="font-medium">{formValues.date} at {formValues.time || 'TBD'}</span>
                   </div>
                 </div>
               </div>
 
               <div className="space-y-3">
                 <label className="block text-sm font-bold text-gray-700">Payment Information</label>
-                <input type="text" name="payerName" placeholder="Name on Account/Card" value={formValues.payerName} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl" required />
+                <input type="text" name="payerName" placeholder="Name on Account/Card" value={formValues.payerName} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white" required />
                 <div className="relative">
-                    <span className="absolute left-4 top-3.5 text-gray-500">K</span>
-                    <input type="number" name="amount" readOnly placeholder="Amount (ZMW)" value={formValues.amount} onChange={handleChange} className="w-full pl-8 pr-4 py-3 border rounded-xl" required min="1" />
+                  <span className="absolute left-4 top-3.5 text-gray-500">K</span>
+                  <input type="number" name="amount" readOnly placeholder="Amount (ZMW)" value={formValues.amount} onChange={handleChange} className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50" required min="1" />
                 </div>
               </div>
 
@@ -371,12 +494,14 @@ const Booking = () => {
                   <span>{new Date().toLocaleDateString()}</span>
                 </div>
                 <div className="border-t pt-3 space-y-2">
-                    <div className="flex justify-between text-sm"><span>Service:</span><span className="font-bold">{receipt.serviceLabel}</span></div>
-                    <div className="flex justify-between text-sm"><span>Paid by:</span><span className="font-bold">{receipt.payerName}</span></div>
-                    <div className="flex justify-between text-lg pt-2 border-t">
-                        <span className="font-bold">Total:</span>
-                        <span className="font-black text-green-900">ZMW {Number(receipt.amount).toFixed(2)}</span>
-                    </div>
+                  <div className="flex justify-between text-sm"><span>Service:</span><span className="font-bold">{receipt.serviceLabel}</span></div>
+                  <div className="flex justify-between text-sm"><span>Date:</span><span className="font-bold">{receipt.date || '—'}</span></div>
+                  <div className="flex justify-between text-sm"><span>Time:</span><span className="font-bold">{receipt.time || '—'}</span></div>
+                  <div className="flex justify-between text-sm"><span>Paid by:</span><span className="font-bold">{receipt.payerName}</span></div>
+                  <div className="flex justify-between text-lg pt-2 border-t">
+                    <span className="font-bold">Total:</span>
+                    <span className="font-black text-green-900">ZMW {Number(receipt.amount).toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
 

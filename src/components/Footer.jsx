@@ -24,8 +24,6 @@ const Footer = () => {
                             <p>Great East Road</p>
                             <p>Lusaka, Zambia</p>
                             <p className="pt-2 font-medium">Established: 2011</p>
-                            <p>Registration No: 184163</p>
-                            <p>TPIN: 1002735194</p>
                         </div>
                     </div>
 

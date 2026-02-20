@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import NavBar from '../components/Navbar/NavBar';
 import Footer from '../components/Footer';
 import { useDocTitle } from '../components/CustomHook';
-import { portfolioProjects } from '../data/portfolioProjects';
+import { usePortfolioProjects } from '../data/usePortfolio';
 
 /**
  * Portfolio page (route: /get-demo). Shows all projects in Commercial and Residential sections.
  */
 const DemoProduct = () => {
   useDocTitle('Portfolio | Lawn Irrigation Technologies');
+  const { projects: portfolioProjects, loading } = usePortfolioProjects();
 
   const commercial = portfolioProjects.filter((p) => p.sector !== 'Residential');
   const residential = portfolioProjects.filter((p) => p.sector === 'Residential');
@@ -104,6 +105,12 @@ const DemoProduct = () => {
         </div>
 
         <div className="m-auto max-w-6xl px-3 sm:px-4 md:px-8 -mt-6 relative z-10 pb-16">
+          {loading ? (
+            <div className="flex justify-center py-16">
+              <div className="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin" />
+            </div>
+          ) : (
+          <>
           {commercial.length > 0 && (
             <section className="mb-12 mt-8 sm:mt-12" data-aos="fade-up">
               <h2 id="commercial-projects" className="text-xl sm:text-2xl font-bold text-green-900 mb-6">
@@ -128,6 +135,11 @@ const DemoProduct = () => {
                 ))}
               </div>
             </section>
+          )}
+          {(commercial.length === 0 && residential.length === 0) && (
+            <p className="text-center text-gray-500 py-12">No projects in portfolio yet.</p>
+          )}
+          </>
           )}
         </div>
       </main>

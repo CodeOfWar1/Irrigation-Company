@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { jsPDF } from 'jspdf';
 import installationImg from '../images/Services/installation.jpg';
 import supplyImg from '../images/Services/Supply.jpg';
 import maintenanceImg from '../images/Services/maintance.webp';
@@ -7,70 +8,92 @@ import consultationImg from '../images/Services/consultation.webp';
 const PROCESS_STEPS = [
     {
         id: 1,
-        title: 'Step 1: The Scientific Audit',
+        title: 'Step 1: Initial Site Consultation & Assessment',
         investment: 'ZMW 1,000',
-        sub: null,
+        sub: 'Step 1.2: Preliminary Budget Estimate – Complimentary',
+        subStep: {
+            title: 'Step 1.2: Preliminary Budget Estimate',
+            investment: 'Complimentary',
+            deliverables: [
+                'A clear, itemized preliminary estimate covering key components: Storage/Tanks, Pumping Unit, Automation, Pipes & Fittings, Labour, and Contingency.',
+                'Understand the potential project scope and cost.'
+            ],
+            timeline: 'Within 1 week after assessment',
+            investmentDetail: 'Complimentary',
+        },
         icon: (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
         ),
-        deliverables: ['On-site evaluation of soil texture and topography.', 'Measurement of water flow rates and static pressure.', 'Identification of hydro-zones and specific water needs.'],
-        timeline: 'Initial consultation on site. Cancellations < 24 hours or no-shows forfeit the fee.',
-        investmentDetail: 'ZMW 1,000 commitment fee. 100% deductible from the final installation cost.',
+        deliverables: [
+            'On-site evaluation of your lawn, garden beds, walkways, etc.',
+            'Identification of factors affecting irrigation performance.',
+            'Analysis of water availability, pressure, and needs.',
+            'Discussion of your vision and tailored solutions.'
+        ],
+        timeline: 'By appointment',
+        investmentDetail: 'ZMW 1,000 (Paid on site at consultation)',
     },
     {
-        id: '2a',
-        title: 'Step 2 (Path A): Scoping — Standard residential',
-        investment: 'Complimentary',
-        investmentHighlight: true,
-        sub: 'For properties up to approximately 4,200 m².',
-        icon: (
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-        ),
-        deliverables: ['Complimentary preliminary quote based on more than 14 years of irrigation experience.'],
-        timeline: 'Prepared following completion of the scientific audit.',
-        investmentDetail: 'Complimentary (no charge).',
-    },
-    {
-        id: '2b',
-        title: 'Step 2 (Path B): Scoping — Estate & commercial',
-        investment: 'ZMW 3,000',
-        sub: 'For properties roughly between 4,200 m² and 10,000 m².',
-        icon: (
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-        ),
-        deliverables: ['Advanced hydraulic quantification.', 'Technical CAD blueprints for precise sprinkler placement.', 'Comprehensive installation guide.'],
-        timeline: 'Work starts after deposit; drafting begins immediately.',
-        investmentDetail: 'ZMW 3,000 (ZMW 1,500 deposit required to start). Arrangements for larger or more complex sites can be discussed separately.',
-    },
-    {
-        id: 3,
-        title: 'Step 3: 3D visualisation & CAD design',
-        investment: 'ZMW 4,000',
-        sub: 'Typically for properties up to around 4,200 m².',
+        id: 2,
+        title: 'Step 2: Detailed Irrigation Design & Formal Quotation',
+        investment: 'ZMW 1,000',
+        sub: null,
         icon: (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2m0 10V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
         ),
-        deliverables: ['Professional 3D landscape rendering.', 'Virtual walkthrough of the garden layout.', 'Full material list and high‑resolution renders.'],
-        timeline: 'Completed before any trenching or digging begins.',
-        investmentDetail: 'ZMW 4,000 for standard property sizes. Larger or more complex properties can be quoted individually.',
+        deliverables: [
+            'Professional Computer-Aided Design (CAD) drawing showing: Site layout, house boundaries, lawn/driveway areas.',
+            'Optimized sprinkler selection & placement.',
+            'Pump and pipe sizing.',
+            'Efficient water zoning.',
+            'Precise quantification of all materials required.',
+            'A firm, detailed quotation for the complete system.'
+        ],
+        timeline: '1-2 weeks after assessment (or go-ahead from preliminary estimate)',
+        investmentDetail: 'ZMW 1,000 (ZMW 700 deposit, ZMW 300 upon design submission)',
     },
     {
-        id: '4-5',
-        title: 'Steps 4 & 5: Precision installation & handover',
-        investment: 'from 25% of total material cost',
+        id: 4,
+        title: 'Step 3: Final Design Package & Technical Plan',
+        investment: 'ZMW 2,000',
+        sub: null,
+        icon: (
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        ),
+        deliverables: [
+            'A comprehensive PDF document ready for installation, including:',
+            'Finalized sprinkler placement details.',
+            'System pressure requirements.',
+            'Specific pipe sizes.',
+            'Depth of trenching guidelines.'
+        ],
+        timeline: '1 week after sharing detailed quotation/design approval',
+        investmentDetail: 'ZMW 2,000 (ZMW 1,400 deposit, ZMW 700 upon plan submission)',
+    },
+    {
+        id: 5,
+        title: 'Step 4: Professional Installation & Handover',
+        investment: '25% of Total Material Cost',
         sub: null,
         icon: (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         ),
-        deliverables: ['Trenching, piping and sprinkler installation.', 'Smart setup of Wi‑Fi controllers and rain sensors.', 'Training on how to control the lawn from your phone.', 'Handover of a fully operational, precision‑engineered system.'],
-        timeline: 'Mobilisation after design approval and contract signing.',
-        investmentDetail: 'Typically from 25% of the total material cost. Detailed installation pricing is confirmed with your final design and bill of quantities.',
+        deliverables: [
+            'Mobilization and site preparation.',
+            'Precise marking of the designed layout.',
+            'Careful trench digging.',
+            'Expert installation of all irrigation components.',
+            'System testing, commissioning, and fine-tuning.',
+            'Thorough handover and operational guidance.'
+        ],
+        timeline: 'Varies (Dependent on project size; advised upon design finalization)',
+        investmentDetail: '25% of Total Material Cost (Exact installation fee confirmed with detailed quotation)',
     },
 ];
 
 const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
     const isLast = index === PROCESS_STEPS.length - 1;
-    const stepLabel = typeof step.id === 'number' ? step.id : step.id === '2a' ? '2A' : step.id === '2b' ? '2B' : '4-5';
+    const stepLabel = typeof step.id === 'number' ? step.id : step.id;
     return (
         <div className="relative flex gap-3 sm:gap-4 md:gap-6">
             {/* Timeline: circle + line — hidden on very small, visible from sm */}
@@ -147,6 +170,32 @@ const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
                                     <p className="leading-snug">{step.investmentDetail}</p>
                                 </div>
                             </div>
+                            {step.subStep && (
+                                <div className="mt-5 pt-5 border-t border-green-200">
+                                    <h4 className="font-bold text-green-800 mb-3 text-sm flex items-center gap-2">
+                                        <span className="w-7 h-7 rounded bg-green-700 text-white flex items-center justify-center text-xs shrink-0">1.2</span>
+                                        {step.subStep.title} <span className="text-green-600 font-semibold">({step.subStep.investment})</span>
+                                    </h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 text-sm text-gray-700 pl-0 md:pl-9">
+                                        <div className="bg-green-50/60 rounded-lg sm:rounded-xl p-4 border border-green-100">
+                                            <h5 className="font-semibold text-green-900 mb-2 text-xs uppercase tracking-wider">Deliverables</h5>
+                                            <ul className="list-disc list-inside space-y-1.5">
+                                                {step.subStep.deliverables.map((item, i) => (
+                                                    <li key={i} className="leading-snug">{item}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div className="bg-gray-50 rounded-lg sm:rounded-xl p-4 border border-gray-200">
+                                            <h5 className="font-semibold text-gray-800 mb-2 text-xs uppercase tracking-wider">Timeline</h5>
+                                            <p className="leading-snug">{step.subStep.timeline}</p>
+                                        </div>
+                                        <div className="bg-green-50/60 rounded-lg sm:rounded-xl p-4 border border-green-200">
+                                            <h5 className="font-semibold text-green-700 mb-2 text-xs uppercase tracking-wider">Investment</h5>
+                                            <p className="leading-snug">{step.subStep.investmentDetail}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </button>
@@ -157,6 +206,74 @@ const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
 
 const Services = () => {
     const [expandedStep, setExpandedStep] = useState(0); // first step expanded by default
+
+    const handleDownloadServicePathPDF = () => {
+        const doc = new jsPDF({ format: 'a4', unit: 'mm' });
+        const pageW = doc.internal.pageSize.getWidth();
+        const margin = 14;
+        let y = margin;
+
+        // Header
+        doc.setFillColor(22, 101, 52); // green-800
+        doc.rect(0, 0, pageW, 40, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(20);
+        doc.text('Lawn Irrigation Technologies', margin, 20);
+        doc.setFontSize(12);
+        doc.text('Service Pathway - How We Work', margin, 30);
+
+        // Body
+        doc.setTextColor(0, 0, 0);
+        y = 50;
+        doc.setFontSize(10);
+        doc.text('Our standard services cater to properties up to 4,200m² within a 30km radius of Lusaka.', margin, y);
+        y += 8;
+        doc.text('For larger properties or specialized requirements, we\'re happy to discuss a custom solution.', margin, y);
+        y += 12;
+
+        PROCESS_STEPS.forEach((step, index) => {
+            if (y > 250) {
+                doc.addPage();
+                y = margin;
+            }
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(11);
+            doc.text(step.title.replace(/^Step \d+: /, `Step ${step.id}: `), margin, y);
+            y += 6;
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.text(`Investment: ${step.investment}`, margin, y);
+            y += 5;
+            doc.text('What You Receive:', margin, y);
+            y += 4;
+            step.deliverables.forEach((item) => {
+                doc.text(`• ${item}`, margin + 3, y, { maxWidth: pageW - 2 * margin - 3 });
+                y += 5;
+              });
+            y += 2;
+            doc.text(`Timeline: ${step.timeline}`, margin, y);
+            y += 5;
+            doc.text(`Investment Details: ${step.investmentDetail}`, margin, y, { maxWidth: pageW - 2 * margin });
+            y += 8;
+            if (step.subStep) {
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.text(`  ${step.subStep.title} (${step.subStep.investment})`, margin, y);
+                y += 5;
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(9);
+                step.subStep.deliverables.forEach((item) => {
+                    doc.text(`  • ${item}`, margin + 3, y, { maxWidth: pageW - 2 * margin - 3 });
+                    y += 5;
+                });
+                doc.text(`  Timeline: ${step.subStep.timeline}`, margin, y);
+                y += 5;
+            }
+            y += 6;
+        });
+
+        doc.save('Service-Pathway-Lawn-Irrigation-Technologies.pdf');
+    };
 
     return (
         <div id="services" className="bg-gray-100 py-12" >
@@ -189,7 +306,7 @@ const Services = () => {
                             <div className="m-3 space-y-3 text-sm sm:text-base text-left">
                                 <img alt="Irrigation installation" className="rounded-t group-hover:scale-[1.15] transition duration-1000 ease-in-out w-full h-40 object-cover" src={installationImg} />
                                 <h2 className="font-semibold my-3 text-lg sm:text-xl text-left">
-                                    Soil Engineering &amp; Consulting
+                                    Engineering &amp; Consulting
                                 </h2>
                                 <p className="font-medium leading-relaxed">
                                     pH testing, nutrient analysis, and "Green-Lawn
@@ -308,8 +425,22 @@ const Services = () => {
                             <div className="w-16 sm:w-20 h-0.5 bg-green-900 rounded-full" />
                         </div>
                         <p className="mt-4 text-gray-600 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-2">
-                            From scientific audit to handover. Tap any step for details.
+                            From initial consultation to handover. Tap any step for details.
                         </p>
+                        <p className="mt-2 text-xs sm:text-sm text-gray-500 max-w-2xl mx-auto px-2">
+                            Our standard services cater to properties up to 4,200m² within a 30km radius of Lusaka (our transport included). For larger properties or specialized requirements beyond this scope, we're happy to discuss a custom solution.
+                        </p>
+                        <div className="mt-4 flex justify-center">
+                          <button
+                            onClick={handleDownloadServicePathPDF}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-900 hover:bg-green-800 text-white font-semibold rounded-xl shadow-md transition-colors text-sm"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download Service Pathway PDF
+                          </button>
+                        </div>
                     </div>
 
                     <div className="space-y-3 sm:space-y-4">

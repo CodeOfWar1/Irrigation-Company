@@ -1,4 +1,5 @@
 import React from 'react';
+import { jsPDF } from 'jspdf';
 import NavBar from '../components/Navbar/NavBar';
 import Footer from '../components/Footer';
 import { useDocTitle } from '../components/CustomHook';
@@ -26,6 +27,85 @@ const SectionCard = ({ id, heading, children, className = '' }) => (
 const CompanyProfile = () => {
   useDocTitle('Lawn Irrigation Technologies | Company profile');
 
+  const handleDownloadCompanyProfilePDF = () => {
+    const doc = new jsPDF({ format: 'a4', unit: 'mm' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const margin = 14;
+    let y = margin;
+
+    // Header
+    doc.setFillColor(22, 101, 52); // green-800
+    doc.rect(0, 0, pageW, 40, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(20);
+    doc.text('Lawn Irrigation Technologies', margin, 20);
+    doc.setFontSize(12);
+    doc.text('Company Profile', margin, 30);
+
+    // Content sections
+    doc.setTextColor(0, 0, 0);
+    y = 50;
+
+    const sections = [
+      {
+        title: '1. Executive Summary',
+        content: [
+          'Established in 2011, Lawn Irrigation Technologies is a leading Zambian engineering firm specialising in the design, supply and installation of advanced residential and commercial irrigation systems.',
+          'Unlike standard landscaping firms, we approach every project through the lens of Agricultural Engineering and Soil Science. With over 14 years of hands‑on experience, we have successfully executed high‑profile projects for diplomatic missions, government agencies and international schools.',
+          'We combine modern 3D visualisation technology with scientific soil analysis to deliver water‑efficient, solar‑ready ("Zesco‑proof") and automated green spaces that thrive in the Zambian climate.'
+        ]
+      },
+      {
+        title: '2. Company Details',
+        content: [
+          'Legal name: Lawn Irrigation Technologies',
+          'Year established: 2011',
+          'Headquarters: Plot 70, Handsworth, Great East Road, Lusaka'
+        ]
+      },
+      {
+        title: '7. Service Pathway',
+        content: [
+          'Step 1: Initial Site Consultation & Assessment - ZMW 1,000',
+          'Step 2: Preliminary Budget Estimate - Complimentary',
+          'Step 3: Detailed Irrigation Design & Formal Quotation - ZMW 1,000',
+          'Step 4: Final Design Package & Technical Plan - ZMW 2,000',
+          'Step 5: Professional Installation & Handover - 25% of Total Material Cost'
+        ]
+      },
+      {
+        title: '8. Contact & Location',
+        content: [
+          'Physical address: Plot 70, Handsworth, Great East Road, Lusaka, Zambia',
+          'Phone: +260 966 897 354',
+          'Email: lawnirrigationtech@gmail.com',
+          'Email: geomulenga@gmail.com',
+          'Tagline: "Easy Life With Modern Technology"'
+        ]
+      }
+    ];
+
+    sections.forEach((section) => {
+      if (y > 250) {
+        doc.addPage();
+        y = margin;
+      }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text(section.title, margin, y);
+      y += 7;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      section.content.forEach((line) => {
+        doc.text(line, margin, y, { maxWidth: pageW - 2 * margin });
+        y += 5;
+      });
+      y += 5;
+    });
+
+    doc.save('Company-Profile-Lawn-Irrigation-Technologies.pdf');
+  };
+
   return (
     <>
       <div>
@@ -47,6 +127,17 @@ const CompanyProfile = () => {
             <p className="mt-2 text-sm text-green-200">
               Design • Supply • Install • Maintain
             </p>
+            <div className="mt-6">
+              <button
+                onClick={handleDownloadCompanyProfilePDF}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl border border-white/30 transition-colors text-sm"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download Company Profile PDF
+              </button>
+            </div>
           </div>
         </div>
 
@@ -78,20 +169,11 @@ const CompanyProfile = () => {
                 <div className="font-semibold text-gray-500">Legal name</div>
                 <div>Lawn Irrigation Technologies</div>
 
-                <div className="font-semibold text-gray-500">Registration number</div>
-                <div>184163</div>
-
-                <div className="font-semibold text-gray-500">TPIN</div>
-                <div>1002735194</div>
-
                 <div className="font-semibold text-gray-500">Year established</div>
                 <div>2011</div>
 
                 <div className="font-semibold text-gray-500">Headquarters</div>
                 <div>Plot 70, Handsworth, Great East Road, Lusaka</div>
-
-                <div className="font-semibold text-gray-500">Bankers</div>
-                <div>Zambia National Commercial Bank (Zanaco) – Premium Branch</div>
               </div>
             </SectionCard>
 
@@ -169,33 +251,13 @@ const CompanyProfile = () => {
               <div className="space-y-5 text-sm md:text-base text-gray-700">
                 <div>
                   <h3 className="font-semibold text-green-900">
-                    George Kabwe Mulenga – Director / Lead Irrigation Designer
+                    George Mulenga – Director / Lead Irrigation Designer
                   </h3>
                   <ul className="list-disc list-inside space-y-1 mt-1">
                     <li>M.Eng Agricultural Engineering (Candidate) – UNZA.</li>
                     <li>B.Sc Agricultural Science, major: Soil Science – UNZA.</li>
                     <li>Diploma in Agricultural Engineering – NRDC.</li>
                     <li>Over 14 years of specialised experience in irrigation hydraulics.</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-green-900">
-                    Stevenson Sumbukeni – Site Manager
-                  </h3>
-                  <ul className="list-disc list-inside space-y-1 mt-1">
-                    <li>Diploma in Water Engineering – NRDC.</li>
-                    <li>Expertise in large‑scale pump installations (formerly CAMCO / Saro Agro).</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-green-900">
-                    William Jere – Lead Technician
-                  </h3>
-                  <ul className="list-disc list-inside space-y-1 mt-1">
-                    <li>Certificate in Electronics.</li>
-                    <li>15+ years’ experience in complex pump systems and electrical automation.</li>
                   </ul>
                 </div>
               </div>

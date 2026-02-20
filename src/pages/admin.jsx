@@ -19,12 +19,70 @@ const AdminAppointments = () => {
   const [selectedAppt, setSelectedAppt] = useState(null);
   const [filter, setFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [viewStatus, setViewStatus] = useState('open'); 
+  const [viewStatus, setViewStatus] = useState('open');
+  const [portfolioProjects, setPortfolioProjects] = useState([]);
+  const [portfolioLoading, setPortfolioLoading] = useState(false);
+  const [portfolioMessage, setPortfolioMessage] = useState(null);
+  const [portfolioForm, setPortfolioForm] = useState({ name: '', sector: 'Commercial & institutional', imageUrlsText: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchAppointments();
   }, []);
+
+  const fetchPortfolio = async () => {
+    setPortfolioLoading(true);
+    const { data, error } = await supabase
+      .from('portfolio_projects')
+      .select('id, name, sector, image_urls, created_at')
+      .order('created_at', { ascending: false });
+    if (error) {
+      console.warn('Portfolio fetch:', error.message);
+      setPortfolioProjects([]);
+    } else {
+      setPortfolioProjects(data || []);
+    }
+    setPortfolioLoading(false);
+  };
+
+  useEffect(() => {
+    fetchPortfolio();
+  }, []);
+
+  const handleAddPortfolioProject = async (e) => {
+    e.preventDefault();
+    setPortfolioMessage(null);
+    const name = portfolioForm.name.trim();
+    const urls = portfolioForm.imageUrlsText.trim().split(/\n/).map((u) => u.trim()).filter(Boolean);
+    if (!name || urls.length === 0) {
+      setPortfolioMessage('Name and at least one image URL are required.');
+      return;
+    }
+    const { error } = await supabase.from('portfolio_projects').insert([{
+      name,
+      sector: portfolioForm.sector,
+      image_urls: urls,
+    }]);
+    if (error) {
+      setPortfolioMessage(error.message || 'Failed to add project.');
+      return;
+    }
+    setPortfolioMessage('Project added. It will appear on the portfolio page.');
+    setPortfolioForm({ name: '', sector: 'Commercial & institutional', imageUrlsText: '' });
+    fetchPortfolio();
+    setTimeout(() => setPortfolioMessage(null), 4000);
+  };
+
+  const handleDeletePortfolioProject = async (id) => {
+    if (!window.confirm('Remove this project from the portfolio?')) return;
+    const { error } = await supabase.from('portfolio_projects').delete().eq('id', id);
+    if (error) setPortfolioMessage(error.message || 'Delete failed.');
+    else {
+      setPortfolioMessage('Project removed.');
+      fetchPortfolio();
+      setTimeout(() => setPortfolioMessage(null), 3000);
+    }
+  };
 
   const fetchAppointments = async () => {
     setLoading(true);
@@ -96,6 +154,7 @@ const AdminAppointments = () => {
       ['Service', SERVICE_LABELS[appt.service_type] || appt.service_type],
       ['Phone', appt.phone],
       ['Scheduled Date', appt.preferred_date],
+      ['Time', appt.preferred_time || '—'],
       ['Amount Paid', `ZMW ${Number(appt.amount).toFixed(2)}`],
     ];
 
@@ -311,7 +370,7 @@ const AdminAppointments = () => {
                   <div className="flex flex-col items-center sm:items-start">
                     <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Schedule</span>
                     <span className="font-mono text-[11px] md:text-xs text-green-900 font-bold bg-green-50 px-2 py-1 rounded-lg mt-1">
-                      {appt.preferred_date}
+                      {appt.preferred_date} {appt.preferred_time ? `at ${appt.preferred_time}` : ''}
                     </span>
                   </div>
                 </div>
@@ -334,6 +393,96 @@ const AdminAppointments = () => {
           </div>
         )}
       </div>
+
+      {/* Portfolio projects – add projects to show on portfolio page */}
+      <section className="mt-12 pt-10 border-t border-gray-200">
+        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <span className="w-8 h-8 rounded-lg bg-green-100 text-green-700 flex items-center justify-center">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+          </span>
+          Portfolio projects
+        </h2>
+        <p className="text-sm text-gray-500 mb-6">Projects added here appear on the Portfolio page (/get-demo) and on the home page. Add name, sector, and image URLs (one per line).</p>
+
+        <form onSubmit={handleAddPortfolioProject} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <label className="block">
+              <span className="block text-sm font-semibold text-gray-700 mb-1">Project name</span>
+              <input
+                type="text"
+                value={portfolioForm.name}
+                onChange={(e) => setPortfolioForm((f) => ({ ...f, name: e.target.value }))}
+                placeholder="e.g. Turkish Embassy"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              />
+            </label>
+            <label className="block">
+              <span className="block text-sm font-semibold text-gray-700 mb-1">Sector</span>
+              <select
+                value={portfolioForm.sector}
+                onChange={(e) => setPortfolioForm((f) => ({ ...f, sector: e.target.value }))}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              >
+                <option value="Commercial & institutional">Commercial &amp; institutional</option>
+                <option value="Residential">Residential</option>
+              </select>
+            </label>
+          </div>
+          <label className="block mb-4">
+            <span className="block text-sm font-semibold text-gray-700 mb-1">Image URLs (one per line)</span>
+            <textarea
+              value={portfolioForm.imageUrlsText}
+              onChange={(e) => setPortfolioForm((f) => ({ ...f, imageUrlsText: e.target.value }))}
+              placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
+              rows={4}
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 font-mono text-sm"
+            />
+          </label>
+          {portfolioMessage && (
+            <p className={`mb-4 text-sm ${portfolioMessage.includes('Failed') || portfolioMessage.includes('required') ? 'text-red-600' : 'text-green-700'}`}>{portfolioMessage}</p>
+          )}
+          <button type="submit" className="bg-green-900 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-800 transition-colors">
+            Add project to portfolio
+          </button>
+        </form>
+
+        {portfolioLoading ? (
+          <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center">
+            <div className="w-10 h-10 border-2 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-2" />
+            <p className="text-gray-500 text-sm">Loading portfolio...</p>
+          </div>
+        ) : portfolioProjects.length === 0 ? (
+          <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-gray-500 text-sm">
+            No admin-added projects yet. Projects from your image folders still appear on the site. Add projects above to show more on the portfolio page.
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Added projects ({portfolioProjects.length})</p>
+            <div className="grid gap-3">
+              {portfolioProjects.map((p) => (
+                <div key={p.id} className="bg-white rounded-xl border border-gray-100 p-4 flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-4 min-w-0">
+                    {Array.isArray(p.image_urls) && p.image_urls[0] && (
+                      <img src={p.image_urls[0]} alt="" className="w-16 h-16 rounded-lg object-cover bg-gray-100" />
+                    )}
+                    <div>
+                      <p className="font-bold text-gray-900">{p.name}</p>
+                      <p className="text-xs text-gray-500">{p.sector} · {Array.isArray(p.image_urls) ? p.image_urls.length : 0} image(s)</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleDeletePortfolioProject(p.id)}
+                    className="px-4 py-2 rounded-lg text-sm font-semibold text-red-600 bg-red-50 hover:bg-red-100 border border-red-100 transition-colors"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
 
       {/* Detail Modal */}
       {selectedAppt && (
@@ -376,7 +525,7 @@ const AdminAppointments = () => {
                 <span className="text-sm md:text-base font-black text-green-900 block">
                   {SERVICE_LABELS[selectedAppt.service_type] || selectedAppt.service_type}
                 </span>
-                <p className="text-xs font-bold text-green-700 mt-1">Date: {selectedAppt.preferred_date}</p>
+                <p className="text-xs font-bold text-green-700 mt-1">Date: {selectedAppt.preferred_date} {selectedAppt.preferred_time ? `at ${selectedAppt.preferred_time}` : ''}</p>
               </div>
 
               <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">

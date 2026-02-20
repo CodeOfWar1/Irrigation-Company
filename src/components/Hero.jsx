@@ -87,19 +87,19 @@ const Hero = () => {
                     data-aos-duration="1000"
                 >
 
-                    <div className="flex flex-col lg:flex-row py-8 justify-between text-center lg:text-left items-center">
+                    <div className="flex flex-col lg:flex-row py-8 justify-start lg:justify-between text-left items-start lg:items-center">
 
-                        <div className="lg:max-w-2xl flex flex-col justify-center">
+                        <div className="lg:max-w-2xl flex flex-col justify-center items-start w-full text-left">
 
-                            {/* HEADLINE */}
-                            <h1 className="mb-5 md:mb-7 md:text-5xl text-3xl font-extrabold text-white drop-shadow-lg leading-tight">
+                            {/* HEADLINE - break-words + smaller on mobile to prevent overflow */}
+                            <h1 className="mb-5 md:mb-7 md:text-5xl text-2xl sm:text-3xl font-extrabold text-white drop-shadow-lg leading-tight break-words max-w-full">
                                 Stop Guessing. Start Engineering.
                             </h1>
 
-                            {/* SUB-HEADLINE (shorter on mobile) */}
-                            <h2 className="text-lg md:text-2xl font-semibold text-green-200 mb-4 md:mb-5 drop-shadow">
+                            {/* SUB-HEADLINE (shorter on mobile, break-words to avoid overflow) */}
+                            <h2 className="text-base sm:text-lg md:text-2xl font-semibold text-green-200 mb-4 md:mb-5 drop-shadow break-words max-w-full">
                                 <span className="sm:hidden">
-                                    Soil science, 3D design & advanced irrigation for your property.
+                                    Soil science, 3D design &amp; advanced irrigation for your property.
                                 </span>
                                 <span className="hidden sm:inline">
                                     The only firm in Zambia combining Soil Science,
@@ -127,23 +127,20 @@ const Hero = () => {
                             </p>
 
                             {/* CTA BUTTONS */}
-                            <div className="mt-2 flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-center lg:justify-start">
-
+                            <div className="mt-2 flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-start w-full sm:w-auto">
                                 <Link
                                     to="/contact"
-                                    className="btn-3d w-full sm:w-auto text-white bg-green-700 hover:bg-green-600 inline-flex items-center justify-center px-4 sm:px-8 py-2.5 sm:py-3.5 text-sm sm:text-lg shadow-xl rounded-lg sm:rounded-2xl"
+                                    className="btn-3d w-auto max-w-[200px] sm:max-w-none sm:w-auto text-white bg-green-700 hover:bg-green-600 inline-flex items-center justify-center px-3 py-2 text-xs sm:px-8 sm:py-3.5 sm:text-lg shadow-xl rounded-lg sm:rounded-2xl"
                                 >
                                     Learn More
                                 </Link>
-
                                 <button
                                     type="button"
                                     onClick={() => window.dispatchEvent(new CustomEvent('open-booking'))}
-                                    className="btn-3d w-full sm:w-auto text-green-900 bg-white hover:bg-gray-100 inline-flex items-center justify-center px-4 sm:px-8 py-2.5 sm:py-3.5 text-sm sm:text-lg shadow-md rounded-lg sm:rounded-2xl border border-green-100"
+                                    className="btn-3d w-auto max-w-[200px] sm:max-w-none sm:w-auto text-green-900 bg-white hover:bg-gray-100 inline-flex items-center justify-center px-3 py-2 text-xs sm:px-8 sm:py-3.5 sm:text-lg shadow-md rounded-lg sm:rounded-2xl border border-green-100"
                                 >
                                     Book a project
                                 </button>
-
                             </div>
 
                         </div>

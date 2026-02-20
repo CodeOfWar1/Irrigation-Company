@@ -60,6 +60,10 @@ export const portfolioProjects = Object.entries(byFolder)
     if (name && name.toLowerCase() === 'choma') {
       name = 'Choma';
     }
+    // Rename Range ROVER to Motor Alliance
+    if (name && name.toLowerCase() === 'range rover') {
+      name = 'Motor Alliance';
+    }
     const slug = isResidential(folderKey)
       ? slugify(getDisplayName(folderKey))
       : slugify(folderKey);

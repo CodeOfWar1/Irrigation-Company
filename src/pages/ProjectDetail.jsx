@@ -3,11 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import NavBar from '../components/Navbar/NavBar';
 import Footer from '../components/Footer';
 import { useDocTitle } from '../components/CustomHook';
-import { portfolioProjects } from '../data/portfolioProjects';
+import { usePortfolioProjects } from '../data/usePortfolio';
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const [lightboxIndex, setLightboxIndex] = useState(-1);
+  const { projects: portfolioProjects, loading } = usePortfolioProjects();
   const project = portfolioProjects.find((p) => p.id === id);
 
   useDocTitle(
@@ -34,7 +35,12 @@ const ProjectDetail = () => {
       </div>
       <main className="mt-14 sm:mt-20 bg-gray-50 py-6 sm:py-12 lg:py-20 min-h-screen">
         <div className="m-auto max-w-6xl px-3 sm:px-4 md:px-8">
-          {!project ? (
+          {loading ? (
+            <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-12 text-center">
+              <div className="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-gray-500 font-medium">Loading project...</p>
+            </div>
+          ) : !project ? (
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 md:p-10 text-center">
               <h1 className="text-2xl md:text-3xl font-extrabold text-green-900 mb-3">
                 Project not found
@@ -43,7 +49,7 @@ const ProjectDetail = () => {
                 The project you are looking for could not be found.
               </p>
               <Link
-                to="/projects"
+                to="/get-demo"
                 className="btn-3d inline-flex items-center justify-center px-6 py-3 rounded-2xl text-white bg-green-900 hover:bg-green-800 text-lg shadow-xl"
               >
                 Back to portfolio

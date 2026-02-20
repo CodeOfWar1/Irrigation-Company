@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { portfolioProjects } from '../data/portfolioProjects';
+import { usePortfolioProjects } from '../data/usePortfolio';
 
 const Portfolio = () => {
-    // Get featured projects with multiple images for transition
+    const { projects: portfolioProjects } = usePortfolioProjects();
     const commercialProjects = portfolioProjects.filter((p) => p.sector !== 'Residential');
     const residentialProjects = portfolioProjects.filter((p) => p.sector === 'Residential');
     
