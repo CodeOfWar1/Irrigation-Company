@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
 import installationImg from '../images/Services/installation.jpg';
 import supplyImg from '../images/Services/Supply.jpg';
-import maintenanceImg from '../images/Services/maintance.webp';
-import consultationImg from '../images/Services/consultation.webp';
+import maintenanceImg from '../images/Services/maintance.jpeg';
+import consultationImg from '../images/Services/consultation.jpeg';
+import DesignImg from '../images/Services/Design.jpeg';
 
 const PROCESS_STEPS = [
     {
@@ -118,7 +119,7 @@ const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
                     className={`relative w-full text-left rounded-xl sm:rounded-2xl border transition-all duration-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 active:scale-[0.99] ${isExpanded
                         ? 'bg-white border-green-900 shadow-lg shadow-blue-900/5'
                         : 'bg-white border-gray-200 hover:border-green-300 hover:shadow-md'
-                    }`}
+                        }`}
                 >
                     <div className="p-4 sm:p-5 md:p-6 flex flex-wrap items-center justify-between gap-3">
                         {/* Step badge on mobile when timeline hidden */}
@@ -249,7 +250,7 @@ const Services = () => {
             step.deliverables.forEach((item) => {
                 doc.text(`• ${item}`, margin + 3, y, { maxWidth: pageW - 2 * margin - 3 });
                 y += 5;
-              });
+            });
             y += 2;
             doc.text(`Timeline: ${step.timeline}`, margin, y);
             y += 5;
@@ -359,7 +360,7 @@ const Services = () => {
                         >
                             <div className="relative h-52 sm:h-64 overflow-hidden">
                                 <img
-                                    src={consultationImg}
+                                    src={DesignImg}
                                     alt="Irrigation design and consultancy"
                                     className="img-3d w-full h-full object-cover"
                                 />
@@ -431,15 +432,15 @@ const Services = () => {
                             Our standard services cater to properties up to 4,200m² within a 30km radius of Lusaka (our transport included). For larger properties or specialized requirements beyond this scope, we're happy to discuss a custom solution.
                         </p>
                         <div className="mt-4 flex justify-center">
-                          <button
-                            onClick={handleDownloadServicePathPDF}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-900 hover:bg-green-800 text-white font-semibold rounded-xl shadow-md transition-colors text-sm"
-                          >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            Download Service Pathway PDF
-                          </button>
+                            <button
+                                onClick={handleDownloadServicePathPDF}
+                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-900 hover:bg-green-800 text-white font-semibold rounded-xl shadow-md transition-colors text-sm"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Download Service Pathway PDF
+                            </button>
                         </div>
                     </div>
 

@@ -22,6 +22,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "backend": "cd src/backend && npm start",
     "build": "vite build",
     "preview": "vite preview",
     "start": "react-scripts start",

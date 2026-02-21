@@ -24,6 +24,9 @@ const AdminAppointments = () => {
   const [portfolioLoading, setPortfolioLoading] = useState(false);
   const [portfolioMessage, setPortfolioMessage] = useState(null);
   const [portfolioForm, setPortfolioForm] = useState({ name: '', sector: 'Commercial & institutional', imageUrlsText: '' });
+  const [portfolioFiles, setPortfolioFiles] = useState([]);
+  const [portfolioUploading, setPortfolioUploading] = useState(false);
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,10 +55,60 @@ const AdminAppointments = () => {
   const handleAddPortfolioProject = async (e) => {
     e.preventDefault();
     setPortfolioMessage(null);
-    const name = portfolioForm.name.trim();
+    const name = portfolioForm.name.trim() || 'Untitled Project';
+
+    if (portfolioFiles.length > 0) {
+      setPortfolioUploading(true);
+      try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('sector', portfolioForm.sector);
+        portfolioFiles.forEach((file) => formData.append('images', file));
+
+        const res = await fetch(`${BACKEND_URL}/createproject`, {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          setPortfolioMessage(data.error || `Upload failed (${res.status}).`);
+          setPortfolioUploading(false);
+          return;
+        }
+
+        const imageUrls = data.project?.imageUrls || [];
+        if (imageUrls.length === 0) {
+          setPortfolioMessage('Server did not return image URLs.');
+          setPortfolioUploading(false);
+          return;
+        }
+
+        const { error } = await supabase.from('portfolio_projects').insert([{
+          name,
+          sector: portfolioForm.sector,
+          image_urls: imageUrls,
+        }]);
+        if (error) {
+          setPortfolioMessage(error.message || 'Images uploaded but failed to save to portfolio.');
+          setPortfolioUploading(false);
+          return;
+        }
+        setPortfolioMessage('Project added with uploaded images.');
+        setPortfolioForm({ name: '', sector: 'Commercial & institutional', imageUrlsText: '' });
+        setPortfolioFiles([]);
+        fetchPortfolio();
+        setTimeout(() => setPortfolioMessage(null), 4000);
+      } catch (err) {
+        setPortfolioMessage(err.message || 'Network error. Is the backend server running on ' + BACKEND_URL + '?');
+      }
+      setPortfolioUploading(false);
+      return;
+    }
+
     const urls = portfolioForm.imageUrlsText.trim().split(/\n/).map((u) => u.trim()).filter(Boolean);
-    if (!name || urls.length === 0) {
-      setPortfolioMessage('Name and at least one image URL are required.');
+    if (urls.length === 0) {
+      setPortfolioMessage('Upload at least one image from your PC, or paste image URLs.');
       return;
     }
     const { error } = await supabase.from('portfolio_projects').insert([{
@@ -402,7 +455,7 @@ const AdminAppointments = () => {
           </span>
           Portfolio projects
         </h2>
-        <p className="text-sm text-gray-500 mb-6">Projects added here appear on the Portfolio page (/get-demo) and on the home page. Add name, sector, and image URLs (one per line).</p>
+        <p className="text-sm text-gray-500 mb-6">Projects appear on the Portfolio page (/get-demo). Upload images from your PC (recommended) or paste image URLs. Start the backend server from <code className="bg-gray-100 px-1 rounded">src/backend</code> with <code className="bg-gray-100 px-1 rounded">npm start</code> for uploads.</p>
 
         <form onSubmit={handleAddPortfolioProject} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -428,21 +481,34 @@ const AdminAppointments = () => {
               </select>
             </label>
           </div>
+          <label className="block mb-3">
+            <span className="block text-sm font-semibold text-gray-700 mb-1">Upload images from your PC</span>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/gif,image/webp"
+              multiple
+              onChange={(e) => setPortfolioFiles(Array.from(e.target.files || []))}
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-100 file:text-green-800 file:font-semibold"
+            />
+            {portfolioFiles.length > 0 && (
+              <p className="text-xs text-gray-500 mt-1">{portfolioFiles.length} file(s) selected</p>
+            )}
+          </label>
           <label className="block mb-4">
-            <span className="block text-sm font-semibold text-gray-700 mb-1">Image URLs (one per line)</span>
+            <span className="block text-sm font-semibold text-gray-700 mb-1">Or paste image URLs (one per line)</span>
             <textarea
               value={portfolioForm.imageUrlsText}
               onChange={(e) => setPortfolioForm((f) => ({ ...f, imageUrlsText: e.target.value }))}
-              placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
-              rows={4}
+              placeholder="https://example.com/image1.jpg"
+              rows={2}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 font-mono text-sm"
             />
           </label>
           {portfolioMessage && (
-            <p className={`mb-4 text-sm ${portfolioMessage.includes('Failed') || portfolioMessage.includes('required') ? 'text-red-600' : 'text-green-700'}`}>{portfolioMessage}</p>
+            <p className={`mb-4 text-sm ${portfolioMessage.includes('Failed') || portfolioMessage.includes('error') || portfolioMessage.includes('required') ? 'text-red-600' : 'text-green-700'}`}>{portfolioMessage}</p>
           )}
-          <button type="submit" className="bg-green-900 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-800 transition-colors">
-            Add project to portfolio
+          <button type="submit" disabled={portfolioUploading} className="bg-green-900 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-800 transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+            {portfolioUploading ? 'Uploading…' : 'Add project to portfolio'}
           </button>
         </form>
 

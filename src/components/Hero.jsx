@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/Navbar/NavBar';
-import heroImg from '../images/sprinklerirrigation.jpg';
+import heroImg from '../images/hero/IMG_20220616_155944.jpg';
 import backgroundWebp from '../images/hero/background.webp';
 import smartIrrigationImg from '../images/hero/smart-irrigation-month-scaled.jpeg';
-import irrigationImg from '../images/hero/irrigation-7262563_1920.jpg';
+import irrigationImg from '../images/hero/types-of-irrigation-for-your-lawn.jpeg';
 
 const Hero = () => {
     // Array of hero images to cycle through
@@ -39,13 +39,12 @@ const Hero = () => {
                     {heroImages.map((img, index) => {
                         const isCurrent = index === currentImageIndex;
                         const isPrevious = index === previousImageIndex;
-                        
+
                         return (
                             <div
                                 key={index}
-                                className={`absolute inset-0 hero-3d-bg hero-bg-slide ${
-                                    isCurrent ? 'opacity-100 z-10' : isPrevious ? 'opacity-0 z-[5]' : 'opacity-0 z-0'
-                                }`}
+                                className={`absolute inset-0 hero-3d-bg hero-bg-slide ${isCurrent ? 'opacity-100 z-10' : isPrevious ? 'opacity-0 z-[5]' : 'opacity-0 z-0'
+                                    }`}
                                 style={{
                                     backgroundImage: `url(${img})`,
                                     backgroundSize: 'cover',
