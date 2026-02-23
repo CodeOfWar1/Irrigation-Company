@@ -1,4 +1,4 @@
-require("dotenv").config()
+require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -9,15 +9,20 @@ const { createClient } = require('@supabase/supabase-js');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Supabase setup
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-);
-
-// Upload directory
+const DIST_DIR = path.join(__dirname, 'dist');
 const UPLOAD_DIR = path.join(__dirname, 'images');
+
+// Supabase setup
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+
+// Ensure upload folder exists
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use('/images', express.static(UPLOAD_DIR));
+app.use(express.static(DIST_DIR));
 
 // Multer config
 const storage = multer.diskStorage({
@@ -32,23 +37,14 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   limits: { fileSize: 10 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    const allowed = /\.(jpe?g|png|gif|webp)$/i.test(file.originalname);
-    cb(null, allowed);
-  },
+  fileFilter: (req, file, cb) => cb(null, /\.(jpe?g|png|gif|webp)$/i.test(file.originalname)),
 });
 
-app.use(cors());
-app.use(express.json());
-app.use('/images', express.static(UPLOAD_DIR));
-
-// Create project
+// API routes
 app.post('/createproject', upload.array('images', 20), async (req, res) => {
   try {
     const files = req.files;
-    if (!files?.length) {
-      return res.status(400).json({ error: 'At least one image required' });
-    }
+    if (!files?.length) return res.status(400).json({ error: 'At least one image required' });
 
     const imageUrls = files.map(f => `/images/${f.filename}`);
 
@@ -63,7 +59,6 @@ app.post('/createproject', upload.array('images', 20), async (req, res) => {
       .single();
 
     if (error) throw error;
-
     res.status(201).json({ success: true, project: data });
   } catch (err) {
     console.error(err);
@@ -79,6 +74,11 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ error: msg });
   }
   res.status(400).json({ error: err.message });
+});
+
+// Catch-all route for React Router
+app.get('*', (req, res) => {
+  res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -26,7 +26,7 @@ const AdminAppointments = () => {
   const [portfolioForm, setPortfolioForm] = useState({ name: '', sector: 'Commercial & institutional', imageUrlsText: '' });
   const [portfolioFiles, setPortfolioFiles] = useState([]);
   const [portfolioUploading, setPortfolioUploading] = useState(false);
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,31 +76,13 @@ const AdminAppointments = () => {
           setPortfolioUploading(false);
           return;
         }
-
-        const imageUrls = data.project?.imageUrls || [];
-        if (imageUrls.length === 0) {
-          setPortfolioMessage('Server did not return image URLs.');
-          setPortfolioUploading(false);
-          return;
-        }
-
-        const { error } = await supabase.from('portfolio_projects').insert([{
-          name,
-          sector: portfolioForm.sector,
-          image_urls: imageUrls,
-        }]);
-        if (error) {
-          setPortfolioMessage(error.message || 'Images uploaded but failed to save to portfolio.');
-          setPortfolioUploading(false);
-          return;
-        }
         setPortfolioMessage('Project added with uploaded images.');
         setPortfolioForm({ name: '', sector: 'Commercial & institutional', imageUrlsText: '' });
         setPortfolioFiles([]);
         fetchPortfolio();
         setTimeout(() => setPortfolioMessage(null), 4000);
       } catch (err) {
-        setPortfolioMessage(err.message || 'Network error. Is the backend server running on ' + BACKEND_URL + '?');
+        setPortfolioMessage("There was a problem Posting A project try again letter");
       }
       setPortfolioUploading(false);
       return;
@@ -494,16 +476,7 @@ const AdminAppointments = () => {
               <p className="text-xs text-gray-500 mt-1">{portfolioFiles.length} file(s) selected</p>
             )}
           </label>
-          <label className="block mb-4">
-            <span className="block text-sm font-semibold text-gray-700 mb-1">Or paste image URLs (one per line)</span>
-            <textarea
-              value={portfolioForm.imageUrlsText}
-              onChange={(e) => setPortfolioForm((f) => ({ ...f, imageUrlsText: e.target.value }))}
-              placeholder="https://example.com/image1.jpg"
-              rows={2}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 font-mono text-sm"
-            />
-          </label>
+        
           {portfolioMessage && (
             <p className={`mb-4 text-sm ${portfolioMessage.includes('Failed') || portfolioMessage.includes('error') || portfolioMessage.includes('required') ? 'text-red-600' : 'text-green-700'}`}>{portfolioMessage}</p>
           )}
@@ -529,7 +502,11 @@ const AdminAppointments = () => {
                 <div key={p.id} className="bg-white rounded-xl border border-gray-100 p-4 flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-4 min-w-0">
                     {Array.isArray(p.image_urls) && p.image_urls[0] && (
-                      <img src={p.image_urls[0]} alt="" className="w-16 h-16 rounded-lg object-cover bg-gray-100" />
+                      <img
+                        src={`${import.meta.env.VITE_BACKEND_URL}${p.image_urls[0]}`}
+                        alt=""
+                        className="w-16 h-16 rounded-lg object-cover bg-gray-100"
+                      />
                     )}
                     <div>
                       <p className="font-bold text-gray-900">{p.name}</p>
