@@ -30,8 +30,32 @@ const CompanyProfile = () => {
   const handleDownloadCompanyProfilePDF = () => {
     const doc = new jsPDF({ format: 'a4', unit: 'mm' });
     const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
     const margin = 14;
     let y = margin;
+    const lineH = 5;
+    const contentW = pageW - 2 * margin;
+
+    const cleanPdfText = (text) =>
+      String(text || '')
+        // Replace special hyphens/dashes that render as control chars in jsPDF default fonts
+        .replace(/[\u2010\u2011\u2012\u2013\u2014\u2212\u00AD]/g, '-') // hyphen, en/em dash, minus, soft hyphen
+        // Replace smart quotes
+        .replace(/[\u2018\u2019]/g, "'")
+        .replace(/[\u201C\u201D]/g, '"')
+        // Replace non-breaking spaces
+        .replace(/\u00A0/g, ' ')
+        // Remove any remaining non-printable control characters
+        .replace(/[\u0000-\u001F\u007F]/g, '')
+        .trim();
+
+    const ensurePageSpace = (neededHeight = lineH) => {
+      const bottom = pageH - margin;
+      if (y + neededHeight > bottom) {
+        doc.addPage();
+        y = margin;
+      }
+    };
 
     // Header
     doc.setFillColor(22, 101, 52); // green-800
@@ -51,8 +75,8 @@ const CompanyProfile = () => {
         title: '1. Executive Summary',
         content: [
           'Established in 2011, Lawn Irrigation Technologies is a leading Zambian engineering firm specialising in the design, supply and installation of advanced residential and commercial irrigation systems.',
-          'Unlike standard landscaping firms, we approach every project through the lens of Agricultural Engineering and Soil Science. With over 14 years of hands‑on experience, we have successfully executed high‑profile projects for diplomatic missions, government agencies and international schools.',
-          'We combine modern 3D visualisation technology with scientific soil analysis to deliver water‑efficient, solar‑ready ("Zesco‑proof") and automated green spaces that thrive in the Zambian climate.'
+          'Unlike standard landscaping firms, we approach every project through the lens of Agricultural Engineering and Soil Science. With over 14 years of hands-on experience, we have successfully executed high-profile projects for diplomatic missions, government agencies and international schools.',
+          'We combine modern 3D visualisation technology with scientific soil analysis to deliver water-efficient, solar-ready ("Zesco-proof") and automated green spaces that thrive in the Zambian climate.'
         ]
       },
       {
@@ -66,11 +90,12 @@ const CompanyProfile = () => {
       {
         title: '7. Service Pathway',
         content: [
-          'Step 1: Initial Site Consultation & Assessment - ZMW 1,000',
-          'Step 2: Preliminary Budget Estimate - Complimentary',
-          'Step 3: Detailed Irrigation Design & Formal Quotation - ZMW 1,000',
-          'Step 4: Final Design Package & Technical Plan - ZMW 2,000',
-          'Step 5: Professional Installation & Handover - 25% of Total Material Cost'
+          'Step 1: Initial Consultation & Site Assessment – ZMW 1,000 commitment fee (100% deductible from final installation cost). K500 down payment required to secure appointment.',
+          'Step 2 (Path A): Scoping – Standard Residential (Properties < 4,200m²) – Complimentary preliminary estimate within 1 week after assessment.',
+          'Step 2 (Path B): Scoping – Estate & Commercial (4,200–10,000m²) – ZMW 3,000 design & quantification fee (ZMW 1,500 deposit before work starts; arrangements for larger properties above 10,000m² to be agreed separately).',
+          'Step 3: 3D Visualisation – ZMW 4,000 (ZMW 2,000 deposit before work starts; includes professional 3D render and average cost indication).',
+          'Step 4: Existing System Diagnosis – ZMW 1,500 (K750 down payment required; full diagnostic report for existing systems).',
+          'Step 5: Precision Installation & Handover – 25% of Total Material Cost (exact installation fee confirmed with detailed quotation).'
         ]
       },
       {
@@ -86,19 +111,21 @@ const CompanyProfile = () => {
     ];
 
     sections.forEach((section) => {
-      if (y > 250) {
-        doc.addPage();
-        y = margin;
-      }
+      ensurePageSpace(12);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(12);
-      doc.text(section.title, margin, y);
+      doc.text(cleanPdfText(section.title), margin, y);
       y += 7;
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(9);
       section.content.forEach((line) => {
-        doc.text(line, margin, y, { maxWidth: pageW - 2 * margin });
-        y += 5;
+        const wrapped = doc.splitTextToSize(cleanPdfText(line), contentW);
+        wrapped.forEach((wLine) => {
+          ensurePageSpace(lineH);
+          doc.text(wLine, margin, y);
+          y += lineH;
+        });
+        y += 2;
       });
       y += 5;
     });
@@ -226,7 +253,7 @@ const CompanyProfile = () => {
                     <li>Automated pop-up sprinkler systems (rotors and sprays).</li>
                     <li>Precision drip and micro‑irrigation for hedges and beds.</li>
                     <li>Pump station setup (booster, centrifugal and submersible).</li>
-                    <li>Smart controllers (Wi‑Fi / GSM enabled).</li>
+                    <li>Smart controllers (Wi-Fi / GSM enabled).</li>
                   </ul>
                 </div>
 
@@ -361,7 +388,6 @@ const CompanyProfile = () => {
                   <div>
                     <h3 className="font-bold text-green-900 mb-2">Email</h3>
                     <p>lawnirrigationtech@gmail.com</p>
-                    <p>geomulenga@gmail.com</p>
                   </div>
                   <div>
                     <h3 className="font-bold text-green-900 mb-2">Tagline</h3>

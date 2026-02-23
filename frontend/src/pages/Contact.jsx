@@ -172,7 +172,6 @@ const Contact = () => {
                                         <div className="text-sm">
                                             <h3 className="font-semibold text-white">Email</h3>
                                             <a href="mailto:lawnirrigationtech@gmail.com" className="text-green-200 mt-0.5 hover:text-white block break-words">lawnirrigationtech@gmail.com</a>
-                                            <a href="mailto:geomulenga@gmail.com" className="text-green-200 hover:text-white block break-words">geomulenga@gmail.com</a>
                                         </div>
                                     </div>
                                 </div>

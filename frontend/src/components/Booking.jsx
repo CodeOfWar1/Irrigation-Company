@@ -7,12 +7,23 @@ const COMPANY_NAME = 'Lawn Irrigation Technologies';
 const LENCO_PUBLIC_KEY = import.meta.env.VITE_LENCO_PUBLIC_KEY;
 
 const SERVICE_LABELS = {
-  'step-1-consultation': 'Step 1: Initial Site Consultation & Assessment',
-  'step-2-budget': 'Step 2: Preliminary Budget Estimate',
-  'step-3-design': 'Step 3: Detailed Irrigation Design & Formal Quotation',
-  'step-4-final-design': 'Step 4: Final Design Package & Technical Plan',
-  'step-5-installation': 'Step 5: Professional Installation & Handover',
+  'step-1-consultation': 'Step 1: Initial Consultation & Site Assessment',
+  'step-2-budget': 'Step 2 (Path A): Scoping – Standard Residential (< 4,200m²)',
+  'step-2b-estate-commercial': 'Step 2 (Path B): Scoping – Estate & Commercial (4,200–10,000m²)',
+  'step-3-design': 'Step 3: 3D Visualisation',
+  'step-4-final-design': 'Step 4: Existing System Diagnosis',
+  'step-5-installation': 'Step 5: Precision Installation & Handover',
   'full-service': 'Full Service Pathway (All Steps)',
+};
+
+const SERVICE_PRICING = {
+  'step-1-consultation': 1000,
+  'step-2-budget': 0,
+  'step-2b-estate-commercial': 3000,
+  'step-3-design': 4000,
+  'step-4-final-design': 1500,
+  'step-5-installation': null, // 25% of total material cost – handled at quotation stage
+  'full-service': null,
 };
 
 const INITIAL_FORM_VALUES = {
@@ -127,6 +138,19 @@ const Booking = () => {
       setStatusMessage('This time slot conflicts with an existing booking. Please choose a time at least 3 hours apart from other appointments.');
       return;
     }
+
+    // Set suggested amount based on selected service (for payment + summary)
+    const base = SERVICE_PRICING[formValues.service];
+    const nextAmount =
+      typeof base === 'number'
+        ? base
+        : formValues.amount || 2.5;
+
+    setFormValues((prev) => ({
+      ...prev,
+      amount: nextAmount,
+    }));
+
     setStep(2);
   };
 
@@ -452,16 +476,51 @@ const Booking = () => {
                     <span className="text-gray-500">Scheduled:</span>
                     <span className="font-medium">{formValues.date} at {formValues.time || 'TBD'}</span>
                   </div>
+                  <div className="h-px bg-gray-100 my-1" />
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">Service fee:</span>
+                    <span className="font-semibold text-green-900">
+                      {SERVICE_PRICING[formValues.service] === 0 && 'Complimentary'}
+                      {SERVICE_PRICING[formValues.service] > 0 && `ZMW ${SERVICE_PRICING[formValues.service].toLocaleString()}`}
+                      {SERVICE_PRICING[formValues.service] == null && 'See quotation (varies)'}
+                    </span>
+                  </div>
                 </div>
               </div>
 
               <div className="space-y-3">
                 <label className="block text-sm font-bold text-gray-700">Payment Information</label>
-                <input type="text" name="payerName" placeholder="Name on Account/Card" value={formValues.payerName} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white" required />
+                <input
+                  type="text"
+                  name="payerName"
+                  placeholder="Name on Account/Card"
+                  value={formValues.payerName}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"
+                  required
+                />
                 <div className="relative">
                   <span className="absolute left-4 top-3.5 text-gray-500">K</span>
-                  <input type="number" name="amount" readOnly placeholder="Amount (ZMW)" value={formValues.amount} onChange={handleChange} className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50" required min="1" />
+                  <input
+                    type="number"
+                    name="amount"
+                    placeholder={
+                      SERVICE_PRICING[formValues.service] != null && SERVICE_PRICING[formValues.service] > 0
+                        ? SERVICE_PRICING[formValues.service]
+                        : 'Enter agreed amount'
+                    }
+                    value={formValues.amount}
+                    onChange={handleChange}
+                    className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    required
+                    min="1"
+                  />
                 </div>
+                {formValues.service === 'step-1-consultation' && (
+                  <p className="text-xs text-gray-500">
+                    You may pay the full consultation fee (ZMW 1,000) or a minimum of ZMW 500 as a commitment deposit.
+                  </p>
+                )}
               </div>
 
               {statusMessage && <p className={`text-sm p-3 rounded-lg ${statusMessage.includes('504') || statusMessage.includes('not responding') ? 'text-amber-800 bg-amber-50' : 'text-red-500 bg-red-50'}`}>{statusMessage}</p>}

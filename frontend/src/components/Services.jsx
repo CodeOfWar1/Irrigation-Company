@@ -9,86 +9,114 @@ import DesignImg from '../images/Services/Design.jpeg';
 const PROCESS_STEPS = [
     {
         id: 1,
-        title: 'Step 1: Initial Site Consultation & Assessment',
+        title: 'Step 1: Initial Consultation & Site Assessment',
         investment: 'ZMW 1,000',
-        sub: 'Step 1.2: Preliminary Budget Estimate – Complimentary',
-        subStep: {
-            title: 'Step 1.2: Preliminary Budget Estimate',
-            investment: 'Complimentary',
-            deliverables: [
-                'A clear, itemized preliminary estimate covering key components: Storage/Tanks, Pumping Unit, Automation, Pipes & Fittings, Labour, and Contingency.',
-                'Understand the potential project scope and cost.'
-            ],
-            timeline: 'Within 1 week after assessment',
-            investmentDetail: 'Complimentary',
-        },
+        sub: null,
         icon: (
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
         ),
         deliverables: [
             'On-site evaluation of your lawn, garden beds, walkways, etc.',
-            'Identification of factors affecting irrigation performance.',
+            'On-site evaluation of soil texture and topography.',
             'Analysis of water availability, pressure, and needs.',
             'Discussion of your vision and tailored solutions.'
         ],
         timeline: 'By appointment',
-        investmentDetail: 'ZMW 1,000 (Paid on site at consultation)',
+        investmentDetail: 'ZMW 1,000 commitment fee (100% deductible from final installation cost). K500 down payment required to secure appointment.',
     },
     {
-        id: 2,
-        title: 'Step 2: Detailed Irrigation Design & Formal Quotation',
-        investment: 'ZMW 1,000',
+        id: '2A',
+        title: 'Step 2 (Path A): Scoping – Standard Residential (Properties < 4,200m²)',
+        investment: 'Complimentary',
+        investmentHighlight: true,
         sub: null,
         icon: (
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2m0 10V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
         ),
         deliverables: [
-            'Professional Computer-Aided Design (CAD) drawing showing: Site layout, house boundaries, lawn/driveway areas.',
-            'Optimized sprinkler selection & placement.',
-            'Pump and pipe sizing.',
-            'Efficient water zoning.',
-            'Precise quantification of all materials required.',
-            'A firm, detailed quotation for the complete system.'
+            'A clear, itemised preliminary estimate covering key components: Storage/Tanks, Pumping Unit, Automation, Pipes & Fittings, Labour, and Contingency.',
+            'Understand the potential project scope and cost.'
         ],
-        timeline: '1-2 weeks after assessment (or go-ahead from preliminary estimate)',
-        investmentDetail: 'ZMW 1,000 (ZMW 700 deposit, ZMW 300 upon design submission)',
+        timeline: 'Within 1 week after assessment (or go-ahead from preliminary estimate)',
+        investmentDetail: 'Complimentary',
+    },
+    {
+        id: '2B',
+        title: 'Step 2 (Path B): Scoping – Estate & Commercial (4,200–10,000m²)',
+        investment: 'ZMW 3,000',
+        sub: null,
+        icon: (
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V7a2 2 0 00-2-2h-3.5L12 3 10.5 5H7a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+        ),
+        deliverables: [
+            'Advanced hydraulic quantification for larger estates and commercial properties.',
+            'Technical CAD blueprints for precise sprinkler placement.',
+            'Comprehensive installation guide aligned with site conditions.'
+        ],
+        timeline: 'Within 1–2 weeks after assessment (or go-ahead from preliminary estimate)',
+        investmentDetail: 'ZMW 3,000 (ZMW 1,500 deposit before work starts. Arrangements for larger properties above 10,000m² to be agreed separately).',
+    },
+    {
+        id: 3,
+        title: 'Step 3: 3D Visualisation',
+        investment: 'ZMW 4,000',
+        sub: null,
+        icon: (
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7l9-4 9 4-9 4-9-4zm0 6l9 4 9-4" />
+            </svg>
+        ),
+        deliverables: [
+            'Professional 3D landscape rendering of the proposed garden.',
+            'Virtual walkthrough experience of the garden before installation.',
+            'An average cost indication for the full project.'
+        ],
+        timeline: '1–2 weeks after assessment (or go-ahead from preliminary estimate)',
+        investmentDetail: 'ZMW 4,000 (ZMW 2,000 deposit before work starts. Arrangements for larger properties above 10,000m² to be agreed separately).',
     },
     {
         id: 4,
-        title: 'Step 3: Final Design Package & Technical Plan',
-        investment: 'ZMW 2,000',
+        title: 'Step 4: Existing System Diagnosis',
+        investment: 'ZMW 1,500',
         sub: null,
         icon: (
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-3-3v6m8-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
         ),
         deliverables: [
-            'A comprehensive PDF document ready for installation, including:',
-            'Finalized sprinkler placement details.',
-            'System pressure requirements.',
-            'Specific pipe sizes.',
-            'Depth of trenching guidelines.'
+            'Testing all irrigation zones for proper coverage.',
+            'Checking sprinkler performance and nozzle condition.',
+            'Checking for leaks and pressure issues.',
+            'Written recommendations and proposed solutions.'
         ],
-        timeline: '1 week after sharing detailed quotation/design approval',
-        investmentDetail: 'ZMW 2,000 (ZMW 1,400 deposit, ZMW 700 upon plan submission)',
+        timeline: 'Within 1 week of booking.',
+        investmentDetail: 'ZMW 1,500 (K750 down payment required to secure appointment).',
     },
     {
         id: 5,
-        title: 'Step 4: Professional Installation & Handover',
+        title: 'Step 5: Precision Installation & Handover',
         investment: '25% of Total Material Cost',
         sub: null,
         icon: (
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
         ),
         deliverables: [
-            'Mobilization and site preparation.',
-            'Precise marking of the designed layout.',
-            'Careful trench digging.',
-            'Expert installation of all irrigation components.',
-            'System testing, commissioning, and fine-tuning.',
-            'Thorough handover and operational guidance.'
+            'Trenching, piping, and precision sprinkler installation.',
+            'Smart controller setup (Wi-Fi / automation) and rain sensor programming where applicable.',
+            'Client training on operating and scheduling the system (including phone-based control where installed).',
+            'Final handover of a fully operational, precision-engineered irrigation system.'
         ],
-        timeline: 'Varies (Dependent on project size; advised upon design finalization)',
-        investmentDetail: '25% of Total Material Cost (Exact installation fee confirmed with detailed quotation)',
+        timeline: 'Mobilisation occurs after design approval and signing of contract.',
+        investmentDetail: '25% of Total Material Cost (exact installation fee confirmed with detailed quotation).',
     },
 ];
 
@@ -145,7 +173,7 @@ const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
                     {isExpanded && (
                         <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 pt-0 border-t border-gray-100 bg-gray-50/30 animate-[fadeIn_0.2s_ease-out]">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 pt-4 text-sm text-gray-700">
-                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-green-100">
+                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-green-100 transition duration-200 hover:shadow-md hover:-translate-y-0.5">
                                     <h4 className="font-bold text-green-900 mb-2 flex items-center gap-2 text-xs uppercase tracking-wider">
                                         <span className="w-6 h-6 rounded bg-green-900 text-white flex items-center justify-center text-xs shrink-0">1</span>
                                         Deliverables
@@ -156,14 +184,14 @@ const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-gray-200">
+                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-gray-200 transition duration-200 hover:shadow-md hover:-translate-y-0.5">
                                     <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2 text-xs uppercase tracking-wider">
                                         <span className="w-6 h-6 rounded bg-gray-600 text-white flex items-center justify-center text-xs shrink-0">2</span>
                                         Timeline
                                     </h4>
                                     <p className="leading-snug">{step.timeline}</p>
                                 </div>
-                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-green-200">
+                                <div className="bg-white rounded-lg sm:rounded-xl p-4 border border-green-200 transition duration-200 hover:shadow-md hover:-translate-y-0.5">
                                     <h4 className="font-bold text-green-700 mb-2 flex items-center gap-2 text-xs uppercase tracking-wider">
                                         <span className="w-6 h-6 rounded bg-green-600 text-white flex items-center justify-center text-xs shrink-0">3</span>
                                         Investment
@@ -178,7 +206,7 @@ const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
                                         {step.subStep.title} <span className="text-green-600 font-semibold">({step.subStep.investment})</span>
                                     </h4>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 text-sm text-gray-700 pl-0 md:pl-9">
-                                        <div className="bg-green-50/60 rounded-lg sm:rounded-xl p-4 border border-green-100">
+                                        <div className="bg-green-50/60 rounded-lg sm:rounded-xl p-4 border border-green-100 transition duration-200 hover:shadow-md hover:-translate-y-0.5">
                                             <h5 className="font-semibold text-green-900 mb-2 text-xs uppercase tracking-wider">Deliverables</h5>
                                             <ul className="list-disc list-inside space-y-1.5">
                                                 {step.subStep.deliverables.map((item, i) => (
@@ -186,11 +214,11 @@ const ProcessStepCard = ({ step, index, isExpanded, onToggle }) => {
                                                 ))}
                                             </ul>
                                         </div>
-                                        <div className="bg-gray-50 rounded-lg sm:rounded-xl p-4 border border-gray-200">
+                                        <div className="bg-gray-50 rounded-lg sm:rounded-xl p-4 border border-gray-200 transition duration-200 hover:shadow-md hover:-translate-y-0.5">
                                             <h5 className="font-semibold text-gray-800 mb-2 text-xs uppercase tracking-wider">Timeline</h5>
                                             <p className="leading-snug">{step.subStep.timeline}</p>
                                         </div>
-                                        <div className="bg-green-50/60 rounded-lg sm:rounded-xl p-4 border border-green-200">
+                                        <div className="bg-green-50/60 rounded-lg sm:rounded-xl p-4 border border-green-200 transition duration-200 hover:shadow-md hover:-translate-y-0.5">
                                             <h5 className="font-semibold text-green-700 mb-2 text-xs uppercase tracking-wider">Investment</h5>
                                             <p className="leading-snug">{step.subStep.investmentDetail}</p>
                                         </div>
@@ -232,7 +260,7 @@ const Services = () => {
         doc.text('For larger properties or specialized requirements, we\'re happy to discuss a custom solution.', margin, y);
         y += 12;
 
-        PROCESS_STEPS.forEach((step, index) => {
+        PROCESS_STEPS.forEach((step) => {
             if (y > 250) {
                 doc.addPage();
                 y = margin;
@@ -248,13 +276,20 @@ const Services = () => {
             doc.text('What You Receive:', margin, y);
             y += 4;
             step.deliverables.forEach((item) => {
-                doc.text(`• ${item}`, margin + 3, y, { maxWidth: pageW - 2 * margin - 3 });
-                y += 5;
+                const lines = doc.splitTextToSize(`• ${item}`, pageW - 2 * margin - 3);
+                lines.forEach((line) => {
+                    doc.text(line, margin + 3, y);
+                    y += 4;
+                });
             });
             y += 2;
             doc.text(`Timeline: ${step.timeline}`, margin, y);
             y += 5;
-            doc.text(`Investment Details: ${step.investmentDetail}`, margin, y, { maxWidth: pageW - 2 * margin });
+            const invLines = doc.splitTextToSize(`Investment Details: ${step.investmentDetail}`, pageW - 2 * margin);
+            invLines.forEach((line) => {
+                doc.text(line, margin, y);
+                y += 4;
+            });
             y += 8;
             if (step.subStep) {
                 doc.setFont('helvetica', 'bold');
@@ -264,8 +299,11 @@ const Services = () => {
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(9);
                 step.subStep.deliverables.forEach((item) => {
-                    doc.text(`  • ${item}`, margin + 3, y, { maxWidth: pageW - 2 * margin - 3 });
-                    y += 5;
+                    const sLines = doc.splitTextToSize(`  • ${item}`, pageW - 2 * margin - 3);
+                    sLines.forEach((line) => {
+                        doc.text(line, margin + 3, y);
+                        y += 4;
+                    });
                 });
                 doc.text(`  Timeline: ${step.subStep.timeline}`, margin, y);
                 y += 5;

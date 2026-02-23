@@ -6,10 +6,15 @@ import { useDocTitle } from '../components/CustomHook';
 
 const COMPANY_NAME = 'Lawn Irrigation Technologies';
 
+// Booking service types (match booking form options)
 const SERVICE_LABELS = {
-  'irrigation-design': 'Irrigation design & consultancy',
-  'installation': 'Installation & supply',
-  'maintenance': 'Maintenance & after-sales',
+  'step-1-consultation': 'Step 1: Initial Consultation & Site Assessment',
+  'step-2-budget': 'Step 2 (Path A): Scoping – Standard Residential (< 4,200m²)',
+  'step-2b-estate-commercial': 'Step 2 (Path B): Scoping – Estate & Commercial (4,200–10,000m²)',
+  'step-3-design': 'Step 3: 3D Visualisation',
+  'step-4-final-design': 'Step 4: Existing System Diagnosis',
+  'step-5-installation': 'Step 5: Precision Installation & Handover',
+  'full-service': 'Full Service Pathway (All Steps)',
 };
 
 const AdminAppointments = () => {
@@ -26,7 +31,7 @@ const AdminAppointments = () => {
   const [portfolioForm, setPortfolioForm] = useState({ name: '', sector: 'Commercial & institutional', imageUrlsText: '' });
   const [portfolioFiles, setPortfolioFiles] = useState([]);
   const [portfolioUploading, setPortfolioUploading] = useState(false);
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
   const navigate = useNavigate();
 
   useEffect(() => {

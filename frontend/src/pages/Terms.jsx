@@ -96,7 +96,7 @@ const Terms = () => {
               <p className="text-sm text-gray-500 mt-10 pt-6 border-t border-gray-200">
                 By engaging our services, making a booking, or accepting a quote, the Client is deemed to have
                 read, understood, and agreed to these Professional Service &amp; Design Terms. For questions, contact
-                us at lawnirrigationtech@gmail.com or geomulenga@gmail.com.
+                us at lawnirrigationtech@gmail.com.
               </p>
             </div>
           </div>
