@@ -1,5 +1,5 @@
 import React from 'react';
-import img from '../images/Services/ceo.jpg';
+import img from '../images/Services/ceo.jpeg';
 import { Link } from 'react-router-dom';
 
 const Intro = () => {
@@ -64,7 +64,7 @@ const Intro = () => {
                                 From early projects focused on smallholder fields to large commercial estates and
                                 institutional campuses, our company has grown around one principle:{" "}
                                 <span className="font-semibold text-green-900 not-italic">precision-engineered irrigation that protects both your
-                                landscape and your water resources</span>. Every design is tailored to the site, backed
+                                    landscape and your water resources</span>. Every design is tailored to the site, backed
                                 by soil science, hydraulics and long-term maintainability.
                             </p>
                         </div>

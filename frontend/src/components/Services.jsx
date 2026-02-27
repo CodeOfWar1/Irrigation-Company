@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
-import installationImg from '../images/Services/installation.jpg';
-import supplyImg from '../images/Services/Supply.jpg';
+import installationImg from '../images/Services/installation.jpeg';
+import supplyImg from '../images/Services/Supply.jpeg';
 import maintenanceImg from '../images/Services/maintance.jpeg';
 import consultationImg from '../images/Services/consultation.jpeg';
 import DesignImg from '../images/Services/Design.jpeg';
-
+import implement from '../images/Services/implement.jpeg';
 const PROCESS_STEPS = [
     {
         id: 1,
@@ -428,7 +428,7 @@ const Services = () => {
                         >
                             <div className="relative h-52 sm:h-64 overflow-hidden">
                                 <img
-                                    src={installationImg}
+                                    src={implement}
                                     alt="Irrigation installation and implementation"
                                     className="img-3d w-full h-full object-cover"
                                 />

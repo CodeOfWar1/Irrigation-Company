@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/Navbar/NavBar';
 import heroImg from '../images/hero/IMG_20220616_155944.jpg';
-import backgroundWebp from '../images/hero/background.webp';
+import backgroundWebp from '../images/hero/background.jpeg';
 import smartIrrigationImg from '../images/hero/smart-irrigation-month-scaled.jpeg';
 import irrigationImg from '../images/hero/types-of-irrigation-for-your-lawn.jpeg';
 
 const Hero = () => {
-    // Array of hero images to cycle through
     const heroImages = [
         backgroundWebp,
         smartIrrigationImg,
         irrigationImg,
-        heroImg, // Keep the original as fallback
+        heroImg,
     ];
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -21,134 +20,143 @@ const Hero = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setPreviousImageIndex(currentImageIndex);
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-        }, 6000); // Change image every 6 seconds
+            setCurrentImageIndex(
+                (prevIndex) => (prevIndex + 1) % heroImages.length
+            );
+        }, 6000);
 
         return () => clearInterval(interval);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [heroImages.length, currentImageIndex]);
+    }, [currentImageIndex, heroImages.length]);
 
     return (
-        <>
+        <div
+            id="hero"
+            className="relative min-h-screen flex flex-col bg-gray-900 overflow-hidden"
+        >
+            {/* BACKGROUND IMAGES */}
+            <div className="absolute inset-0 overflow-hidden">
+                {heroImages.map((img, index) => {
+                    const isCurrent = index === currentImageIndex;
+                    const isPrevious = index === previousImageIndex;
+
+                    return (
+                        <div
+                            key={index}
+                            className={`absolute inset-0 transition-all duration-[2500ms] ease-in-out ${isCurrent
+                                ? 'opacity-100 scale-100 z-10'
+                                : isPrevious
+                                    ? 'opacity-0 scale-105 z-[5]'
+                                    : 'opacity-0 scale-110 z-0'
+                                }`}
+                            style={{
+                                backgroundImage: `url(${img})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                            }}
+                        />
+                    );
+                })}
+            </div>
+
+            {/* GRADIENT OVERLAY */}
             <div
-                id="hero"
-                className="relative min-h-screen flex flex-col bg-gray-900 overflow-hidden"
-            >
-                {/* Hero Images with Smooth Crossfade Transition and 3D Animation */}
-                <div className="absolute inset-0 overflow-hidden">
-                    {heroImages.map((img, index) => {
-                        const isCurrent = index === currentImageIndex;
-                        const isPrevious = index === previousImageIndex;
+                className="absolute inset-0 z-0 pointer-events-none"
+                style={{
+                    background:
+                        'linear-gradient(135deg, rgba(22,160,107,0.75) 0%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.75) 100%)',
+                }}
+            />
 
-                        return (
-                            <div
-                                key={index}
-                                className={`absolute inset-0 hero-3d-bg hero-bg-slide ${isCurrent ? 'opacity-100 z-10' : isPrevious ? 'opacity-0 z-[5]' : 'opacity-0 z-0'
-                                    }`}
-                                style={{
-                                    backgroundImage: `url(${img})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                    transition: 'opacity 2500ms cubic-bezier(0.4, 0, 0.2, 1), transform 2500ms cubic-bezier(0.4, 0, 0.2, 1)',
-                                }}
-                                aria-hidden={!isCurrent}
-                            />
-                        );
-                    })}
-                </div>
-                {/* Gradient overlay for better contrast and depth */}
-                <div
-                    className="absolute inset-0 z-0 pointer-events-none"
-                    style={{
-                        background: 'linear-gradient(135deg, rgba(22, 160, 107, 0.75) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.7) 100%)',
-                    }}
-                    aria-hidden="true"
-                />
-                {/* Subtle vignette */}
-                <div
-                    className="absolute inset-0 z-0 pointer-events-none opacity-60"
-                    style={{
-                        boxShadow: 'inset 0 0 20rem 8rem rgba(0,0,0,0.4)',
-                    }}
-                    aria-hidden="true"
-                />
+            {/* VIGNETTE */}
+            <div
+                className="absolute inset-0 z-0 pointer-events-none opacity-60"
+                style={{
+                    boxShadow: 'inset 0 0 18rem 6rem rgba(0,0,0,0.5)',
+                }}
+            />
 
-                {/* Navbar */}
-                <div className="relative z-20">
-                    <NavBar />
-                </div>
+            {/* NAVBAR */}
+            <div className="relative z-20">
+                <NavBar />
+            </div>
 
-                {/* HERO CONTENT */}
-                <div
-                    className="relative z-10 m-auto overflow-hidden mx-4 mt-8 lg:mt-4 p-2 md:p-12 flex-1 flex flex-col justify-center w-full max-w-6xl"
-                    data-aos="fade"
-                    data-aos-duration="1000"
-                >
+            {/* HERO CONTENT */}
+            <div className="relative z-10 flex-1 flex items-center justify-center px-6 sm:px-8 lg:px-12">
+                <div className="w-full max-w-6xl text-center lg:text-left">
 
-                    <div className="flex flex-col lg:flex-row py-8 justify-start lg:justify-between text-left items-start lg:items-center">
+                    {/* HEADLINE */}
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight sm:leading-snug drop-shadow-lg mb-6">
+                        Stop Guessing.
+                        <br className="sm:hidden" />
+                        {' '}Start Engineering.
+                    </h1>
 
-                        <div className="lg:max-w-2xl flex flex-col justify-center items-start w-full text-left">
+                    {/* SUBHEADLINE */}
+                    <h2 className="text-base sm:text-lg md:text-2xl font-semibold text-green-200 mb-6 leading-relaxed max-w-3xl mx-auto lg:mx-0">
 
-                            {/* HEADLINE - break-words + smaller on mobile to prevent overflow */}
-                            <h1 className="mb-5 md:mb-7 md:text-5xl text-2xl sm:text-3xl font-extrabold text-white drop-shadow-lg leading-tight break-words max-w-full">
-                                Stop Guessing. Start Engineering.
-                            </h1>
+                        {/* Mobile version */}
+                        <span className="sm:hidden">
+                            Soil science, 3D design &amp; advanced irrigation for your property.
+                        </span>
 
-                            {/* SUB-HEADLINE (shorter on mobile, break-words to avoid overflow) */}
-                            <h2 className="text-base sm:text-lg md:text-2xl font-semibold text-green-200 mb-4 md:mb-5 drop-shadow break-words max-w-full">
-                                <span className="sm:hidden">
-                                    Soil science, 3D design &amp; advanced irrigation for your property.
-                                </span>
-                                <span className="hidden sm:inline">
-                                    The only firm in Zambia combining Soil Science,
-                                    3D Landscape Visualization, and Advanced Water Technology.
-                                </span>
-                            </h2>
+                        {/* Desktop version (original wording preserved) */}
+                        <span className="hidden sm:block">
+                            The only firm in Zambia combining Soil Science,
+                            3D Landscape Visualization, and Advanced Water Technology.
+                        </span>
 
-                            {/* BODY TEXT (summarised on mobile) */}
-                            <p className="text-gray-100 text-sm md:text-lg leading-relaxed mb-6 md:mb-7 drop-shadow">
-                                <span className="sm:hidden">
-                                    14+ years of Agricultural Engineering experience, delivering
-                                    efficient, engineered irrigation systems for homes, estates and institutions.
-                                </span>
-                                <span className="hidden sm:inline">
-                                    In a market saturated with unqualified labor, Lawn Irrigation
-                                    Technologies brings 14 years of Agricultural Engineering
-                                    expertise to your doorstep. We don't just plant; we design.
-                                    We don't just water; we engineer.
-                                    <br /><br />
-                                    From small luxury gardens to massive estates, we use 3D
-                                    renders to show you the future of your property before we
-                                    ever dig a trench. Our designs are based on your soil’s DNA
-                                    and your property’s unique hydraulics.
-                                </span>
-                            </p>
+                    </h2>
 
-                            {/* CTA BUTTONS */}
-                            <div className="mt-2 flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-start w-full sm:w-auto">
-                                <Link
-                                    to="/contact"
-                                    className="btn-3d w-auto max-w-[200px] sm:max-w-none sm:w-auto text-white bg-green-700 hover:bg-green-600 inline-flex items-center justify-center px-3 py-2 text-xs sm:px-8 sm:py-3.5 sm:text-lg shadow-xl rounded-lg sm:rounded-2xl"
-                                >
-                                    Learn More
-                                </Link>
-                                <button
-                                    type="button"
-                                    onClick={() => window.dispatchEvent(new CustomEvent('open-booking'))}
-                                    className="btn-3d w-auto max-w-[200px] sm:max-w-none sm:w-auto text-green-900 bg-white hover:bg-gray-100 inline-flex items-center justify-center px-3 py-2 text-xs sm:px-8 sm:py-3.5 sm:text-lg shadow-md rounded-lg sm:rounded-2xl border border-green-100"
-                                >
-                                    Book a project
-                                </button>
-                            </div>
+                    {/* DESCRIPTION */}
+                    <p className="text-gray-100 text-sm sm:text-base md:text-lg leading-relaxed mb-10 max-w-3xl mx-auto lg:mx-0">
 
-                        </div>
+                        {/* Mobile version */}
+                        <span className="sm:hidden">
+                            14+ years of Agricultural Engineering experience delivering
+                            efficient, engineered irrigation systems for homes,
+                            estates and institutions.
+                        </span>
+
+                        {/* Desktop version (FULL original text restored) */}
+                        <span className="hidden sm:block">
+                            In a market saturated with unqualified labor, Lawn Irrigation
+                            Technologies brings 14 years of Agricultural Engineering
+                            expertise to your doorstep. We don't just plant; we design.
+                            We don't just water; we engineer.
+                            <br /><br />
+                            From small luxury gardens to massive estates, we use 3D
+                            renders to show you the future of your property before we
+                            ever dig a trench. Our designs are based on your soil’s DNA
+                            and your property’s unique hydraulics.
+                        </span>
+
+                    </p>
+
+                    {/* BUTTONS */}
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <Link
+                            to="/contact"
+                            className="btn-3d text-white bg-green-700 hover:bg-green-600 px-6 py-3 text-sm sm:text-base shadow-xl rounded-xl transition"
+                        >
+                            Learn More
+                        </Link>
+
+                        <button
+                            type="button"
+                            onClick={() =>
+                                window.dispatchEvent(new CustomEvent('open-booking'))
+                            }
+                            className="btn-3d text-green-900 bg-white hover:bg-gray-100 px-6 py-3 text-sm sm:text-base shadow-md rounded-xl border border-green-100 transition"
+                        >
+                            Book a Project
+                        </button>
                     </div>
+
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
 export default Hero;
-
